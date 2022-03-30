@@ -1,0 +1,17 @@
+import './App.css'
+import 'normalize.css'
+import {Route, Routes} from 'react-router-dom'
+import {AuthenticatedApp} from './components/Authenticated'
+import {useAuth} from './Auth'
+import {Login} from './components/login/Login'
+function App() {
+  const {user, setUser, setStatus} = useAuth()
+
+  return (
+    <Routes>
+      <Route path="/" element={user ? <AuthenticatedApp /> : <Login />}></Route>
+    </Routes>
+  )
+}
+
+export default App

@@ -1,0 +1,12 @@
+{
+  "register": {
+    "title": "Nice to Meet You",
+    "subtitle": "First time? Create Free Account Now. Its 100% free",
+    "btnText": "register"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Nice that you are still with us",
+    "btnText": "login"
+  }
+}
