@@ -8,7 +8,6 @@ import {
   inputLogin,
   inputPassword,
   setError,
-  setLoading,
 } from './index'
 import {
   FormGroup,
@@ -20,11 +19,11 @@ import {
 } from '@mui/material'
 
 import styled from '@emotion/styled'
+// eslint-disable-next-line no-unused-vars
 import {css, jsx} from '@emotion/react'
 import {Send} from '@mui/icons-material'
 import {
   getAuth,
-  signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
@@ -36,18 +35,9 @@ import {baseFlex, myBlue} from '../layout'
 import {AnimatePresence, motion} from 'framer-motion'
 
 export const Login = () => {
-  const {
-    user,
-    isLogin,
-    isRegister,
-    setLogin,
-    setRegister,
-    status,
-    setStatus,
-    setIsLoading,
-  } = useAuth()
+  const {isRegister, status, setIsLoading} = useAuth()
   const [state, dispatch] = useReducer(loginReducer, initialState)
-  const {login, email, password, isLoading, isError, errorMessage} = state
+  const {login, email, password, isError, errorMessage} = state
   const {[status]: filedData} = unauthData
 
   const handleRegister = () => {
@@ -91,11 +81,15 @@ export const Login = () => {
   return (
     <LoginWrapper>
       <Form
-        onClick={e =>
-          e.keyCode === 13 && status === 'register'
-            ? handleRegister
-            : handleLogin
-        }
+        onSubmit={e => {
+          e.preventDefault()
+
+          if (status === 'register') {
+            return handleRegister()
+          } else {
+            return handleLogin()
+          }
+        }}
       >
         <AnimatePresence initial={true}>
           <motion.div
@@ -149,6 +143,7 @@ export const Login = () => {
               </FormGroup>
               <FormActions>
                 <Button
+                  type="submit"
                   onClick={status === 'register' ? handleRegister : handleLogin}
                   variant="contained"
                   endIcon={
