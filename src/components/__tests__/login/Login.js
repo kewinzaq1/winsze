@@ -1,7 +1,6 @@
-import {render, screen, fireEvent, act} from '@testing-library/react'
+import {render, screen, fireEvent} from '@testing-library/react'
 import {BrowserRouter} from 'react-router-dom'
 import {AuthProvider} from '../../../Auth'
-import userEvent from '@testing-library/user-event'
 import {Navbar} from '../../layout/Navbar'
 import {UnAuthenticatedApp} from './../../UnAuthenticated'
 

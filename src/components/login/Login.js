@@ -72,7 +72,6 @@ export const Login = () => {
 
     signInWithEmailAndPassword(auth, email, password).then(
       success => {
-        updateProfile(auth.currentUser, {displayName: login})
         setIsLoading(false)
       },
       error => {
