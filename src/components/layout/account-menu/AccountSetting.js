@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from "@emotion/react";
+import {css, jsx} from '@emotion/react'
 import {
   Avatar,
   Box,
@@ -12,21 +12,25 @@ import {
   ListItemText,
   Modal,
   Typography,
-} from "@mui/material";
-import BadgeIcon from "@mui/icons-material/Badge";
+} from '@mui/material'
+import BadgeIcon from '@mui/icons-material/Badge'
+import PortraitIcon from '@mui/icons-material/Portrait'
+import PasswordIcon from '@mui/icons-material/Password'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import {alertRed} from '../../layout'
 
-function AccountSetting({ closeModal: close, isModalOpen: open, user }) {
+function AccountSetting({closeModal: close, isModalOpen: open, user}) {
   const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: "background.paper",
+    bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    borderRadius: "1rem",
-  };
+    borderRadius: '1rem',
+  }
   return (
     <Modal
       open={open}
@@ -35,14 +39,23 @@ function AccountSetting({ closeModal: close, isModalOpen: open, user }) {
       aria-describedby="modal-settings-description"
     >
       <Box sx={style}>
-        <Typography id="modal-settings-title" variant="h6" component="h2">
+        <Typography id="modal-settings-title" variant="h4" component="h1">
           Hi {user?.displayName} change your settings
         </Typography>
-        <Typography id="modal-modal-description" variant="subtitle1">
+        <Typography
+          id="modal-modal-description"
+          variant="subtitle1"
+          component="h2"
+        >
           Personalize settings for your preferences
         </Typography>
         <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
+          css={css`
+            li {
+              cursor: pointer;
+            }
+          `}
         >
           <ListItem>
             <ListItemAvatar>
@@ -51,36 +64,58 @@ function AccountSetting({ closeModal: close, isModalOpen: open, user }) {
               </Avatar>
             </ListItemAvatar>
             <ListItemText
-              primary="nickname"
+              primary="Nickname"
               secondary={`@${user?.displayName}`}
             />
-            <Divider />
           </ListItem>
+          <Divider variant="inset" component="li" />
+          <ListItem>
+            <Divider />
+            <ListItemAvatar>
+              <Avatar>
+                <PortraitIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary="Profile picture"
+              secondary="Update profile picture"
+            />
+          </ListItem>
+          <Divider variant="inset" component="li" />
           <ListItem>
             <ListItemAvatar>
-              <Avatar>{/*<WorkIcon />*/}</Avatar>
+              <Avatar>
+                <PasswordIcon />
+              </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Work" secondary="Jan 7, 2014" />
-            <Divider />
+            <ListItemText primary="Password" secondary="Change your password" />
           </ListItem>
+          <Divider variant="inset" component="li" />
+
           <ListItem>
             <ListItemAvatar>
-              <Avatar>{/*<BeachAccessIcon />*/}</Avatar>
+              <Avatar
+                css={css`
+                  background: ${alertRed};
+                `}
+              >
+                <DeleteForeverIcon
+                  css={css`
+                    fill: white;
+                  `}
+                />
+              </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Vacation" secondary="July 20, 2014" />
-            <Divider />{" "}
+            <ListItemText
+              primary="Delete account"
+              secondary="Leave me forever"
+            />
           </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>{/*<BeachAccessIcon />*/}</Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Vacation" secondary="July 20, 2014" />
-            <Divider />
-          </ListItem>
+          <Divider variant="inset" component="li" />
         </List>
       </Box>
     </Modal>
-  );
+  )
 }
 
-export default AccountSetting;
+export default AccountSetting

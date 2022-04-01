@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Menu, MenuItem, ListItemIcon, Avatar, Divider } from "@mui/material";
-import LogoutIcon from "@mui/icons-material/Logout";
-import SettingsIcon from "@mui/icons-material/Settings";
-import AccountSetting from "./AccountSetting";
+import React, {useState} from 'react'
+import {Menu, MenuItem, ListItemIcon, Avatar, Divider} from '@mui/material'
+import LogoutIcon from '@mui/icons-material/Logout'
+import SettingsIcon from '@mui/icons-material/Settings'
+import AccountSetting from './AccountSetting'
 // TODO settings menu with delete account, change nickname, password and photo
 export const AccountMenu = ({
   anchorEl,
@@ -12,9 +12,9 @@ export const AccountMenu = ({
   user,
   logout,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => setIsModalOpen(false);
-  const openModal = () => setIsModalOpen(true);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const closeModal = () => setIsModalOpen(false)
+  const openModal = () => setIsModalOpen(true)
 
   return (
     <>
@@ -27,31 +27,31 @@ export const AccountMenu = ({
         PaperProps={{
           elevation: 0,
           sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
-            "& .MuiAvatar-root": {
+            '& .MuiAvatar-root': {
               width: 32,
               height: 32,
               ml: -0.5,
               mr: 1,
             },
-            "&:before": {
+            '&:before': {
               content: '""',
-              display: "block",
-              position: "absolute",
+              display: 'block',
+              position: 'absolute',
               top: 0,
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
           },
         }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{horizontal: 'right', vertical: 'top'}}
+        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
         <MenuItem>
           <Avatar> {user?.displayName?.[0]}</Avatar> {user?.displayName}
@@ -76,5 +76,5 @@ export const AccountMenu = ({
         closeModal={closeModal}
       />
     </>
-  );
-};
+  )
+}
