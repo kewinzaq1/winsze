@@ -3,6 +3,7 @@ import {Menu, MenuItem, ListItemIcon, Avatar, Divider} from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 import SettingsIcon from '@mui/icons-material/Settings'
 import AccountSetting from './AccountSetting'
+
 // TODO settings menu with delete account, change nickname, password and photo
 export const AccountMenu = ({
   anchorEl,
