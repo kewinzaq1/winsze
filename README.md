@@ -49,6 +49,17 @@
 
 ## Code Example/Issues 🔍
 
+function useLocalStorageState(name, initValue = null) { const
+getValueFromLocalStorage = window.localStorage.getItem(name)
+
+const [state, setState] = useState( name !== 'undefined' ?
+JSON.parse(getValueFromLocalStorage) : null, )
+
+useEffect(() => { window.localStorage.setItem(name, JSON.stringify(state)) },
+[name, state])
+
+return [state, setState] }
+
 ## Installation 💾
 
 ## Available scripts
