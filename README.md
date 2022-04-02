@@ -36,11 +36,11 @@
 ## Screenshots 📺
 
 <p align="center">
-    <img src="unauth-desktop.png" alt="unauth-desktop">
+    <img src="/assets/screens/unauth-desktop.png" alt="unauth-desktop">
 </p>
 
 <p align="center">
-    <img src="unauth-mobile.png" alt="unauth-mobile">
+    <img src="/assets/screens/unauth-mobile.png" alt="unauth-mobile">
 </p>
 
 <p align="center">
