@@ -77,7 +77,7 @@ export const Login = e => {
 
   return (
     <LoginWrapper>
-      <Form onSubmit={isRegister ? handleRegister : handleLogin}>
+      <Form onSubmit={isRegister ? handleRegister : handleLogin} method="post">
         <AnimatePresence initial={true}>
           <motion.div
             key="modal"

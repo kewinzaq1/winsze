@@ -1,6 +1,7 @@
 import React from 'react'
 import {useContext, createContext, useState} from 'react'
 import {initializeApp} from 'firebase/app'
+import {getStorage} from 'firebase/storage'
 import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth'
 import {useEffect} from 'react'
 import {useLocalStorageState} from '../Utils/hooks'
@@ -16,7 +17,7 @@ const firebaseConfig = {
 }
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
-
+const storage = getStorage(app)
 const AuthContext = createContext()
 
 const AuthProvider = ({children}) => {
@@ -72,4 +73,4 @@ const useAuth = () => {
   return context
 }
 
-export {AuthProvider, useAuth, app, auth}
+export {AuthProvider, useAuth, app, auth, storage}

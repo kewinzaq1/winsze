@@ -12,12 +12,14 @@ import {
 } from '@mui/material'
 import styled from '@emotion/styled'
 
+// TODO fix button on small screens
+
 export const AccountForm = ({
   open,
   onClose,
   label,
   placeholder,
-  type = 'text',
+  type,
   onSubmit,
 } = {}) => {
   const [val, setVal] = useState('')
@@ -50,6 +52,7 @@ export const AccountForm = ({
           onSubmit={e => {
             e.preventDefault()
             onSubmit(val)
+            setVal('')
           }}
         >
           <FormGroup
@@ -60,9 +63,14 @@ export const AccountForm = ({
             `}
           >
             <InputLabel>{label}</InputLabel>
+
             <Input
-              value={val}
-              onChange={({target: {value}}) => setVal(value)}
+              value={type !== 'file' ? val : val.name}
+              onChange={({target}) => {
+                if (type === 'file') {
+                  setVal(target.files)
+                } else setVal(target.value)
+              }}
               type={type}
               placeholder={placeholder}
             />
