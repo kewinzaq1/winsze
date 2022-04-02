@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {useReducer, useEffect} from 'react'
+import React, {useReducer} from 'react'
 import unauthData from '../unauth.json'
 import {
   loginReducer,
@@ -31,7 +31,7 @@ import {
 
 import {useAuth} from '../../Auth'
 import {baseFlex, myBlue} from '../layout'
-
+import {useOverflowHidden} from '../../Utils/hooks'
 import {AnimatePresence, motion} from 'framer-motion'
 
 export const Login = e => {
@@ -72,12 +72,7 @@ export const Login = e => {
     )
   }
 
-  useEffect(() => {
-    document.querySelector('body').style.overflow = 'hidden'
-    return () => {
-      document.querySelector('body').style.overflow = 'visible'
-    }
-  }, [])
+  useOverflowHidden()
 
   return (
     <LoginWrapper>

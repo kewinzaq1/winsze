@@ -1,6 +1,13 @@
 import {useEffect, useState} from 'react'
 
-function useOverflowHidden() {}
+function useOverflowHidden() {
+  return useEffect(() => {
+    document.querySelector('body').style.overflow = 'hidden'
+    return () => {
+      document.querySelector('body').style.overflow = 'visible'
+    }
+  }, [])
+}
 
 function useLocalStorageState(name, initValue = null) {
   const getValueFromLocalStorage = window.localStorage.getItem(name)
