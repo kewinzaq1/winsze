@@ -49,16 +49,32 @@
 
 ## Code Example/Issues 🔍
 
-function useLocalStorageState(name, initValue = null) { const
-getValueFromLocalStorage = window.localStorage.getItem(name)
+customHooks:
 
-const [state, setState] = useState( name !== 'undefined' ?
-JSON.parse(getValueFromLocalStorage) : null, )
+```javascript
+function useLocalStorageState(name, initValue = null) {
+  const getValueFromLocalStorage = window.localStorage.getItem(name)
 
-useEffect(() => { window.localStorage.setItem(name, JSON.stringify(state)) },
-[name, state])
+  const [state, setState] = useState(
+    name !== 'undefined' ? JSON.parse(getValueFromLocalStorage) : null,
+  )
 
-return [state, setState] }
+  useEffect(() => {
+    window.localStorage.setItem(name, JSON.stringify(state))
+  }, [name, state])
+
+  return [state, setState]
+}
+
+function useOverflowHidden() {
+  return useEffect(() => {
+    document.querySelector('body').style.overflow = 'hidden'
+    return () => {
+      document.querySelector('body').style.overflow = 'visible'
+    }
+  }, [])
+}
+```
 
 ## Installation 💾
 
