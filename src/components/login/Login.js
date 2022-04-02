@@ -36,13 +36,21 @@ import {AnimatePresence, motion} from 'framer-motion'
 
 export const Login = e => {
   const auth = getAuth()
+<<<<<<< HEAD
   const {isRegister, status, setIsLoading} = useAuth()
+=======
+  const {isRegister, isLogin, status, setIsLoading} = useAuth()
+>>>>>>> 7fad48c7973af48d3347018e13f3d7fe3ea329da
   const [state, dispatch] = useReducer(loginReducer, initialState)
   const {login, email, password, isError, errorMessage} = state
   const {[status]: filedData} = unauthData
 
   const handleRegister = e => {
     e.preventDefault()
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7fad48c7973af48d3347018e13f3d7fe3ea329da
     setIsLoading(true)
 
     createUserWithEmailAndPassword(auth, email, password).then(
@@ -57,6 +65,10 @@ export const Login = e => {
     )
   }
 
+<<<<<<< HEAD
+=======
+  // const auth = getAuth()
+>>>>>>> 7fad48c7973af48d3347018e13f3d7fe3ea329da
   const handleLogin = e => {
     e.preventDefault()
     setIsLoading(true)
@@ -76,6 +88,20 @@ export const Login = e => {
 
   return (
     <LoginWrapper>
+<<<<<<< HEAD
+=======
+      {/* <Form
+        onSubmit={e => {
+          e.preventDefault()
+
+          if (status === 'register') {
+            return handleRegister()
+          } else {
+            return handleLogin()
+          }
+        }}
+      > */}
+>>>>>>> 7fad48c7973af48d3347018e13f3d7fe3ea329da
       <Form onSubmit={isRegister ? handleRegister : handleLogin}>
         <AnimatePresence initial={true}>
           <motion.div
