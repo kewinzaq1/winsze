@@ -80,11 +80,11 @@ function useOverflowHidden() {
 
 ## Available scripts
 
-| Command         | Description            |     |
-| --------------- | ---------------------- | --- |
-| `npm run start` | Open local server      |     |
-| `npm run build` | Create optimized build |     |
-| `npm run test`  | Run tests              |     |
+| Command         | Description            |
+| --------------- | ---------------------- |
+| `npm run start` | Open local server      |
+| `npm run build` | Create optimized build |
+| `npm run test`  | Run tests              |
 
 ## Live 📍
 

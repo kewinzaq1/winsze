@@ -25,7 +25,7 @@ export const Navbar = () => {
     logout,
     isLoading,
   } = useAuth()
-
+  // TODO: fix update avatar
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = event => {

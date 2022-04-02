@@ -18,7 +18,6 @@ import PasswordIcon from '@mui/icons-material/Password'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import {alertRed} from '../../layout'
 import {
-  getAuth,
   updateProfile,
   deleteUser,
   updatePassword as updatePasswd,
@@ -26,8 +25,10 @@ import {
 import {toast} from 'react-hot-toast'
 import {AccountForm} from './AccountForm'
 import {ConfirmationMenu} from './ConfirmationMenu'
+import {auth, storage} from '../../../Auth'
+import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
 
-function AccountSetting({closeModal: close, isModalOpen: open, user}) {
+function AccountSetting({closeModal: close, isModalOpen: open, user} = {}) {
   const [settings, setSettings] = useState(null)
   const deleteAccount = () => deleteUser(currentUser)
   const closeAll = () => {
@@ -56,7 +57,6 @@ function AccountSetting({closeModal: close, isModalOpen: open, user}) {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
 
-  const auth = getAuth()
   const currentUser = auth.currentUser
 
   const updateUserName = newName =>
@@ -78,10 +78,26 @@ function AccountSetting({closeModal: close, isModalOpen: open, user}) {
       loading: 'Password is changing',
       success: () => {
         closeAll()
-        return `Password successful changed `
+        return `Password successful changed`
       },
       error: 'Try again!',
     })
+  const updatePhoto = photo => {
+    const imageRef = ref(storage, `ProfilePictures/${currentUser.uid}`)
+    return toast.promise(uploadBytes(imageRef, photo), {
+      loading: 'Photo is changing',
+      success: () => {
+        getDownloadURL(imageRef).then(async url => {
+          await updateProfile(currentUser, {
+            photoURL: url,
+          })
+        })
+        closeAll()
+        return `That's look great!`
+      },
+      error: 'Try again!',
+    })
+  }
 
   const onSubmitValidation = () => {
     if (settings === 'username') {
@@ -90,6 +106,19 @@ function AccountSetting({closeModal: close, isModalOpen: open, user}) {
     if (settings === 'password') {
       return updatePassword
     }
+    if (settings === 'picture') {
+      return updatePhoto
+    }
+  }
+
+  const typeValidation = () => {
+    if (settings === 'password') {
+      return 'password'
+    }
+    if (settings === 'picture') {
+      return 'file'
+    }
+    return 'text'
   }
 
   const style = {
@@ -209,7 +238,7 @@ function AccountSetting({closeModal: close, isModalOpen: open, user}) {
           onClose={resetSettings}
           placeholder={settings}
           onSubmit={onSubmitValidation()}
-          type={settings === 'password' ? 'password' : 'text'}
+          type={typeValidation()}
         />
         <ConfirmationMenu
           open={isConfirmationOpen}
