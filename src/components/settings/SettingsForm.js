@@ -1,20 +1,12 @@
 /** @jsxImportSource @emotion/react */
+// eslint-disable-next-line no-unused-vars
 import {css, jsx} from '@emotion/react'
 import {useState} from 'react'
-import {
-  FormGroup,
-  InputLabel,
-  Input,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-} from '@mui/material'
+import {FormGroup, Input, Button, Dialog, DialogContent} from '@mui/material'
 import styled from '@emotion/styled'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
-// TODO fix button on small screens
-
-export const AccountForm = ({
+export const SettingsForm = ({
   open,
   onClose,
   label,
@@ -33,20 +25,7 @@ export const AccountForm = ({
       }}
       aria-labelledby="alert-confirmation-update-title"
       aria-describedby="alert-confirmation-update-description"
-      css={css`
-        padding: 2rem;
-        min-height: 500px;
-      `}
     >
-      <DialogTitle
-        id="alert-confirmation-update-title"
-        css={css`
-          font-weight: 500;
-          font-size: 1.5rem;
-        `}
-      >
-        {`Enter ${placeholder}`}
-      </DialogTitle>
       <DialogContent>
         <Form
           onSubmit={e => {
@@ -54,16 +33,18 @@ export const AccountForm = ({
             onSubmit(val)
             setVal('')
           }}
+          css={css`
+            flex-direction: row;
+          `}
         >
           <FormGroup
             css={css`
               flex-direction: row;
               align-items: center;
               justify-content: center;
+              flex-wrap: nowrap;
             `}
           >
-            <InputLabel>{label}</InputLabel>
-
             <Input
               value={type !== 'file' ? val : val[0]}
               onChange={({target}) => {
@@ -81,7 +62,11 @@ export const AccountForm = ({
                 margin-left: 0.5rem;
               `}
             >
-              Update
+              <ExpandMoreIcon
+                css={css`
+                  fill: white;
+                `}
+              />
             </Button>
           </FormGroup>
         </Form>
