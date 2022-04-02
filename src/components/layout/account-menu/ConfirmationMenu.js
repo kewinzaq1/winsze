@@ -17,6 +17,9 @@ export const ConfirmationMenu = ({open, onClose, onAgree}) => {
       onClose={onClose}
       aria-labelledby="alert-confirmation-delete-title"
       aria-describedby="alert-confirmation-delete-description"
+      css={css`
+        border-radius: 0.5rem;
+      `}
     >
       <DialogTitle
         id="alert-confirmation-delete-title"

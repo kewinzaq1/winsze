@@ -17,25 +17,44 @@ import PortraitIcon from '@mui/icons-material/Portrait'
 import PasswordIcon from '@mui/icons-material/Password'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import {alertRed} from '../../layout'
-import {getAuth, updateProfile, deleteUser} from 'firebase/auth'
+import {
+  getAuth,
+  updateProfile,
+  deleteUser,
+  updatePassword as updatePasswd,
+} from 'firebase/auth'
 import {toast} from 'react-hot-toast'
 import {AccountForm} from './AccountForm'
 import {ConfirmationMenu} from './ConfirmationMenu'
 
 function AccountSetting({closeModal: close, isModalOpen: open, user}) {
   const [settings, setSettings] = useState(null)
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    maxWidth: '500px',
-    minWidth: '200px',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: '1.25rem',
+  const deleteAccount = () => deleteUser(currentUser)
+  const closeAll = () => {
+    close()
+    setIsFormOpen(false)
   }
+  const openUpdatePicture = () => {
+    setIsFormOpen(true)
+    setSettings('picture')
+  }
+  const openUpdateUsername = () => {
+    setIsFormOpen(true)
+    setSettings('username')
+  }
+  const openUpdatePassword = () => {
+    setIsFormOpen(true)
+    setSettings('password')
+  }
+  const openConfirmation = () => setIsConfirmationOpen(true)
+
+  const resetSettings = () => {
+    setIsFormOpen(false)
+    setIsConfirmationOpen(false)
+  }
+
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
 
   const auth = getAuth()
   const currentUser = auth.currentUser
@@ -47,23 +66,44 @@ function AccountSetting({closeModal: close, isModalOpen: open, user}) {
       }),
       {
         loading: 'Changing username',
-        success: 'Successful username changed',
-        error: 'Error username changed',
+        success: () => {
+          closeAll()
+          return `Successful changed @${newName}`
+        },
+        error: 'Try again!',
       },
     )
+  const updatePassword = newPassword =>
+    toast.promise(updatePasswd(currentUser, newPassword), {
+      loading: 'Password is changing',
+      success: () => {
+        closeAll()
+        return `Password successful changed `
+      },
+      error: 'Try again!',
+    })
 
-  const deleteAccount = async () => await deleteUser(currentUser)
+  const onSubmitValidation = () => {
+    if (settings === 'username') {
+      return updateUserName
+    }
+    if (settings === 'password') {
+      return updatePassword
+    }
+  }
 
-  const isOpenSettings = settings !== null
-  const isProfilePicture = settings === 'picture'
-  const isPassword = settings === 'password'
-  const isUsername = settings === 'username'
-  const isConfirmation = settings === 'confirm'
-  const openUpdatePicture = () => setSettings('picture')
-  const openUpdateUsername = () => setSettings('username')
-  const openUpdatePassword = () => setSettings('passwd')
-  const openConfirmation = () => setSettings('confirm')
-  const resetSettings = () => setSettings(null)
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '500px',
+    minWidth: '200px',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: '.5rem',
+  }
 
   return (
     <Modal
@@ -77,7 +117,7 @@ function AccountSetting({closeModal: close, isModalOpen: open, user}) {
         <Box sx={style}>
           <Typography
             id="modal-settings-title"
-            variant="h3"
+            variant="h4"
             component="h1"
             css={css`
               white-space: pre-wrap;
@@ -94,7 +134,7 @@ function AccountSetting({closeModal: close, isModalOpen: open, user}) {
               margin-top: 0.5rem;
             `}
           >
-            Personalize settings for your preferences
+            Personalize account for your preferences
           </Typography>
           <List
             css={css`
@@ -164,9 +204,15 @@ function AccountSetting({closeModal: close, isModalOpen: open, user}) {
             <Divider variant="inset" component="li" />
           </List>
         </Box>
-        {isOpenSettings && <AccountForm />}
+        <AccountForm
+          open={isFormOpen}
+          onClose={resetSettings}
+          placeholder={settings}
+          onSubmit={onSubmitValidation()}
+          type={settings === 'password' ? 'password' : 'text'}
+        />
         <ConfirmationMenu
-          open={isConfirmation}
+          open={isConfirmationOpen}
           onClose={resetSettings}
           onAgree={deleteAccount}
         />

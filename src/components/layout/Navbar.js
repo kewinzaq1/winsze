@@ -7,10 +7,6 @@ import {
   Typography,
   AppBar as Bar,
   Avatar,
-  Menu,
-  MenuItem,
-  Divider,
-  ListItemIcon,
   LinearProgress,
 } from '@mui/material'
 import {useAuth} from '../../Auth'
@@ -29,8 +25,6 @@ export const Navbar = () => {
     logout,
     isLoading,
   } = useAuth()
-
-  console.log(user)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
