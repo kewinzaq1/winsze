@@ -65,7 +65,7 @@ export const AccountForm = ({
             <InputLabel>{label}</InputLabel>
 
             <Input
-              value={type !== 'file' ? val : val[0].name}
+              value={type !== 'file' ? val : val[0]}
               onChange={({target}) => {
                 if (type === 'file') {
                   setVal(target.files[0])
