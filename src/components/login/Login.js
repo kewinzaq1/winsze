@@ -34,19 +34,20 @@ import {baseFlex, myBlue} from '../layout'
 
 import {AnimatePresence, motion} from 'framer-motion'
 
-export const Login = () => {
+export const Login = e => {
+  const auth = getAuth()
   const {isRegister, status, setIsLoading} = useAuth()
   const [state, dispatch] = useReducer(loginReducer, initialState)
   const {login, email, password, isError, errorMessage} = state
   const {[status]: filedData} = unauthData
 
-  const handleRegister = () => {
+  const handleRegister = e => {
+    e.preventDefault()
     setIsLoading(true)
-    const auth = getAuth()
 
     createUserWithEmailAndPassword(auth, email, password).then(
-      success => {
-        updateProfile(auth.currentUser, {displayName: login})
+      async success => {
+        await updateProfile(auth.currentUser, {displayName: login})
         setIsLoading(false)
       },
       error => {
@@ -56,8 +57,8 @@ export const Login = () => {
     )
   }
 
-  const handleLogin = async () => {
-    const auth = getAuth()
+  const handleLogin = e => {
+    e.preventDefault()
     setIsLoading(true)
 
     signInWithEmailAndPassword(auth, email, password).then(
@@ -80,17 +81,7 @@ export const Login = () => {
 
   return (
     <LoginWrapper>
-      <Form
-        onSubmit={e => {
-          e.preventDefault()
-
-          if (status === 'register') {
-            return handleRegister()
-          } else {
-            return handleLogin()
-          }
-        }}
-      >
+      <Form onSubmit={isRegister ? handleRegister : handleLogin}>
         <AnimatePresence initial={true}>
           <motion.div
             key="modal"

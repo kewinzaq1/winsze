@@ -1,10 +1,9 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {Menu, MenuItem, ListItemIcon, Avatar, Divider} from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 import SettingsIcon from '@mui/icons-material/Settings'
 import AccountSetting from './AccountSetting'
 
-// TODO settings menu with delete account, change nickname, password and photo
 export const AccountMenu = ({
   anchorEl,
   open,
@@ -31,6 +30,7 @@ export const AccountMenu = ({
             overflow: 'visible',
             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
+            borderRadius: '.5rem',
             '& .MuiAvatar-root': {
               width: 32,
               height: 32,

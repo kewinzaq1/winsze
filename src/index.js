@@ -1,4 +1,6 @@
 import React from 'react'
+/** @jsxImportSource @emotion/react */
+import {css, jsx} from '@emotion/react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
@@ -8,11 +10,19 @@ import {Navbar} from './components/layout/Navbar'
 import {AuthProvider} from './Auth'
 import './index.css'
 import 'normalize.css'
+import {Toaster} from 'react-hot-toast'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
+        <Toaster
+          toastOptions={{
+            style: {
+              fontFamily: 'Poppins',
+            },
+          }}
+        />
         <Navbar />
         <App />
       </AuthProvider>
