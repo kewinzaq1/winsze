@@ -14,8 +14,6 @@ const firebaseConfig = {
   messagingSenderId: '564098727958',
   appId: '1:564098727958:web:3951cf9519225ec0043537',
 }
-const userLocalKey = 'FANCY_LOCAL_KEY'
-const getLocalUser = window.localStorage.getItem(userLocalKey)
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 
