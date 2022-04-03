@@ -1,15 +1,7 @@
 /** @jsxImportSource @emotion/react */
+// eslint-disable-next-line no-unused-vars
 import {css, jsx} from '@emotion/react'
-import React, {useState} from 'react'
-import {useAuth} from '../../Auth'
 import {Typography} from '@mui/material'
-import {
-  updateProfile,
-  deleteUser,
-  updatePassword as updatePasswd,
-  updateEmail as updateMail,
-  sendEmailVerification,
-} from 'firebase/auth'
 import {
   ListItem,
   ListItemAvatar,
@@ -25,128 +17,30 @@ import PasswordIcon from '@mui/icons-material/Password'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined'
 import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined'
-import {toast} from 'react-hot-toast'
 import {ConfirmationMenu} from './SettingsConfirmation'
-import {auth, storage} from '../../Auth'
-import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
 import {alertRed} from '../layout'
 import {SettingsForm} from './SettingsForm'
+import {useSettings} from './index'
 
 export const Settings = () => {
-  const {user} = useAuth()
-  const userEmailVerified = user.emailVerified
-  const [isOpenConfirmation, setIsConfirmationOpen] = useState(false)
-  const [settings, setSettings] = useState(null)
-  const deleteAccount = async () => await deleteUser(currentUser)
-
-  const closeAll = () => {
-    setIsConfirmationOpen(false)
-    setIsFormOpen(false)
-  }
-  const openUpdatePicture = () => {
-    setIsFormOpen(true)
-    setSettings('picture')
-  }
-  const openUpdateUsername = () => {
-    setIsFormOpen(true)
-    setSettings('username')
-  }
-  const openUpdatePassword = () => {
-    setIsFormOpen(true)
-    setSettings('password')
-  }
-  const openUpdateEmail = () => {
-    setIsFormOpen(true)
-    setSettings('email')
-  }
-  const openConfirmation = () => setIsConfirmationOpen(true)
-
-  const resetSettings = () => {
-    setIsFormOpen(false)
-    setIsConfirmationOpen(false)
-  }
-
-  const [isFormOpen, setIsFormOpen] = useState(false)
-
-  const currentUser = auth.currentUser
-
-  const updateUserName = newName =>
-    toast.promise(
-      updateProfile(currentUser, {
-        displayName: newName,
-      }),
-      {
-        loading: 'Changing username',
-        success: () => {
-          closeAll()
-          return `Successful changed @${newName}`
-        },
-        error: e => e.code,
-      },
-    )
-  const updatePassword = newPassword =>
-    toast.promise(updatePasswd(currentUser, newPassword), {
-      loading: 'Password is changing',
-      success: () => {
-        closeAll()
-        return `Password successful changed`
-      },
-      error: e => e.code,
-    })
-  const updatePhoto = photo => {
-    const imageRef = ref(storage, `ProfilePictures/${currentUser.uid}`)
-    return toast.promise(uploadBytes(imageRef, photo), {
-      loading: 'Photo is changing',
-      success: () => {
-        getDownloadURL(imageRef).then(async url => {
-          await updateProfile(currentUser, {
-            photoURL: url,
-          })
-        })
-        closeAll()
-        return `That's look great!`
-      },
-      error: e => e.code,
-    })
-  }
-  const verifyEmail = () => {
-    return toast.promise(sendEmailVerification(auth.currentUser), {
-      loading: 'Email sending',
-      success: `Email delivered`,
-      error: e => e.code,
-    })
-  }
-
-  const updateEmail = email => {
-    return toast.promise(updateMail(auth.currentUser, email), {
-      loading: 'Email has been updated',
-      success: `Email updated`,
-      error: e => e.code,
-    })
-  }
-
-  const submitValidation = () => {
-    if (settings === 'picture') {
-      return updatePhoto
-    }
-    if (settings === 'username') {
-      return updateUserName
-    }
-    if (settings === 'password') {
-      return updatePassword
-    }
-    if (settings === 'email') {
-      return updateEmail
-    }
-  }
-  const typeValidation = () => {
-    if (settings === 'picture') {
-      return 'file'
-    }
-    if (settings === 'password') {
-      return 'password'
-    }
-  }
+  const {
+    user,
+    userEmailVerified,
+    isOpenConfirmation,
+    settings,
+    deleteAccount,
+    closeAll,
+    openUpdatePicture,
+    openUpdateUsername,
+    openUpdatePassword,
+    openUpdateEmail,
+    openConfirmation,
+    resetSettings,
+    isFormOpen,
+    verifyEmail,
+    submitValidation,
+    typeValidation,
+  } = useSettings()
 
   return (
     <main
