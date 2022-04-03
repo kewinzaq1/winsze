@@ -3,15 +3,11 @@ import {
   screen,
   fireEvent,
   waitForElementToBeRemoved,
-  waitFor,
 } from '@testing-library/react'
 import {BrowserRouter} from 'react-router-dom'
 import {AuthProvider} from '../../../Auth'
 import {Navbar} from '../../layout/Navbar'
-import {useAuth} from '../../../Auth'
 import App from '../../../App'
-import {renderHook, act} from '@testing-library/react-hooks'
-import {connectAuthEmulator, getAuth} from 'firebase/auth'
 import {buildUser} from '../../../Utils/Builders'
 
 jest.fn('firebase/auth')
