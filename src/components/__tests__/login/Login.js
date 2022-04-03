@@ -14,7 +14,7 @@ jest.fn('firebase/auth')
 jest.fn('firebase')
 jest.fn('firebase/app')
 
-function renderLoginScreen() {
+const renderLoginScreen = () => {
   render(
     <BrowserRouter>
       <AuthProvider>
