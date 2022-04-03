@@ -70,7 +70,7 @@ export const Login = e => {
     )
   }
 
-  useOverflowHidden()
+  // useOverflowHidden()
 
   return (
     <LoginWrapper>
@@ -84,8 +84,10 @@ export const Login = e => {
           >
             <FormGroup>
               <FormGroup>
-                <Typography variant="h2">{filedData?.title}</Typography>
-                <Typography variant="subtitle1">
+                <Typography variant="h2" component="h1">
+                  {filedData?.title}
+                </Typography>
+                <Typography variant="subtitle1" component="h2">
                   {filedData?.subtitle}
                 </Typography>
                 {isError && <Alert severity="error">{errorMessage}</Alert>}
