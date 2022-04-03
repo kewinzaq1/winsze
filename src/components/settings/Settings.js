@@ -32,17 +32,15 @@ import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
 import {alertRed} from '../layout'
 import {SettingsForm} from './SettingsForm'
 
-// TODO: add removeUser confirmation and impl. function
-
 export const Settings = () => {
   const {user} = useAuth()
   const userEmailVerified = user.emailVerified
-  const [isOpenConfirmation, setIsOpenConfirmation] = React.useState(false)
+  const [isOpenConfirmation, setIsConfirmationOpen] = useState(false)
   const [settings, setSettings] = useState(null)
-  const deleteAccount = () => deleteUser(currentUser)
+  const deleteAccount = async () => await deleteUser(currentUser)
 
   const closeAll = () => {
-    setIsOpenConfirmation(false)
+    setIsConfirmationOpen(false)
     setIsFormOpen(false)
   }
   const openUpdatePicture = () => {
@@ -69,7 +67,6 @@ export const Settings = () => {
   }
 
   const [isFormOpen, setIsFormOpen] = useState(false)
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
 
   const currentUser = auth.currentUser
 
@@ -265,13 +262,11 @@ export const Settings = () => {
         onSubmit={submitValidation()}
         type={typeValidation()}
       />
-      {isOpenConfirmation && (
-        <ConfirmationMenu
-          onSubmit={deleteAccount}
-          open={isConfirmationOpen}
-          onClose={closeAll}
-        />
-      )}
+      <ConfirmationMenu
+        onAgree={deleteAccount}
+        open={isOpenConfirmation}
+        onClose={closeAll}
+      />
     </main>
   )
 }

@@ -14,6 +14,8 @@ import styled from '@emotion/styled'
 import {myBlue} from '.'
 import {AccountMenu} from './account-menu/AccountMenu'
 
+// TODO add link to home page
+
 export const Navbar = () => {
   const {
     isLogin,

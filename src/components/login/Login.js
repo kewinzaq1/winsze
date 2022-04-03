@@ -46,8 +46,8 @@ export const Login = e => {
 
     createUserWithEmailAndPassword(auth, email, password).then(
       async success => {
-        await updateProfile(auth.currentUser, {displayName: login})
         setIsLoading(false)
+        await updateProfile(auth.currentUser, {displayName: login})
       },
       error => {
         setError(dispatch, error.message)
