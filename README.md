@@ -25,15 +25,15 @@
 
 ## Tech/framework used 🔧
 
-| Tech             | Description               |
-| ---------------- | ------------------------- |
-| React            | Base Javascript Framework |
-| Jest             | Test                      |
-| React Router Dom | Routing                   |
-| Firebase         | Serverless backend        |
-| Emotion          | Styling (css in js)       |
-| Material UI      | Styling (components)      |
-| React Hot Toast  | Notifications             |
+| Tech             | Description          |
+| ---------------- | -------------------- |
+| React            | JS Library           |
+| Jest             | Test                 |
+| React Router Dom | Routing              |
+| Firebase         | Serverless backend   |
+| Emotion          | Styling (css in js)  |
+| Material UI      | Styling (components) |
+| React Hot Toast  | Notifications        |
 
 ## Screenshots 📺
 

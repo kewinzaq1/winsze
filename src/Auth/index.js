@@ -14,12 +14,12 @@ const firebaseConfig = {
   messagingSenderId: '564098727958',
   appId: '1:564098727958:web:3951cf9519225ec0043537',
 }
-const app = initializeApp(firebaseConfig)
-const auth = getAuth(app)
-const storage = getStorage(app)
-const AuthContext = createContext()
+export const app = initializeApp(firebaseConfig)
+export const auth = getAuth(app)
+export const storage = getStorage(app)
+export const AuthContext = createContext()
 
-const AuthProvider = ({children}) => {
+export const AuthProvider = ({children}) => {
   const [user, setUser] = useLocalStorageState('user')
   const [status, setStatus] = useState(user ? 'authenticated' : 'login')
   const [isLoading, setIsLoading] = useState(false)
@@ -64,12 +64,10 @@ const AuthProvider = ({children}) => {
   )
 }
 
-const useAuth = () => {
+export const useAuth = () => {
   const context = useContext(AuthContext)
   if (!context) {
     throw new Error(`useAuth used only within AuthProvider`)
   }
   return context
 }
-
-export {AuthProvider, useAuth, app, auth, storage}

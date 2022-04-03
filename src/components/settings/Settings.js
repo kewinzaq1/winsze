@@ -32,6 +32,8 @@ import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
 import {alertRed} from '../layout'
 import {SettingsForm} from './SettingsForm'
 
+// TODO: add removeUser confirmation and impl. function
+
 export const Settings = () => {
   const {user} = useAuth()
   const userEmailVerified = user.emailVerified
