@@ -5,7 +5,6 @@ import {getStorage} from 'firebase/storage'
 import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth'
 import {useEffect} from 'react'
 import {useLocalStorageState} from '../Utils/hooks'
-
 const firebaseConfig = {
   apiKey: 'AIzaSyDgPawN4QvQwjjIp5x_D_ktEY1hxzwLsKU',
   authDomain: 'winsze.firebaseapp.com',

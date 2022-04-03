@@ -28,7 +28,6 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth'
-
 import {useAuth} from '../../Auth'
 import {baseFlex, myBlue} from '../layout'
 import {useOverflowHidden} from '../../Utils/hooks'
@@ -57,11 +56,9 @@ export const Login = e => {
     )
   }
 
-  // const auth = getAuth()
   const handleLogin = e => {
     e.preventDefault()
     setIsLoading(true)
-
     signInWithEmailAndPassword(auth, email, password).then(
       success => {
         setIsLoading(false)

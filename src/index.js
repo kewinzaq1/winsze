@@ -1,8 +1,5 @@
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-/** @jsxImportSource @emotion/react */
-import {css, jsx} from '@emotion/react'
-import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
@@ -13,7 +10,6 @@ import './index.css'
 import 'normalize.css'
 import {Toaster} from 'react-hot-toast'
 
-// If you want to start measuring performance in your app, pass a function
 const container = document.getElementById('root')
 const root = ReactDOMClient.createRoot(container)
 root.render(
