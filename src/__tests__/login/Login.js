@@ -36,6 +36,18 @@ const renderLoginScreen = () => {
   }
 }
 
+const renderRegisterScreen = () => {
+  const {emailInput, passwordInput, registerButton} = renderLoginScreen()
+  const sendForm = screen.getByRole('button', {name: /register/i})
+  fireEvent.click(registerButton)
+
+  return {
+    emailInput,
+    passwordInput,
+    sendForm,
+  }
+}
+
 describe('unauth app', () => {
   test('display login page', () => {
     const {emailInput, passwordInput, loginButton, registerButton} =
@@ -67,31 +79,31 @@ describe('auth successful', () => {
   const {username, email, password} = buildUser()
 
   test('register new user', async () => {
-    const {emailInput, passwordInput, registerButton} = renderLoginScreen()
-    fireEvent.click(registerButton)
-    const registerFormBtn = screen.getByRole('button', {name: /register/i})
+    const {emailInput, passwordInput, sendForm} = renderRegisterScreen()
 
     fireEvent.change(emailInput, {target: {value: email}})
     fireEvent.change(screen.getByLabelText(/nickname/i), {
       target: {value: username},
     })
     fireEvent.change(passwordInput, {target: {value: password}})
-
-    fireEvent.click(registerFormBtn)
+    fireEvent.click(sendForm)
 
     await screen.findByRole('progressbar')
-
     // eslint-disable-next-line testing-library/prefer-query-by-disappearance
     await waitForElementToBeRemoved(screen.getByRole('progressbar'))
 
     expect(screen.getByText(/authenticated/i)).toBeInTheDocument()
   })
   test('login as user', async () => {
-    const {emailInput, passwordInput, loginButton} = renderLoginScreen()
+    const {
+      emailInput,
+      passwordInput,
+      loginButton: sendForm,
+    } = renderLoginScreen()
 
     fireEvent.change(emailInput, {target: {value: email}})
     fireEvent.change(passwordInput, {target: {value: password}})
-    fireEvent.click(loginButton)
+    fireEvent.click(sendForm)
 
     await screen.findByRole('progressbar')
     // eslint-disable-next-line testing-library/prefer-query-by-disappearance
