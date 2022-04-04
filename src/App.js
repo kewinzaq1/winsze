@@ -1,4 +1,3 @@
-import './App.css'
 import 'normalize.css'
 import {Route, Routes} from 'react-router-dom'
 import {AuthenticatedApp} from './components/Authenticated'

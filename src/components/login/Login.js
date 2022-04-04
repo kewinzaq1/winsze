@@ -17,7 +17,6 @@ import {
   Button,
   Alert,
 } from '@mui/material'
-
 import styled from '@emotion/styled'
 // eslint-disable-next-line no-unused-vars
 import {css, jsx} from '@emotion/react'
@@ -29,7 +28,7 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import {useAuth} from '../../Auth'
-import {baseFlex, myBlue} from '../layout'
+import {baseFlex, mobileBreakpoint, myBlue} from '../layout'
 import {useOverflowHidden} from '../../Utils/hooks'
 import {AnimatePresence, motion} from 'framer-motion'
 
@@ -70,7 +69,7 @@ export const Login = e => {
     )
   }
 
-  // useOverflowHidden()
+  useOverflowHidden()
 
   return (
     <LoginWrapper>
@@ -155,7 +154,7 @@ export const Login = e => {
 const LoginWrapper = styled.main`
   ${baseFlex}
   margin: 0 auto;
-  max-height: calc(100vh - 100px);
+  height: calc(100vh - 100px);
   width: 100%;
   height: 100vh;
   justify-content: center;
@@ -166,20 +165,20 @@ const LoginWrapper = styled.main`
 
 const Form = styled.form`
   width: 50%;
-  align-items: flex-start;
   ${baseFlex};
   flex-direction: column;
   height: 100%;
-  align-items: flex-start;
   padding: 2rem;
   align-items: center;
   justify-items: center;
 
   div:first-of-type {
     gap: 2rem;
+    justify-content: center;
+    max-width: 700px;
   }
 
-  @media (max-width: 992px) {
+  @media (max-width: ${mobileBreakpoint}) {
     padding: 2rem 0;
     justify-content: center;
     align-items: center;
@@ -197,7 +196,7 @@ const FormWallpaper = styled.div`
   background-image: url('assets/login.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  @media (max-width: 992px) {
+  @media (max-width: ${mobileBreakpoint}) {
     display: none;
   }
 `
