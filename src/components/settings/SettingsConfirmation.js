@@ -15,14 +15,11 @@ export const ConfirmationMenu = ({open, onClose, onAgree}) => {
     <Dialog
       open={open}
       onClose={onClose}
-      aria-labelledby="alert-confirmation-delete-title"
-      aria-describedby="alert-confirmation-delete-description"
       css={css`
         border-radius: 0.5rem;
       `}
     >
       <DialogTitle
-        id="alert-confirmation-delete-title"
         css={css`
           font-weight: 500;
           font-size: 1.5rem;
@@ -33,7 +30,7 @@ export const ConfirmationMenu = ({open, onClose, onAgree}) => {
       <DialogContent>
         <DialogContentText id="alert-confirmation-delete-description">
           This is an irreversible process, all data will be lost and all your
-          subscriptions/services will be lost
+          subscriptions will be lost
         </DialogContentText>
       </DialogContent>
       <DialogActions>

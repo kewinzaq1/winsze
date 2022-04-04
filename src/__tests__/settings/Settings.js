@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react'
+import {render, screen, fireEvent} from '@testing-library/react'
 import {AuthProvider} from '../../Auth'
 import {SettingsProvider} from '../../components/settings'
 import {Settings} from '../../components/settings/Settings'
@@ -51,6 +51,29 @@ test('render settings', () => {
   expect(screen.getByText(/email/i, {selector: 'span'})).toBeInTheDocument()
   expect(
     screen.getByText(/send verification email/i, {selector: 'p'}),
+  ).toBeInTheDocument()
+
+  expect(
+    screen.getByText(/delete account/i, {selector: 'span'}),
+  ).toBeInTheDocument()
+  expect(
+    screen.getByText(/leave me forever/i, {selector: 'p'}),
+  ).toBeInTheDocument()
+})
+
+test('open confirmation modal', () => {
+  renderSettings()
+
+  fireEvent.click(screen.getByText(/delete account/i, {selector: 'span'}))
+
+  expect(
+    screen.getByText(/you want to delete your account/i, {selector: 'h2'}),
+  ).toBeInTheDocument()
+  expect(
+    screen.getByText(
+      /this is an irreversible process, all data will be lost and all your subscriptions will be lost/i,
+      {selector: 'p'},
+    ),
   ).toBeInTheDocument()
 
   // eslint-disable-next-line testing-library/no-debugging-utils
