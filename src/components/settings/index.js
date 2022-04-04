@@ -15,7 +15,7 @@ const SettingsContext = createContext()
 
 export const SettingsProvider = ({children}) => {
   const {user} = useAuth()
-  const userEmailVerified = user.emailVerified
+  const userEmailVerified = user?.emailVerified
   const [isOpenConfirmation, setIsConfirmationOpen] = useState(false)
   const [settings, setSettings] = useState(null)
   const deleteAccount = async () => await deleteUser(currentUser)

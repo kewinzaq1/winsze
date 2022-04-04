@@ -52,7 +52,7 @@ export const Settings = () => {
         margin: 0 auto;
         max-width: 1400px;
         width: 90%;
-        padding: 1rem;
+        padding: 2rem 0;
         gap: 1rem;
       `}
     >
@@ -121,7 +121,7 @@ export const Settings = () => {
               secondary={
                 userEmailVerified
                   ? `Change your email`
-                  : `Send email email verification`
+                  : `Send verification email`
               }
             />
           </ListItem>
