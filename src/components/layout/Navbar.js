@@ -12,9 +12,8 @@ import {
 import {useAuth} from '../../Auth'
 import styled from '@emotion/styled'
 import {myBlue} from '.'
-import {AccountMenu} from './account-menu/AccountMenu'
-
-// TODO add link to home page
+import {NavbarMenu} from './NavbarMenu'
+import {Link} from 'react-router-dom'
 
 export const Navbar = () => {
   const {
@@ -27,7 +26,6 @@ export const Navbar = () => {
     logout,
     isLoading,
   } = useAuth()
-  // TODO: fix update avatar
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = event => {
@@ -47,7 +45,9 @@ export const Navbar = () => {
             color: #111;
           `}
         >
-          win<span>sze</span>
+          <Link to="/">
+            win<span>sze</span>
+          </Link>
         </Typography>
         <NavActions>
           {isRegister && (
@@ -70,7 +70,7 @@ export const Navbar = () => {
               >
                 {user?.displayName?.[0]}
               </Avatar>
-              <AccountMenu
+              <NavbarMenu
                 anchorEl={anchorEl}
                 open={open}
                 handleClick={handleClick}

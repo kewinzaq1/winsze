@@ -2,7 +2,7 @@ import {Menu, MenuItem, ListItemIcon, Avatar, Divider} from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 import SettingsIcon from '@mui/icons-material/Settings'
 import {Link} from 'react-router-dom'
-export const AccountMenu = ({
+export const NavbarMenu = ({
   anchorEl,
   open,
   handleClick,
