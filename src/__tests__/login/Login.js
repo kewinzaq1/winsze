@@ -65,12 +65,12 @@ describe('unauth app', () => {
     ).toBeInTheDocument()
   })
   test('display register page', () => {
-    const {emailInput, passwordInput, loginButton, registerButton} =
-      renderLoginScreen()
+    const {emailInput, passwordInput, sendForm, usernameInput} =
+      renderRegisterScreen()
     expect(emailInput).toBeInTheDocument()
     expect(passwordInput).toBeInTheDocument()
-    expect(loginButton).toBeInTheDocument()
-    fireEvent.click(registerButton)
+    expect(usernameInput).toBeInTheDocument()
+    expect(sendForm).toBeInTheDocument()
     expect(screen.getByText('Nice to Meet You')).toBeInTheDocument()
     expect(
       screen.getByText('First time? Create Free Account Now. Its 100% free'),
