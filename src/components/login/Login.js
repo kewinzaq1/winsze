@@ -1,4 +1,6 @@
 /** @jsxImportSource @emotion/react */
+// eslint-disable-next-line no-unused-vars
+import {css, jsx} from '@emotion/react'
 import React, {useReducer} from 'react'
 import unauthData from '../unauth.json'
 import {
@@ -18,8 +20,6 @@ import {
   Alert,
 } from '@mui/material'
 import styled from '@emotion/styled'
-// eslint-disable-next-line no-unused-vars
-import {css, jsx} from '@emotion/react'
 import {Send} from '@mui/icons-material'
 import {
   getAuth,
@@ -155,9 +155,8 @@ export const Login = e => {
 const LoginWrapper = styled.main`
   ${baseFlex}
   margin: 0 auto;
-  height: calc(100vh - 100px);
+  height: 100vh
   width: 100%;
-  height: 100vh;
   justify-content: center;
   span {
     color: ${myBlue};
@@ -165,9 +164,9 @@ const LoginWrapper = styled.main`
 `
 
 const Form = styled.form`
-  width: 50%;
   ${baseFlex};
   flex-direction: column;
+  width: 50%;
   height: 100%;
   padding: 2rem;
   align-items: center;
@@ -180,9 +179,11 @@ const Form = styled.form`
   }
 
   @media (max-width: ${mobileBreakpoint}) {
+    width: 90%;
     padding: 2rem 0;
     justify-content: center;
     align-items: center;
+    height: calc(100vh - 100px);
   }
 `
 

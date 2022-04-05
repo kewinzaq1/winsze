@@ -10,6 +10,7 @@ import {toast} from 'react-hot-toast'
 import {auth, storage} from '../../Auth'
 import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
 import {createContext, useContext, useState} from 'react'
+import {Settings} from './Settings'
 
 const SettingsContext = createContext()
 
@@ -161,3 +162,5 @@ export const useSettings = () => {
     throw new Error('useSettings() only used within SettingsProvider')
   return context
 }
+
+export {Settings}

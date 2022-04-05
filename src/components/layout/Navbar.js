@@ -44,6 +44,7 @@ export const Navbar = () => {
           variant="h1"
           css={css`
             font-weight: 400;
+            color: #111;
           `}
         >
           win<span>sze</span>
