@@ -51,69 +51,63 @@ const renderRegisterScreen = () => {
   }
 }
 
-// describe('unauth app', () => {
-//   test('display login page', () => {
-//     const {emailInput, passwordInput, loginButton, registerButton} =
-//       renderLoginScreen()
-//     expect(emailInput).toBeInTheDocument()
-//     expect(passwordInput).toBeInTheDocument()
-//     expect(loginButton).toBeInTheDocument()
-//     expect(registerButton).toBeInTheDocument()
-//     expect(screen.getByText('Welcome back')).toBeInTheDocument()
-//     expect(
-//       screen.getByText('Nice that you are still with us'),
-//     ).toBeInTheDocument()
-//   })
-//   test('display register page', () => {
-//     const {emailInput, passwordInput, loginButton, registerButton} =
-//       renderLoginScreen()
-//     expect(emailInput).toBeInTheDocument()
-//     expect(passwordInput).toBeInTheDocument()
-//     expect(loginButton).toBeInTheDocument()
-//     fireEvent.click(registerButton)
-//     expect(screen.getByText('Nice to Meet You')).toBeInTheDocument()
-//     expect(
-//       screen.getByText('First time? Create Free Account Now. Its 100% free'),
-//     ).toBeInTheDocument()
-//   })
-// })
+describe('unauth app', () => {
+  test('display login page', () => {
+    const {emailInput, passwordInput, loginButton, registerButton} =
+      renderLoginScreen()
+    expect(emailInput).toBeInTheDocument()
+    expect(passwordInput).toBeInTheDocument()
+    expect(loginButton).toBeInTheDocument()
+    expect(registerButton).toBeInTheDocument()
+    expect(screen.getByText('Welcome back')).toBeInTheDocument()
+    expect(
+      screen.getByText('Nice that you are still with us'),
+    ).toBeInTheDocument()
+  })
+  test('display register page', () => {
+    const {emailInput, passwordInput, loginButton, registerButton} =
+      renderLoginScreen()
+    expect(emailInput).toBeInTheDocument()
+    expect(passwordInput).toBeInTheDocument()
+    expect(loginButton).toBeInTheDocument()
+    fireEvent.click(registerButton)
+    expect(screen.getByText('Nice to Meet You')).toBeInTheDocument()
+    expect(
+      screen.getByText('First time? Create Free Account Now. Its 100% free'),
+    ).toBeInTheDocument()
+  })
+})
 
-describe('auth successful', () => {
-  test('register new user', async () => {
-    const {username, email, password} = buildUser()
-    const {emailInput, usernameInput, passwordInput, sendForm} =
-      renderRegisterScreen()
+describe('integration with firebase', () => {
+  test('login as user', async () => {
+    const {emailInput, passwordInput, loginButton} = renderLoginScreen()
 
-    fireEvent.change(emailInput, {target: {value: email}})
-    fireEvent.change(usernameInput, {
-      target: {value: username},
+    fireEvent.change(emailInput, {
+      target: {value: 'test@winsze.pl'},
     })
-    fireEvent.change(passwordInput, {target: {value: password}})
-    fireEvent.click(sendForm)
+    fireEvent.change(passwordInput, {target: {value: 'test1234'}})
+    fireEvent.click(loginButton)
 
-    await screen.findAllByRole('progressbar')
-    // eslint-disable-next-line testing-library/prefer-query-by-disappearance
-    await waitForElementToBeRemoved(() => screen.findAllByRole('progressbar'))
+    await screen.findByRole('progressbar')
+    await waitForElementToBeRemoved(screen.queryByRole('progressbar'))
 
     expect(screen.getByText(/authenticated/i)).toBeInTheDocument()
   })
 
-  // test('login as user', async () => {
-  //   const {
-  //     emailInput,
-  //     passwordInput,
-  //     loginButton: sendForm,
-  //   } = renderLoginScreen()
+  // test('register new user', async () => {
+  //   const {username, email, password} = buildUser()
+  //   const {emailInput, usernameInput, passwordInput, sendForm} =
+  //     renderRegisterScreen()
 
-  //   fireEvent.change(emailInput, {
-  //     target: {value: 'kewinszlezingier@gmail.com'},
+  //   fireEvent.change(emailInput, {target: {value: email}})
+  //   fireEvent.change(usernameInput, {
+  //     target: {value: username},
   //   })
-  //   fireEvent.change(passwordInput, {target: {value: 'Kewinek20'}})
+  //   fireEvent.change(passwordInput, {target: {value: password}})
   //   fireEvent.click(sendForm)
 
   //   await screen.findByRole('progressbar')
-  //   // eslint-disable-next-line testing-library/prefer-query-by-disappearance
-  //   await waitForElementToBeRemoved(screen.getByRole('progressbar'))
+  //   await waitForElementToBeRemoved(screen.queryByRole('progressbar'))
 
   //   expect(screen.getByText(/authenticated/i)).toBeInTheDocument()
   // })

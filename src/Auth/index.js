@@ -2,7 +2,12 @@ import React from 'react'
 import {useContext, createContext, useState} from 'react'
 import {initializeApp} from 'firebase/app'
 import {getStorage} from 'firebase/storage'
-import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth'
+import {
+  getAuth,
+  signOut,
+  onAuthStateChanged,
+  connectAuthEmulator,
+} from 'firebase/auth'
 import {useEffect} from 'react'
 import {useLocalStorageState} from '../Utils/hooks'
 const firebaseConfig = {
@@ -20,7 +25,7 @@ export const storage = getStorage(app)
 export const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
-  const [user, setUser] = useLocalStorageState('user')
+  const [user, setUser] = useLocalStorageState('user', '')
   const [status, setStatus] = useState(user ? 'authenticated' : 'login')
   const [isLoading, setIsLoading] = useState(false)
   const isLogin = status === 'login'
@@ -36,13 +41,11 @@ export const AuthProvider = ({children}) => {
         setUser(user)
         setStatus('authenticated')
       } else {
-        setUser(null)
+        setUser('')
         setStatus('login')
       }
     })
   }, [setUser])
-
-  console.log('user', user)
 
   return (
     <AuthContext.Provider

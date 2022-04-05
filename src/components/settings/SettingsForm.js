@@ -23,8 +23,7 @@ export const SettingsForm = ({
         onClose()
         setVal('')
       }}
-      aria-labelledby="alert-confirmation-update-title"
-      aria-describedby="alert-confirmation-update-description"
+      aria-labelledby={`dialog update ${placeholder.toLowerCase()}`}
     >
       <DialogContent>
         <Form

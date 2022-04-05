@@ -79,3 +79,25 @@ test('open confirmation modal', () => {
   // eslint-disable-next-line testing-library/no-debugging-utils
   screen.debug()
 })
+
+test('open form modal', () => {
+  renderSettings()
+
+  fireEvent.click(screen.getByText(/profile picture/i, {selector: 'span'}))
+  expect(screen.getByRole('dialog')).toBeInTheDocument()
+  expect(screen.getByRole('button')).toBeInTheDocument()
+
+  fireEvent.click(screen.getByText(/password/i, {selector: 'span'}))
+  expect(screen.getByRole('dialog')).toBeInTheDocument()
+  expect(screen.getByRole('button')).toBeInTheDocument()
+  expect(
+    screen.getByPlaceholderText(/password/i, {selector: 'input'}),
+  ).toBeInTheDocument()
+
+  fireEvent.click(screen.getByText(/nickname/i, {selector: 'span'}))
+  expect(screen.getByRole('dialog')).toBeInTheDocument()
+  expect(screen.getByRole('button')).toBeInTheDocument()
+  expect(
+    screen.getByPlaceholderText(/nickname/i, {selector: 'input'}),
+  ).toBeInTheDocument()
+})

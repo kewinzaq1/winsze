@@ -17,7 +17,7 @@ export const SettingsProvider = ({children}) => {
   const {user} = useAuth()
   const userEmailVerified = user?.emailVerified
   const [isOpenConfirmation, setIsConfirmationOpen] = useState(false)
-  const [settings, setSettings] = useState(null)
+  const [settings, setSettings] = useState('')
   const deleteAccount = async () => await deleteUser(currentUser)
 
   const closeAll = () => {
@@ -30,7 +30,7 @@ export const SettingsProvider = ({children}) => {
   }
   const openUpdateUsername = () => {
     setIsFormOpen(true)
-    setSettings('username')
+    setSettings('nickname')
   }
   const openUpdatePassword = () => {
     setIsFormOpen(true)
@@ -51,13 +51,13 @@ export const SettingsProvider = ({children}) => {
 
   const currentUser = auth.currentUser
 
-  const updateUserName = newName =>
+  const updateNickname = newName =>
     toast.promise(
       updateProfile(currentUser, {
         displayName: newName,
       }),
       {
-        loading: 'Changing username',
+        loading: 'Changing nickname',
         success: () => {
           closeAll()
           return `Successful changed @${newName}`
@@ -110,8 +110,8 @@ export const SettingsProvider = ({children}) => {
     if (settings === 'picture') {
       return updatePhoto
     }
-    if (settings === 'username') {
-      return updateUserName
+    if (settings === 'nickname') {
+      return updateNickname
     }
     if (settings === 'password') {
       return updatePassword

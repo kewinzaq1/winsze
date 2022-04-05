@@ -32,6 +32,7 @@ import {baseFlex, mobileBreakpoint, myBlue} from '../layout'
 import {useOverflowHidden} from '../../Utils/hooks'
 import {AnimatePresence, motion} from 'framer-motion'
 
+// TODO => username => nickname and merge this logic for /login/index
 export const Login = e => {
   const auth = getAuth()
   const {isRegister, status, setIsLoading} = useAuth()
