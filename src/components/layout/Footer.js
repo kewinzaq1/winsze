@@ -30,31 +30,33 @@ export const Footer = () => {
   }
 
   return (
-    <BottomNavigation
-      css={css`
-        position: fixed;
-        width: 100vw;
-        bottom: 0;
-      `}
-      value={path}
-      onChange={handleChange}
-    >
-      <BottomNavigationAction
-        label="Feed"
-        value="/"
-        onClick={() => <Navigate to="/feed" />}
-        icon={<NewspaperIcon />}
-      ></BottomNavigationAction>
-      <BottomNavigationAction
-        label="Favorites"
-        value="/favorites"
-        icon={<PeopleAltIcon />}
-      />
-      <BottomNavigationAction
-        label="Settings"
-        value="/settings"
-        icon={<Settings />}
-      />
-    </BottomNavigation>
+    <footer>
+      <BottomNavigation
+        css={css`
+          position: fixed;
+          width: 100vw;
+          bottom: 0;
+        `}
+        value={path}
+        onChange={handleChange}
+      >
+        <BottomNavigationAction
+          label="Feed"
+          value="/"
+          onClick={() => <Navigate to="/feed" />}
+          icon={<NewspaperIcon />}
+        ></BottomNavigationAction>
+        <BottomNavigationAction
+          label="Favorites"
+          value="/favorites"
+          icon={<PeopleAltIcon />}
+        />
+        <BottomNavigationAction
+          label="Settings"
+          value="/settings"
+          icon={<Settings />}
+        />
+      </BottomNavigation>
+    </footer>
   )
 }

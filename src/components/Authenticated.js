@@ -1,5 +1,6 @@
 import React from 'react'
 import {Route, Routes} from 'react-router-dom'
+import {Feed} from './Feed'
 import {SettingsProvider, Settings} from './settings'
 
 export const AuthenticatedApp = () => {
@@ -13,6 +14,7 @@ export const AuthenticatedApp = () => {
           </SettingsProvider>
         }
       />
+      <Route path="/" element={<Feed />}></Route>
     </Routes>
   )
 }

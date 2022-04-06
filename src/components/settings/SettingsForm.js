@@ -53,6 +53,7 @@ export const SettingsForm = ({
               }}
               type={type}
               placeholder={placeholder}
+              error={val.length < 6}
             />
             <Button
               type="submit"
@@ -60,6 +61,7 @@ export const SettingsForm = ({
               css={css`
                 margin-left: 0.5rem;
               `}
+              disabled={val.length < 6}
             >
               <ExpandMoreIcon
                 css={css`

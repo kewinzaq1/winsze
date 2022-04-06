@@ -2,12 +2,7 @@ import React from 'react'
 import {useContext, createContext, useState} from 'react'
 import {initializeApp} from 'firebase/app'
 import {getStorage} from 'firebase/storage'
-import {
-  getAuth,
-  signOut,
-  onAuthStateChanged,
-  connectAuthEmulator,
-} from 'firebase/auth'
+import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth'
 import {useEffect} from 'react'
 import {useLocalStorageState} from '../Utils/hooks'
 const firebaseConfig = {
