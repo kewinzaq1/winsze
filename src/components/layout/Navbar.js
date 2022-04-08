@@ -15,6 +15,8 @@ import {myBlue} from '.'
 import {NavbarMenu} from './NavbarMenu'
 import {Link} from 'react-router-dom'
 
+// FIXME: update photo
+
 export const Navbar = () => {
   const {
     isLogin,

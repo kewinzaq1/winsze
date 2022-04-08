@@ -7,7 +7,6 @@ import {
   FormGroup,
   Input,
   InputLabel,
-  Paper,
   Typography,
 } from '@mui/material'
 import React, {useState} from 'react'
@@ -18,6 +17,7 @@ import {alertRed} from '../layout'
 import {uploadPost} from '.'
 import {useAuth} from '../../Auth'
 import LoadingButton from '@mui/lab/LoadingButton'
+import SendIcon from '@mui/icons-material/Send'
 
 export const FeedHeading = () => {
   const {user} = useAuth()
@@ -73,9 +73,8 @@ export const FeedHeading = () => {
           justify-content: space-between;
           gap: 1rem;
           flex-wrap: nowrap;
-          padding: 2rem 1rem;
+          padding: 2rem 1rem 1rem 1rem;
           border-radius: 0.5rem;
-          height: max-content;
         `}
         elevation={0}
       >
@@ -157,6 +156,7 @@ export const FeedHeading = () => {
             disabled={valid}
             loading={isLoading}
             error={toString(isError)}
+            endIcon={<SendIcon />}
           >
             Feed
           </LoadingButton>
@@ -168,7 +168,7 @@ export const FeedHeading = () => {
 }
 
 const Form = styled.form`
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   gap: 2rem;
 `

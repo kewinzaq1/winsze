@@ -1,6 +1,7 @@
-import {Stack} from '@mui/material'
+import {Divider, Stack} from '@mui/material'
 import {onSnapshot} from 'firebase/firestore'
 import React, {lazy, useEffect, useState} from 'react'
+import {maxWidth} from '../layout'
 import {q} from './index'
 const Post = lazy(() => import('./Post'))
 
@@ -24,7 +25,7 @@ const Posts = () => {
   }
 
   return (
-    <Stack spacing={1}>
+    <Stack divider={<Divider />} maxWidth={maxWidth}>
       {posts.map(({author, avatar, date, description, photo, id}) => (
         <Post
           key={id}

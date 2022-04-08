@@ -20,6 +20,8 @@ export const desktopBreakpoint = '1200px'
 export const laptopBreakpoint = '768px'
 export const tabletBreakpoint = '768px'
 export const mobileBreakpoint = '600px'
+export const maxWidth = '1400px'
+export const padEl = '1rem'
 
 export const Layout = ({children}) => {
   return (

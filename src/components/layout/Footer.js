@@ -30,7 +30,11 @@ export const Footer = () => {
   }
 
   return (
-    <footer>
+    <footer
+      css={css`
+        margin-top: 50px;
+      `}
+    >
       <BottomNavigation
         css={css`
           position: fixed;

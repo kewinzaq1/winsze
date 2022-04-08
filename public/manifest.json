@@ -1,6 +1,6 @@
 {
   "short_name": "winsze",
-  "name": "Winsze Social App",
+  "name": "winsze",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,6 +21,5 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "prefer_related_applications": true
+  "background_color": "#ffffff"
 }

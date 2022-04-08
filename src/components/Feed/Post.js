@@ -1,17 +1,19 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars
 import {jsx, css} from '@emotion/react'
-import {Avatar, Box, Paper, Typography} from '@mui/material'
+import {Avatar, Box, Card, Paper, Typography} from '@mui/material'
 import Moment from 'react-moment'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import {myBlue} from '../layout'
+import {myBlue, padEl} from '../layout'
+
+// TODO: add popover with functionality 1.Edit post, 2.Remove post
 
 const Post = ({author, description, date, photo, avatar} = {}) => {
   return (
-    <Paper>
+    <Card elevation={0}>
       <Box
         css={css`
-          padding: 2rem;
+          padding: ${padEl};
           gap: 1.25rem;
           display: flex;
           flex-direction: column;
@@ -30,19 +32,31 @@ const Post = ({author, description, date, photo, avatar} = {}) => {
               gap: 0.5rem;
             `}
           >
-            <Avatar
-              variant="rounded"
-              sizes="large"
-              src={avatar && null}
-              alt={author}
-              css={css`
-                background-color: ${myBlue};
-                width: 45px;
-                height: 45px;
-              `}
-            >
-              {!avatar && author[0]}
-            </Avatar>
+            {avatar ? (
+              <Avatar
+                variant="rounded"
+                sizes="large"
+                src={avatar}
+                alt={author}
+                css={css`
+                  width: 45px;
+                  height: 45px;
+                `}
+              />
+            ) : (
+              <Avatar
+                variant="rounded"
+                sizes="large"
+                alt={author}
+                css={css`
+                  background-color: ${myBlue};
+                  width: 45px;
+                  height: 45px;
+                `}
+              >
+                {author[0]}
+              </Avatar>
+            )}
             <Box>
               <Typography variant="subtitle2">
                 <Moment fromNow>{date}</Moment>
@@ -75,7 +89,7 @@ const Post = ({author, description, date, photo, avatar} = {}) => {
         </Typography>
       </Box>
       {photo && <img src={photo} alt={description} />}
-    </Paper>
+    </Card>
   )
 }
 
