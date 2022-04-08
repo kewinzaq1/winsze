@@ -48,7 +48,8 @@ export const NavbarMenu = ({
       anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
     >
       <MenuItem>
-        <Avatar> {user?.displayName?.[0]}</Avatar> {user?.displayName}
+        <Avatar> {user?.displayName ?? user?.email.split('@')[0][0]}</Avatar>{' '}
+        {user?.displayName ?? user?.email.split('@')[0]}
       </MenuItem>
       <Divider />
       <Link to="/settings">

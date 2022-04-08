@@ -30,7 +30,7 @@ export const uploadPost = async (user, desc, photo) => {
     return uploadBytes(imageRef, photo).then(() => {
       getDownloadURL(imageRef).then(async photoURL => {
         await addDoc(collection(db, 'posts'), {
-          author: user.displayName,
+          author: user.displayName ?? user.email.split('@')[0],
           avatar: user.photoURL,
           date: `${new Date().toISOString()}`,
           description: desc,
@@ -41,7 +41,7 @@ export const uploadPost = async (user, desc, photo) => {
     })
   } else
     return await addDoc(collection(db, 'posts'), {
-      author: user.displayName,
+      author: user.displayName ?? user.email.split('@')[0],
       avatar: user.photoURL,
       date: `${new Date().toISOString()}`,
       description: desc,

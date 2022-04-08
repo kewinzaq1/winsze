@@ -70,7 +70,10 @@ export const Navbar = () => {
                 alt={user?.displayName}
                 src={user?.photoURL}
               >
-                {user?.displayName?.[0]}
+                {!user?.displayName &&
+                  !user?.photoURL &&
+                  user?.email?.split('@')[0][0]}
+                {user?.displayName && !user?.photoURL && user?.displayName}
               </Avatar>
               <NavbarMenu
                 anchorEl={anchorEl}
