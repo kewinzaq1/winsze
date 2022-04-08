@@ -1,61 +1,61 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars
-import { css } from "@emotion/react";
-import { FormGroup, Input, InputLabel, Paper, Typography } from "@mui/material";
-import React, { useState} from "react";
-import styled from "@emotion/styled";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import ClearIcon from "@mui/icons-material/Clear";
-import { alertRed } from "../layout";
-import { uploadPost } from ".";
-import { useAuth } from "../../Auth";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { toast } from "react-hot-toast";
+import {css} from '@emotion/react'
+import {FormGroup, Input, InputLabel, Paper, Typography} from '@mui/material'
+import React, {useState} from 'react'
+import styled from '@emotion/styled'
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
+import ClearIcon from '@mui/icons-material/Clear'
+import {alertRed} from '../layout'
+import {uploadPost} from '.'
+import {useAuth} from '../../Auth'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 export const FeedHeading = () => {
-  const { user } = useAuth();
-  const [photo, setPhoto] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [desc, setDesc] = useState("");
-  const [status, setStatus] = useState(null);
+  const {user} = useAuth()
+  const [photo, setPhoto] = useState(null)
+  const [preview, setPreview] = useState(null)
+  const [desc, setDesc] = useState('')
+  const [status, setStatus] = useState(null)
 
   const isLoading = status === 'loading'
   const isError = status === 'error'
 
+  const onPhotoChange = ({target}) => {
+    setPreview(URL.createObjectURL(target.files[0]))
+    setPhoto(target.files[0])
+  }
 
-  const onPhotoChange = ({ target }) => {
-    setPreview(URL.createObjectURL(target.files[0]));
-    setPhoto(target.files[0]);
-  };
-
-  const onDescChange = ({ target }) => {
-    setDesc(target.value);
-  };
+  const onDescChange = ({target}) => {
+    setDesc(target.value)
+  }
 
   const removePhoto = () => {
-    setPhoto(null);
-    setPreview(null);
-  };
+    setPhoto(null)
+    setPreview(null)
+  }
 
-  const valid = !desc?.length;
+  const valid = !desc?.length
 
   const clearAll = () => {
-    setPhoto(null);
-    setPreview(null);
-    setDesc("");
-  };
+    setPhoto(null)
+    setPreview(null)
+    setDesc('')
+  }
 
-  const submitPost = (e) => {
+  const submitPost = e => {
     setStatus('loading')
-    e.preventDefault();
-    uploadPost(user, desc, photo).then(() => {
-      setStatus(null)
-      clearAll()
-      e.target.blur()
-    }).catch(e => {
-      setStatus('error')
-    })
-  };
+    e.preventDefault()
+    uploadPost(user, desc, photo)
+      .then(() => {
+        setStatus(null)
+        clearAll()
+        e.target.blur()
+      })
+      .catch(e => {
+        setStatus('error')
+      })
+  }
 
   // TODO add confirmation change page (lost currently write post)
   return (
@@ -149,17 +149,17 @@ export const FeedHeading = () => {
           `}
           disabled={valid}
           loading={isLoading}
-          error={isError}
+          error={toString(isError)}
         >
           Feed
         </LoadingButton>
       </Form>
     </Paper>
-  );
-};
+  )
+}
 
 const Form = styled.form`
   width: 90%;
   margin: 0 auto;
   gap: 2rem;
-`;
+`

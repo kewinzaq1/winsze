@@ -2,6 +2,7 @@ import React from 'react'
 import {useContext, createContext, useState} from 'react'
 import {initializeApp} from 'firebase/app'
 import {getStorage} from 'firebase/storage'
+import {getFirestore} from 'firebase/firestore'
 import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth'
 import {useEffect} from 'react'
 import {useLocalStorageState} from '../Utils/hooks'
@@ -18,6 +19,7 @@ export const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const storage = getStorage(app)
 export const AuthContext = createContext()
+export const db = getFirestore(app)
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useLocalStorageState('user', '')
