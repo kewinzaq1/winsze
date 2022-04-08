@@ -6,6 +6,8 @@ import {Footer} from './Footer'
 import 'normalize.css'
 import './index.css'
 import {Toaster} from 'react-hot-toast'
+import styled from '@emotion/styled'
+import {CircularProgress, Skeleton} from '@mui/material'
 
 export const baseFlex = css`
   display: flex;
@@ -35,3 +37,14 @@ export const Layout = ({children}) => {
     </>
   )
 }
+
+export const Progress = styled(Skeleton)`
+  margin: 0 auto;
+  width: 90%;
+  height: 300px;
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+`

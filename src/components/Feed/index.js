@@ -1,23 +1,23 @@
+/** @jsxImportSource @emotion/react */
+// eslint-disable-next-line no-unused-vars
+import {jsx, css} from '@emotion/react'
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
-import {
-  addDoc,
-  collection,
-  query,
-  getDocs,
-  orderBy,
-  onSnapshot,
-} from 'firebase/firestore'
+import {addDoc, collection, query, orderBy} from 'firebase/firestore'
 import {db, storage} from '../../Auth'
 import {FeedHeading} from './FeedHeading'
 import {v4 as uuidv4} from 'uuid'
-import React, {lazy, Suspense, useEffect, useMemo, useState} from 'react'
+import React, {lazy, Suspense} from 'react'
+import {Progress} from '../layout'
 const Posts = lazy(() => import('./Posts'))
 
 export const Feed = () => {
   return (
     <>
       <FeedHeading />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        key={'suspense-feed'}
+        fallback={<Progress variant="rectangular" animation="wave" />}
+      >
         <Posts />
       </Suspense>
     </>

@@ -1,7 +1,15 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars
 import {css} from '@emotion/react'
-import {FormGroup, Input, InputLabel, Paper, Typography} from '@mui/material'
+import {
+  Card,
+  Divider,
+  FormGroup,
+  Input,
+  InputLabel,
+  Paper,
+  Typography,
+} from '@mui/material'
 import React, {useState} from 'react'
 import styled from '@emotion/styled'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
@@ -57,104 +65,105 @@ export const FeedHeading = () => {
       })
   }
 
-  // TODO add confirmation change page (lost currently write post)
   return (
-    <Paper
-      css={css`
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 1rem;
-        flex-wrap: nowrap;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin: 1rem;
-        height: max-content;
-      `}
-      elevation={2}
-    >
-      <Form onSubmit={submitPost}>
-        <Typography variant="h4" component="h1" fontWeight={500}>
-          Share this with your friends
-        </Typography>
-        <FormGroup
-          css={css`
-            height: 100%;
-            flex-direction: row;
-            align-items: flex-end;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-          `}
-        >
-          <Input
-            id="feed-input"
-            name="feed-input"
-            placeholder="What's up?"
-            value={desc}
-            onChange={onDescChange}
-            disableUnderline
+    <>
+      <Card
+        css={css`
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 1rem;
+          flex-wrap: nowrap;
+          padding: 2rem 1rem;
+          border-radius: 0.5rem;
+          height: max-content;
+        `}
+        elevation={0}
+      >
+        <Form onSubmit={submitPost}>
+          <Typography variant="h4" component="h1" fontWeight={500}>
+            Share this with friends
+          </Typography>
+          <FormGroup
             css={css`
-              height: 100px;
-              padding: 55px 0 0 0;
-              padding-left: 0.5rem;
-              padding-right: 0.5rem;
-              width: 70%;
-              border-radius: 0.5rem;
-            `}
-          />
-          {photo ? (
-            <ClearIcon
-              onClick={removePhoto}
-              css={css`
-                fill: ${alertRed};
-                cursor: pointer;
-                justify-content: flex-start;
-                align-items: flex-start;
-              `}
-            />
-          ) : (
-            <InputLabel htmlFor="add-photo-feed">
-              <AddAPhotoIcon />
-            </InputLabel>
-          )}
-        </FormGroup>
-        <Input
-          type="file"
-          id="add-photo-feed"
-          name="add-photo-feed"
-          css={css`
-            display: none;
-          `}
-          value={photo?.[0]}
-          onChange={onPhotoChange}
-        />
-        {preview && (
-          <Paper
-            css={css`
-              position: relative;
-              width: 100%;
-
-              img {
-                border-radius: 0.5rem;
-              }
+              height: 100%;
+              flex-direction: row;
+              align-items: flex-end;
+              justify-content: space-between;
+              padding: 0.5rem 0;
             `}
           >
-            <img src={preview} alt={photo.name} />
-          </Paper>
-        )}
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          css={css`
-            width: 100%;
-          `}
-          disabled={valid}
-          loading={isLoading}
-          error={toString(isError)}
-        >
-          Feed
-        </LoadingButton>
-      </Form>
-    </Paper>
+            <Input
+              id="feed-input"
+              name="feed-input"
+              placeholder="What's up?"
+              value={desc}
+              onChange={onDescChange}
+              disableUnderline
+              css={css`
+                height: 100px;
+                padding: 55px 0 0 0;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                width: 70%;
+                border-radius: 0.5rem;
+              `}
+            />
+            {photo ? (
+              <ClearIcon
+                onClick={removePhoto}
+                css={css`
+                  fill: ${alertRed};
+                  cursor: pointer;
+                  justify-content: flex-start;
+                  align-items: flex-start;
+                `}
+              />
+            ) : (
+              <InputLabel htmlFor="add-photo-feed">
+                <AddAPhotoIcon />
+              </InputLabel>
+            )}
+          </FormGroup>
+          <Input
+            type="file"
+            id="add-photo-feed"
+            name="add-photo-feed"
+            css={css`
+              display: none;
+            `}
+            value={photo?.[0]}
+            onChange={onPhotoChange}
+          />
+          {preview && (
+            <Card
+              css={css`
+                position: relative;
+                width: 100%;
+
+                img {
+                  border-radius: 0.5rem;
+                }
+              `}
+            >
+              <img src={preview} alt={photo.name} />
+            </Card>
+          )}
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            css={css`
+              width: 100%;
+            `}
+            disabled={valid}
+            loading={isLoading}
+            error={toString(isError)}
+          >
+            Feed
+          </LoadingButton>
+        </Form>
+      </Card>
+      <Divider />
+    </>
   )
 }
 

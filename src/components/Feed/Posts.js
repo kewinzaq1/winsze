@@ -1,7 +1,8 @@
+import {Stack} from '@mui/material'
 import {onSnapshot} from 'firebase/firestore'
-import React, {useEffect, useState} from 'react'
+import React, {lazy, useEffect, useState} from 'react'
 import {q} from './index'
-import {Post} from './Post'
+const Post = lazy(() => import('./Post'))
 
 const Posts = () => {
   const [posts, setPosts] = useState(null)
@@ -22,17 +23,20 @@ const Posts = () => {
     return
   }
 
-  return posts.map(({author, avatar, date, description, photo, id}) => {
-    return (
-      <Post
-        key={id}
-        avatar={avatar}
-        date={date}
-        description={description}
-        photo={photo}
-      />
-    )
-  })
+  return (
+    <Stack spacing={1}>
+      {posts.map(({author, avatar, date, description, photo, id}) => (
+        <Post
+          key={id}
+          avatar={avatar}
+          date={date}
+          description={description}
+          photo={photo}
+          author={author}
+        />
+      ))}
+    </Stack>
+  )
 }
 
 export default Posts
