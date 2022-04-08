@@ -1,9 +1,16 @@
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
-import {addDoc, collection, query, getDocs, orderBy} from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  query,
+  getDocs,
+  orderBy,
+  onSnapshot,
+} from 'firebase/firestore'
 import {db, storage} from '../../Auth'
 import {FeedHeading} from './FeedHeading'
 import {v4 as uuidv4} from 'uuid'
-import React, {lazy, Suspense} from 'react'
+import React, {lazy, Suspense, useEffect, useMemo, useState} from 'react'
 const Posts = lazy(() => import('./Posts'))
 
 export const Feed = () => {
@@ -42,17 +49,5 @@ export const uploadPost = async (user, desc, photo) => {
     })
 }
 
-export const fetchPosts = async () => {
-  let res = []
-  const postsRef = collection(db, 'posts')
-  const q = await query(postsRef, orderBy('date', 'asc'))
-
-  const querySnapshot = await getDocs(q)
-
-  querySnapshot.forEach(doc => {
-    console.log(doc)
-    res.push(doc.data())
-  })
-
-  return res
-}
+const postsRef = collection(db, 'posts')
+export const q = query(postsRef, orderBy('date', 'desc'))
