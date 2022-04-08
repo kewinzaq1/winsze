@@ -30,37 +30,37 @@ export const Footer = () => {
   }
 
   return (
-    <footer
-      css={css`
+      <footer
+          css={css`
         margin-top: 50px;
       `}
-    >
-      <BottomNavigation
-        css={css`
+      >
+        <BottomNavigation
+            css={css`
           position: fixed;
           width: 100vw;
           bottom: 0;
         `}
-        value={path}
-        onChange={handleChange}
-      >
-        <BottomNavigationAction
-          label="Feed"
-          value="/"
-          onClick={() => <Navigate to="/feed" />}
-          icon={<NewspaperIcon />}
-        ></BottomNavigationAction>
-        <BottomNavigationAction
-          label="Favorites"
-          value="/favorites"
-          icon={<PeopleAltIcon />}
-        />
-        <BottomNavigationAction
-          label="Settings"
-          value="/settings"
-          icon={<Settings />}
-        />
-      </BottomNavigation>
-    </footer>
+            value={path}
+            onChange={handleChange}
+        >
+          <BottomNavigationAction
+    label="Feed"
+    value="/"
+    onClick={() => <Navigate to="/feed"/>}
+    icon={<NewspaperIcon/>}
+    />
+          <BottomNavigationAction
+              label="Favorites"
+              value="/favorites"
+              icon={<PeopleAltIcon />}
+          />
+          <BottomNavigationAction
+              label="Settings"
+              value="/settings"
+              icon={<Settings />}
+          />
+        </BottomNavigation>
+      </footer>
   )
 }
