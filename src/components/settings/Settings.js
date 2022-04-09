@@ -80,7 +80,7 @@ export const Settings = () => {
             </ListItemAvatar>
             <ListItemText
               primary="Nickname"
-              secondary={`@${user?.displayName}`}
+              secondary={`${user?.displayName ? `@${user?.displayName}` : 'Set nickname'}`}
             />
           </ListItem>
           <Divider variant="inset" component="li" />
