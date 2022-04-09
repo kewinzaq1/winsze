@@ -9,10 +9,8 @@ function useOverflowHidden() {
     }, [])
 }
 
-function useLocalStorageState(name, initValue) {
+function useLocalStorageState(name, initValue = '') {
     const getValueFromLocalStorage = window.localStorage.getItem(name)
-
-
     const [state, setState] = useState(
         getValueFromLocalStorage ?? initValue
     )
