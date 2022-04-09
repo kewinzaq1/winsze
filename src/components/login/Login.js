@@ -31,7 +31,7 @@ import {db, useAuth} from '../../Auth'
 import {baseFlex, mobileBreakpoint, myBlue} from '../layout'
 import {useOverflowHidden} from '../../Utils/hooks'
 import {AnimatePresence, motion} from 'framer-motion'
-import {setDoc, updateDoc, doc} from "firebase/firestore";
+import {setDoc, doc} from "firebase/firestore";
 
 export const Login = () => {
     const auth = getAuth()

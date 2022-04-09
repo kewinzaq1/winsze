@@ -49,7 +49,7 @@ export const NavbarMenu = ({
         >
             <MenuItem>
                 <Avatar> {user?.displayName?.[0] ?? user?.email?.split('@')[0][0]}</Avatar>{' '}
-                {user?.displayName ?? user?.email.split('@')[0]}
+                {user?.displayName ?? user?.email?.split('@')[0]}
             </MenuItem>
             <Divider/>
             <Link to="/settings">
