@@ -66,19 +66,12 @@ export const Login = () => {
         })
 
 
-    const updateUserInFirestore = async () =>
-        await updateDoc(doc(db, "users", auth.currentUser.uid), {
-            photoURL: 'https://static.wikia.nocookie.net/james-camerons-avatar/images/d/d4/Neytiri_Profil.jpg/revision/latest?cb=20100226001342&path-prefix=pl'
-        })
-
-
     const handleLogin = e => {
         e.preventDefault()
         setIsLoading(true)
         signInWithEmailAndPassword(auth, email, password).then(
-            async () => {
+            () => {
                 setIsLoading(false)
-                await updateUserInFirestore()
             },
             error => {
                 setError(dispatch, error.message)
