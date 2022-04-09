@@ -4,159 +4,178 @@ import {css, jsx} from '@emotion/react'
 import React, {useReducer} from 'react'
 import unauthData from '../unauth.json'
 import {
-  loginReducer,
-  initialState,
-  inputEmail,
-  inputLogin,
-  inputPassword,
-  setError,
+    loginReducer,
+    initialState,
+    inputEmail,
+    inputLogin,
+    inputPassword,
+    setError,
 } from './index'
 import {
-  FormGroup,
-  Typography,
-  FormLabel,
-  Input,
-  Button,
-  Alert,
+    FormGroup,
+    Typography,
+    FormLabel,
+    Input,
+    Button,
+    Alert,
 } from '@mui/material'
 import styled from '@emotion/styled'
 import {Send} from '@mui/icons-material'
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile,
 } from 'firebase/auth'
-import {useAuth} from '../../Auth'
+import {db, useAuth} from '../../Auth'
 import {baseFlex, mobileBreakpoint, myBlue} from '../layout'
 import {useOverflowHidden} from '../../Utils/hooks'
 import {AnimatePresence, motion} from 'framer-motion'
+import {setDoc, updateDoc, doc} from "firebase/firestore";
 
-export const Login = e => {
-  const auth = getAuth()
-  const {isRegister, status, setIsLoading} = useAuth()
-  const [state, dispatch] = useReducer(loginReducer, initialState)
-  const {login, email, password, isError, errorMessage} = state
-  const {[status]: filedData} = unauthData
+export const Login = () => {
+    const auth = getAuth()
+    const {isRegister, status, setIsLoading} = useAuth()
+    const [state, dispatch] = useReducer(loginReducer, initialState)
+    const {login, email, password, isError, errorMessage} = state
+    const {[status]: textData} = unauthData
 
-  const handleRegister = e => {
-    e.preventDefault()
-    setIsLoading(true)
+    const handleRegister = e => {
+        e.preventDefault()
+        setIsLoading(true)
 
-    createUserWithEmailAndPassword(auth, email, password).then(
-      async success => {
-        setIsLoading(false)
-        await updateProfile(auth.currentUser, {displayName: login})
-      },
-      error => {
-        setError(dispatch, error.message)
-        setIsLoading(false)
-      },
+        createUserWithEmailAndPassword(auth, email, password).then(
+            async () => {
+                setIsLoading(false)
+                await updateProfile(auth.currentUser, {displayName: login})
+                await addUserToFirestore(auth.currentUser)
+            },
+            error => {
+                setError(dispatch, error.message)
+                setIsLoading(false)
+            },
+        )
+    }
+
+    const addUserToFirestore = async () =>
+        await setDoc(doc(db, "users", auth.currentUser.uid), {
+            displayName: auth.currentUser.displayName ?? auth.currentUser.email.split('@')[0],
+            photoURL: auth.currentUser.photoURL ?? null,
+            email: auth.currentUser.email,
+            registerDate: new Date().toLocaleString(),
+        })
+
+
+    const updateUserInFirestore = async () =>
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+            photoURL: 'https://static.wikia.nocookie.net/james-camerons-avatar/images/d/d4/Neytiri_Profil.jpg/revision/latest?cb=20100226001342&path-prefix=pl'
+        })
+
+
+    const handleLogin = e => {
+        e.preventDefault()
+        setIsLoading(true)
+        signInWithEmailAndPassword(auth, email, password).then(
+            async () => {
+                setIsLoading(false)
+                await updateUserInFirestore()
+            },
+            error => {
+                setError(dispatch, error.message)
+                setIsLoading(false)
+            },
+        )
+    }
+
+    useOverflowHidden()
+
+    return (
+        <LoginWrapper>
+            <Form onSubmit={isRegister ? handleRegister : handleLogin} method="post">
+                <AnimatePresence initial={true}>
+                    <motion.div
+                        key="modal"
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                    >
+                        <FormGroup>
+                            <FormGroup>
+                                <Typography variant="h2" component="h1">
+                                    {textData?.title}
+                                </Typography>
+                                <Typography variant="subtitle1" component="h2">
+                                    {textData?.subtitle}
+                                </Typography>
+                                {isError && <Alert severity="error">{errorMessage}</Alert>}
+                            </FormGroup>
+                            <FormGroup>
+                                <FormLabel htmlFor="email">email</FormLabel>
+                                <Input
+                                    id="email"
+                                    name="email"
+                                    placeholder="example@some.ex"
+                                    value={email}
+                                    onChange={({target}) => inputEmail(dispatch, target.value)}
+                                />
+                            </FormGroup>
+                            {isRegister && (
+                                <FormGroup>
+                                    <FormLabel htmlFor="nickname">nickname</FormLabel>
+                                    <Input
+                                        type="text"
+                                        id="nickname"
+                                        name="nickname"
+                                        placeholder="eg. fancyplayer1992"
+                                        value={login}
+                                        onChange={({target}) => inputLogin(dispatch, target.value)}
+                                    />
+                                </FormGroup>
+                            )}
+
+                            <FormGroup>
+                                <FormLabel htmlFor="password">password</FormLabel>
+                                <Input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="eg. i<3React"
+                                    value={password}
+                                    onChange={({target}) => inputPassword(dispatch, target.value)}
+                                />
+                            </FormGroup>
+                            <FormActions>
+                                <Button
+                                    type="submit"
+                                    onClick={status === 'register' ? handleRegister : handleLogin}
+                                    variant="contained"
+                                    endIcon={
+                                        <Send
+                                            css={css`
+                                              fill: white;
+                                            `}
+                                        />
+                                    }
+                                >
+                                    {textData?.btnText}
+                                </Button>
+                            </FormActions>
+                        </FormGroup>
+                    </motion.div>
+                </AnimatePresence>
+            </Form>
+            <FormWallpaper/>
+        </LoginWrapper>
     )
-  }
-
-  const handleLogin = e => {
-    e.preventDefault()
-    setIsLoading(true)
-    signInWithEmailAndPassword(auth, email, password).then(
-      success => {
-        setIsLoading(false)
-      },
-      error => {
-        setError(dispatch, error.message)
-        setIsLoading(false)
-      },
-    )
-  }
-
-  useOverflowHidden()
-
-  return (
-    <LoginWrapper>
-      <Form onSubmit={isRegister ? handleRegister : handleLogin} method="post">
-        <AnimatePresence initial={true}>
-          <motion.div
-            key="modal"
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
-            exit={{opacity: 0}}
-          >
-            <FormGroup>
-              <FormGroup>
-                <Typography variant="h2" component="h1">
-                  {filedData?.title}
-                </Typography>
-                <Typography variant="subtitle1" component="h2">
-                  {filedData?.subtitle}
-                </Typography>
-                {isError && <Alert severity="error">{errorMessage}</Alert>}
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="email">email</FormLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  placeholder="example@some.ex"
-                  value={email}
-                  onChange={({target}) => inputEmail(dispatch, target.value)}
-                ></Input>
-              </FormGroup>
-              {isRegister && (
-                <FormGroup>
-                  <FormLabel htmlFor="nickname">nickname</FormLabel>
-                  <Input
-                    type="text"
-                    id="nickname"
-                    name="nickname"
-                    placeholder="eg. fancyplayer1992"
-                    value={login}
-                    onChange={({target}) => inputLogin(dispatch, target.value)}
-                  ></Input>
-                </FormGroup>
-              )}
-
-              <FormGroup>
-                <FormLabel htmlFor="password">password</FormLabel>
-                <Input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="eg. i<3React"
-                  value={password}
-                  onChange={({target}) => inputPassword(dispatch, target.value)}
-                ></Input>
-              </FormGroup>
-              <FormActions>
-                <Button
-                  type="submit"
-                  onClick={status === 'register' ? handleRegister : handleLogin}
-                  variant="contained"
-                  endIcon={
-                    <Send
-                      css={css`
-                        fill: white;
-                      `}
-                    />
-                  }
-                >
-                  {filedData?.btnText}
-                </Button>
-              </FormActions>
-            </FormGroup>
-          </motion.div>
-        </AnimatePresence>
-      </Form>
-      <FormWallpaper />
-    </LoginWrapper>
-  )
 }
 
 const LoginWrapper = styled.main`
-  ${baseFlex}
+  ${baseFlex};
   margin: 0 auto;
-  height: 100vh
+  height: 100vh;
   width: 100%;
   justify-content: center;
+
   span {
     color: ${myBlue};
   }
