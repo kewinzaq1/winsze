@@ -52,7 +52,6 @@
 ## Code Example/Issues 🔍
 
 
-```
 
 ## Installation 💾
 
