@@ -53,6 +53,7 @@ export const FeedHeading = () => {
 
   const submitPost = e => {
     setStatus('loading')
+    scrollToButton(e)
     e.preventDefault()
     uploadPost(user, desc, photo)
       .then(() => {
@@ -65,13 +66,20 @@ export const FeedHeading = () => {
       })
   }
 
+  const scrollToButton = e => {
+    window.scrollTo({
+      top: e.target.offsetHeight - 50,
+      behavior: 'smooth',
+    })
+  }
+
   return (
     <>
       <Card
         css={css`
           flex-direction: row;
           justify-content: space-between;
-          gap: 1rem;
+          gap: 0.5rem;
           flex-wrap: nowrap;
           padding: 2rem 1rem 1rem 1rem;
           border-radius: 0.5rem;
@@ -79,7 +87,7 @@ export const FeedHeading = () => {
         elevation={0}
       >
         <Form onSubmit={submitPost}>
-          <Typography variant="h4" component="h1" fontWeight={500}>
+          <Typography variant="h3" component="h1" fontWeight={500}>
             Share this with friends
           </Typography>
           <FormGroup
@@ -158,13 +166,14 @@ export const FeedHeading = () => {
             variant="contained"
             css={css`
               width: 100%;
+              padding: 0.75rem 0;
             `}
             disabled={valid}
             loading={isLoading}
             error={toString(isError)}
             endIcon={<SendIcon />}
           >
-            Feed
+            <b>Publish</b>
           </LoadingButton>
         </Form>
       </Card>
