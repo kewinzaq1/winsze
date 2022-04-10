@@ -1,11 +1,11 @@
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import {BrowserRouter} from 'react-router-dom'
-
 import App from './App'
 import {AuthProvider} from './Auth'
 import reportWebVitals from './reportWebVitals'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import '@fontsource/poppins'
 
 const container = document.getElementById('root')
 const root = ReactDOMClient.createRoot(container)
