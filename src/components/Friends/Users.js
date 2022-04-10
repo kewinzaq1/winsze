@@ -4,11 +4,11 @@ import {css, jsx} from '@emotion/react'
 import {Divider, Stack} from '@mui/material'
 import React, {useEffect, useState} from 'react'
 import {streamFriends} from '.'
-import {maxWidth, Progress} from '../layout'
+import {Progress} from '../layout'
 import {User} from './User'
 
-export const Friends = () => {
-  const [friends, setFriends] = useState(null)
+const Users = () => {
+  const [users, setUsers] = useState(null)
 
   useEffect(() => {
     const unsubscribe = streamFriends(
@@ -16,27 +16,20 @@ export const Friends = () => {
         const updatedFriend = querySnapshot.docs.map(docSnapshot =>
           docSnapshot.data(),
         )
-        setFriends(updatedFriend)
+        setUsers(updatedFriend)
       },
       error => console.error(error.message),
     )
     return unsubscribe
   }, [])
 
-  if (!friends) {
+  if (!users) {
     return <Progress />
   }
 
   return (
-    <Stack
-      divider={<Divider />}
-      css={css`
-        margin: 0 auto;
-        width: 100%;
-        max-width: ${maxWidth};
-      `}
-    >
-      {friends.map(({id, displayName, email, photoURL, registerDate}) => (
+    <Stack divider={<Divider />}>
+      {users.map(({id, displayName, email, photoURL, registerDate}) => (
         <User
           key={id}
           nickname={displayName}
@@ -48,3 +41,5 @@ export const Friends = () => {
     </Stack>
   )
 }
+
+export default Users
