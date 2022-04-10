@@ -15,6 +15,7 @@ import {
   Typography,
   InputLabel,
   Input,
+  Divider,
 } from '@mui/material'
 import Moment from 'react-moment'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
@@ -26,7 +27,10 @@ import SaveAsIcon from '@mui/icons-material/SaveAs'
 import CloseIcon from '@mui/icons-material/Close'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography'
-import {removePost, updatePost} from '.'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import {removePost, toggleLike, updatePost} from '.'
 import {useAuth} from '../../Auth'
 import {ConfirmationDeleteMenu} from '../layout/ConfirmationDeleteMenu'
 
@@ -38,6 +42,8 @@ const Post = ({
   avatar,
   id,
   authorId,
+  likes,
+  usersLiked,
 } = {}) => {
   const {
     user: {uid: userId},
@@ -48,6 +54,7 @@ const Post = ({
   const [editPhotoFile, setEditPhotoFile] = useState(null)
   const [photoPreview, setPhotoPreview] = useState(originalPhoto)
   const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
+  const [isLiked, setIsLiked] = useState(usersLiked?.includes(userId))
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -89,6 +96,8 @@ const Post = ({
     }
     await updatePost(id, {editPhotoFile, originalPhoto, overrides})
   }
+
+  // TODO: add comment to post
 
   return (
     <>
@@ -288,10 +297,39 @@ const Post = ({
             alt={description}
             css={css`
               width: 100%;
-              border-radius: 0.5rem;
             `}
           />
         )}
+        <Box
+          css={css`
+            width: 100%;
+            padding: 0 0.5rem;
+          `}
+        >
+          <IconButton
+            aria-label="like"
+            onClick={() => {
+              setIsLiked(!isLiked)
+              toggleLike(id, {isLiked, userId})
+            }}
+          >
+            {isLiked ? (
+              <FavoriteIcon
+                css={css`
+                  color: ${alertRed};
+                `}
+              />
+            ) : (
+              <FavoriteBorderIcon />
+            )}
+            {likes > 0 && likes}
+          </IconButton>
+          <IconButton aria-label="comment">
+            <ChatBubbleOutlineIcon />
+            {/* {comments.length} */}
+          </IconButton>
+        </Box>
+        <Divider />
       </Card>
       <ConfirmationDeleteMenu
         onAgree={() => removePost(id)}
