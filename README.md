@@ -58,6 +58,8 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 
 ## Live 📍
 
-winsze.web.app
+https://winsze.web.app/
 
 ## License 🔱
+
+GPL 3.0
