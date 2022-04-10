@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react'
 import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import Settings from '@mui/icons-material/Settings'
-import NewspaperIcon from '@mui/icons-material/Newspaper'
+import ArticleIcon from '@mui/icons-material/Article'
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {useAuth} from '../../Auth'
@@ -50,11 +50,7 @@ export const Footer = () => {
           margin: 0 auto;
         `}
       >
-        <BottomNavigationAction
-          label="Feed"
-          value="/"
-          icon={<NewspaperIcon />}
-        />
+        <BottomNavigationAction label="Feed" value="/" icon={<ArticleIcon />} />
         <BottomNavigationAction
           label="Friends"
           value="/friends"
