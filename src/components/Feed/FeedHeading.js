@@ -144,7 +144,13 @@ export const FeedHeading = () => {
                 }
               `}
             >
-              <img src={preview} alt={photo.name} />
+              <img
+                src={preview}
+                alt={photo.name}
+                css={css`
+                  width: 100%;
+                `}
+              />
             </Card>
           )}
           <LoadingButton
