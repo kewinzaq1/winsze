@@ -1,27 +1,39 @@
 import {Divider, Stack} from '@mui/material'
 import {onSnapshot} from 'firebase/firestore'
 import React, {lazy, useEffect, useState} from 'react'
-import {maxWidth} from '../layout'
-import {q} from './index'
+import {maxWidth, Progress} from '../layout'
+import {q, streamPosts} from './index'
 const Post = lazy(() => import('./Post'))
 
 const Posts = () => {
   const [posts, setPosts] = useState(null)
 
-  const unsubscribe = onSnapshot(q, querySnapshot => {
-    const cities = []
-    querySnapshot.forEach(doc => {
-      cities.push(doc.data())
-    })
-    setPosts(cities)
-  })
+  // useEffect(() => {
+  //   const unsubscribe = onSnapshot(q, querySnapshot => {
+  //     console.log(querySnapshot)
+  //     const updatedPosts = querySnapshot.docs.map(docSnapshot => docSnapshot)
+  //     // setPosts(updatedPosts)
+  //   })
+  //   return unsubscribe
+  // }, [posts])
 
   useEffect(() => {
-    return () => unsubscribe()
-  }, [unsubscribe])
+    const unsubscribe = streamPosts(
+      querySnapshot => {
+        const updatedPosts = querySnapshot.docs.map(docSnapshot =>
+          docSnapshot.data(),
+        )
+        setPosts(updatedPosts)
+      },
+      error => console.error(error.message),
+    )
+    return unsubscribe
+  }, [])
+
+  console.log(posts)
 
   if (!posts) {
-    return
+    return <Progress />
   }
 
   return (
@@ -34,6 +46,7 @@ const Posts = () => {
           description={description}
           photo={photo}
           author={author}
+          id={id}
         />
       ))}
     </Stack>
