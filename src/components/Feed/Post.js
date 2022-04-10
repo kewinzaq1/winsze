@@ -1,14 +1,80 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars
 import {jsx, css} from '@emotion/react'
-import {Avatar, Box, Card, Paper, Typography} from '@mui/material'
+import {useState} from 'react'
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  IconButton,
+  List,
+  ListItem,
+  Popover,
+  TextField,
+  Typography,
+  InputLabel,
+  Input,
+} from '@mui/material'
 import Moment from 'react-moment'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import {myBlue, padEl} from '../layout'
+import {myBlue, alertRed, padEl} from '../layout'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import styled from '@emotion/styled'
+import SaveAsIcon from '@mui/icons-material/SaveAs'
+import CloseIcon from '@mui/icons-material/Close'
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
+import NoPhotographyIcon from '@mui/icons-material/NoPhotography'
+import {removePost, updatePost} from '.'
 
-// TODO: add popover with functionality 1.Edit post, 2.Remove post
+const Post = ({author, description, date, photo, avatar, id} = {}) => {
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [isEdit, setIsEdit] = useState(false)
+  const [desc, setDesc] = useState(description)
+  const [editPhoto, setEditPhoto] = useState(null)
+  const [preview, setPreview] = useState(photo)
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
 
-const Post = ({author, description, date, photo, avatar} = {}) => {
+  const handleClose = () => {
+    setAnchorEl(null)
+    setIsEdit(false)
+  }
+
+  const open = Boolean(anchorEl)
+
+  const editPost = () => {
+    setAnchorEl(null)
+    setIsEdit(true)
+  }
+
+  const onPhotoChange = ({target: {files}}) => {
+    setPreview(URL.createObjectURL(files[0]))
+    setEditPhoto(files[0])
+  }
+  const cancelEdit = () => {
+    setDesc(description)
+    setIsEdit(false)
+    setPreview(photo)
+  }
+
+  const removePhoto = () => {
+    setPreview(null)
+    setEditPhoto(null)
+  }
+
+  const uploadChanges = async e => {
+    e.preventDefault()
+    const overrides = {
+      description: desc,
+      date: `${new Date().toISOString()}`,
+    }
+    await updatePost(id, {editPhoto, overrides})
+    handleClose()
+  }
+
   return (
     <Card elevation={0}>
       <Box
@@ -75,22 +141,145 @@ const Post = ({author, description, date, photo, avatar} = {}) => {
               </Typography>
             </Box>
           </Box>
-          <Box>
-            <MoreHorizIcon
-              css={css`
-                cursor: pointer;
-                align-self: flex-start;
-              `}
-            />
-          </Box>
+          {isEdit ? (
+            preview ? (
+              <IconButton
+                onClick={removePhoto}
+                aria-label="leave changes"
+                component="span"
+                css={css`
+                  color: ${alertRed};
+                `}
+              >
+                <NoPhotographyIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                css={css`
+                  position: relative;
+                `}
+              >
+                <InputLabel htmlFor="add-photo-post">
+                  <AddAPhotoIcon
+                    css={css`
+                      color: ${myBlue};
+                    `}
+                  />
+                </InputLabel>
+                <Input
+                  type="file"
+                  id="add-photo-post"
+                  name="add-photo-post"
+                  css={css`
+                    display: none;
+                  `}
+                  value={editPhoto?.[0]}
+                  onChange={onPhotoChange}
+                />
+              </IconButton>
+            )
+          ) : (
+            <Box>
+              <MoreHorizIcon
+                onClick={handleClick}
+                role={'button'}
+                css={css`
+                  cursor: pointer;
+                  align-self: flex-start;
+                `}
+              />
+              <Popover
+                css={css`
+                  border-radius: 0.5rem;
+                `}
+                id={'action-post-popover'}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                elevation={2}
+              >
+                <List>
+                  <ListItem onClick={editPost}>
+                    <Button
+                      size={'small'}
+                      css={css`
+                        color: #2b2b2b;
+                      `}
+                      startIcon={<EditIcon />}
+                    >
+                      Edit
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      size={'small'}
+                      css={css`
+                        color: #2b2b2b;
+                      `}
+                      startIcon={<DeleteIcon />}
+                      onClick={() => removePost(id)}
+                    >
+                      Delete
+                    </Button>
+                  </ListItem>
+                </List>
+              </Popover>
+            </Box>
+          )}
         </Box>
-        <Typography variant="h4" component="h1">
-          {description}
-        </Typography>
+        {isEdit ? (
+          <Form onSubmit={uploadChanges}>
+            <TextField
+              css={css``}
+              fullWidth
+              value={desc}
+              onChange={({target: {value}}) => setDesc(value)}
+            />
+            <IconButton
+              onClick={cancelEdit}
+              color="error"
+              aria-label="leave changes"
+              component="span"
+              type="button"
+            >
+              <CloseIcon />
+            </IconButton>
+            <IconButton
+              color="primary"
+              aria-label="upload changes"
+              component="span"
+              type="submit"
+            >
+              <SaveAsIcon />
+            </IconButton>
+          </Form>
+        ) : (
+          <Typography variant="h4" component="h1">
+            {description}
+          </Typography>
+        )}
       </Box>
-      {photo && <img src={photo} alt={description} />}
+      {preview && (
+        <img
+          src={preview}
+          alt={description}
+          css={css`
+            width: 100%;
+          `}
+        />
+      )}
     </Card>
   )
 }
 
 export default Post
+
+const Form = styled.form`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
