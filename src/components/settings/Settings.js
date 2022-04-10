@@ -17,7 +17,7 @@ import PasswordIcon from '@mui/icons-material/Password'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined'
 import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined'
-import {ConfirmationMenu} from './SettingsConfirmation'
+import {ConfirmationDeleteMenu} from '../layout/ConfirmationDeleteMenu'
 import {alertRed} from '../layout'
 import {SettingsForm} from './SettingsForm'
 import {useSettings} from './index'
@@ -51,8 +51,8 @@ export const Settings = () => {
         flex-direction: column;
         margin: 0 auto;
         max-width: 1400px;
-        width: 90%;
-        padding: 2rem 0;
+        /* width: 90%; */
+        padding: 2rem 1rem;
         gap: 1rem;
       `}
     >
@@ -67,8 +67,11 @@ export const Settings = () => {
           css={css`
             margin-top: 1rem;
             margin: 1rem auto;
+            width: 100%;
             li {
               cursor: pointer;
+              padding-left: 0;
+              padding-right: 0;
             }
           `}
         >
@@ -80,7 +83,9 @@ export const Settings = () => {
             </ListItemAvatar>
             <ListItemText
               primary="Nickname"
-              secondary={`${user?.displayName ? `@${user?.displayName}` : 'Set nickname'}`}
+              secondary={`${
+                user?.displayName ? `@${user?.displayName}` : 'Set nickname'
+              }`}
             />
           </ListItem>
           <Divider variant="inset" component="li" />
@@ -156,10 +161,11 @@ export const Settings = () => {
         onSubmit={submitValidation()}
         type={typeValidation()}
       />
-      <ConfirmationMenu
+      <ConfirmationDeleteMenu
         onAgree={deleteAccount}
         open={isOpenConfirmation}
         onClose={closeAll}
+        deleteItem="account"
       />
     </main>
   )

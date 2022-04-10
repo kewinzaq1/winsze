@@ -28,6 +28,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography'
 import {removePost, updatePost} from '.'
 import {useAuth} from '../../Auth'
+import {ConfirmationDeleteMenu} from '../layout/ConfirmationDeleteMenu'
 
 const Post = ({
   author,
@@ -36,15 +37,17 @@ const Post = ({
   photo: originalPhoto,
   avatar,
   id,
+  authorId,
 } = {}) => {
   const {
-    user: {displayName: user},
+    user: {uid: userId},
   } = useAuth()
   const [anchorEl, setAnchorEl] = useState(null)
   const [isEdit, setIsEdit] = useState(false)
   const [desc, setDesc] = useState(description)
   const [editPhotoFile, setEditPhotoFile] = useState(null)
   const [photoPreview, setPhotoPreview] = useState(originalPhoto)
+  const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -52,6 +55,7 @@ const Post = ({
   const handleClose = () => {
     setAnchorEl(null)
     setIsEdit(false)
+    setIsOpenConfirmation(false)
   }
 
   const open = Boolean(anchorEl)
@@ -87,206 +91,214 @@ const Post = ({
   }
 
   return (
-    <Card elevation={0}>
-      <Box
-        css={css`
-          padding: ${padEl};
-          gap: 1.25rem;
-          display: flex;
-          flex-direction: column;
-        `}
-      >
+    <>
+      <Card elevation={0}>
         <Box
           css={css`
+            padding: ${padEl};
+            gap: 1.25rem;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
           `}
         >
           <Box
             css={css`
               display: flex;
-              align-items: center;
-              gap: 0.5rem;
+              justify-content: space-between;
             `}
           >
-            {avatar ? (
-              <Avatar
-                variant="rounded"
-                sizes="large"
-                src={avatar}
-                alt={author}
-                css={css`
-                  width: 45px;
-                  height: 45px;
-                `}
-              />
-            ) : (
-              <Avatar
-                variant="rounded"
-                sizes="large"
-                alt={author}
-                css={css`
-                  background-color: ${myBlue};
-                  width: 45px;
-                  height: 45px;
-                `}
-              >
-                {author[0]}
-              </Avatar>
-            )}
-            <Box>
-              <Typography variant="subtitle2">
-                <Moment fromNow>{date}</Moment>
-              </Typography>
-              <Typography
-                variant="h5"
-                component="p"
-                css={css`
-                  display: flex;
-                  align-items: center;
-                  justify-content: space-between;
-                  gap: 1rem;
-                `}
-              >
-                @{author}
-              </Typography>
+            <Box
+              css={css`
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+              `}
+            >
+              {avatar ? (
+                <Avatar
+                  variant="rounded"
+                  sizes="large"
+                  src={avatar}
+                  alt={author}
+                  css={css`
+                    width: 45px;
+                    height: 45px;
+                  `}
+                />
+              ) : (
+                <Avatar
+                  variant="rounded"
+                  sizes="large"
+                  alt={author}
+                  css={css`
+                    background-color: ${myBlue};
+                    width: 45px;
+                    height: 45px;
+                  `}
+                >
+                  {author[0]}
+                </Avatar>
+              )}
+              <Box>
+                <Typography variant="subtitle2">
+                  <Moment fromNow>{date}</Moment>
+                </Typography>
+                <Typography
+                  variant="h5"
+                  component="p"
+                  css={css`
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 1rem;
+                  `}
+                >
+                  @{author}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-          {isEdit ? (
-            photoPreview ? (
-              <IconButton
-                onClick={removePhoto}
-                aria-label="leave changes"
-                component="span"
-                css={css`
-                  color: ${alertRed};
-                `}
-              >
-                <NoPhotographyIcon />
-              </IconButton>
-            ) : (
-              <IconButton
-                css={css`
-                  position: relative;
-                `}
-              >
-                <InputLabel htmlFor="add-photo-post">
-                  <AddAPhotoIcon
+            {isEdit ? (
+              photoPreview ? (
+                <IconButton
+                  onClick={removePhoto}
+                  aria-label="leave changes"
+                  component="span"
+                  css={css`
+                    color: ${alertRed};
+                  `}
+                >
+                  <NoPhotographyIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  css={css`
+                    position: relative;
+                  `}
+                >
+                  <InputLabel htmlFor="add-photo-post">
+                    <AddAPhotoIcon
+                      css={css`
+                        color: ${myBlue};
+                      `}
+                    />
+                  </InputLabel>
+                  <Input
+                    type="file"
+                    id="add-photo-post"
+                    name="add-photo-post"
                     css={css`
-                      color: ${myBlue};
+                      display: none;
+                    `}
+                    value={editPhotoFile?.[0]}
+                    onChange={onPhotoChange}
+                  />
+                </IconButton>
+              )
+            ) : (
+              userId === authorId && (
+                <Box>
+                  <MoreHorizIcon
+                    onClick={handleClick}
+                    role={'button'}
+                    css={css`
+                      cursor: pointer;
+                      align-self: flex-start;
                     `}
                   />
-                </InputLabel>
-                <Input
-                  type="file"
-                  id="add-photo-post"
-                  name="add-photo-post"
-                  css={css`
-                    display: none;
-                  `}
-                  value={editPhotoFile?.[0]}
-                  onChange={onPhotoChange}
-                />
+                  <Popover
+                    css={css`
+                      border-radius: 0.5rem;
+                    `}
+                    id={'action-post-popover'}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    elevation={2}
+                  >
+                    <List>
+                      <ListItem onClick={editPost}>
+                        <Button
+                          size={'small'}
+                          css={css`
+                            color: #2b2b2b;
+                          `}
+                          startIcon={<EditIcon />}
+                        >
+                          Edit
+                        </Button>
+                      </ListItem>
+                      <ListItem>
+                        <Button
+                          size={'small'}
+                          css={css`
+                            color: #2b2b2b;
+                          `}
+                          startIcon={<DeleteIcon />}
+                          onClick={() => setIsOpenConfirmation(true)}
+                        >
+                          Delete
+                        </Button>
+                      </ListItem>
+                    </List>
+                  </Popover>
+                </Box>
+              )
+            )}
+          </Box>
+          {isEdit ? (
+            <Form onSubmit={uploadChanges}>
+              <TextField
+                css={css``}
+                fullWidth
+                value={desc}
+                onChange={({target: {value}}) => setDesc(value)}
+              />
+              <IconButton
+                onClick={cancelEdit}
+                color="error"
+                aria-label="leave changes"
+                component="span"
+                type="button"
+              >
+                <CloseIcon />
               </IconButton>
-            )
+              <IconButton
+                onClick={uploadChanges}
+                color="primary"
+                aria-label="upload changes"
+                component="span"
+                role="button"
+              >
+                <SaveAsIcon />
+              </IconButton>
+            </Form>
           ) : (
-            user === author && (
-              <Box>
-                <MoreHorizIcon
-                  onClick={handleClick}
-                  role={'button'}
-                  css={css`
-                    cursor: pointer;
-                    align-self: flex-start;
-                  `}
-                />
-                <Popover
-                  css={css`
-                    border-radius: 0.5rem;
-                  `}
-                  id={'action-post-popover'}
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                  elevation={2}
-                >
-                  <List>
-                    <ListItem onClick={editPost}>
-                      <Button
-                        size={'small'}
-                        css={css`
-                          color: #2b2b2b;
-                        `}
-                        startIcon={<EditIcon />}
-                      >
-                        Edit
-                      </Button>
-                    </ListItem>
-                    <ListItem>
-                      <Button
-                        size={'small'}
-                        css={css`
-                          color: #2b2b2b;
-                        `}
-                        startIcon={<DeleteIcon />}
-                        onClick={() => removePost(id)}
-                      >
-                        Delete
-                      </Button>
-                    </ListItem>
-                  </List>
-                </Popover>
-              </Box>
-            )
+            <Typography variant="h4" component="h1">
+              {description}
+            </Typography>
           )}
         </Box>
-        {isEdit ? (
-          <Form onSubmit={uploadChanges}>
-            <TextField
-              css={css``}
-              fullWidth
-              value={desc}
-              onChange={({target: {value}}) => setDesc(value)}
-            />
-            <IconButton
-              onClick={cancelEdit}
-              color="error"
-              aria-label="leave changes"
-              component="span"
-              type="button"
-            >
-              <CloseIcon />
-            </IconButton>
-            <IconButton
-              onClick={uploadChanges}
-              color="primary"
-              aria-label="upload changes"
-              component="span"
-              role="button"
-            >
-              <SaveAsIcon />
-            </IconButton>
-          </Form>
-        ) : (
-          <Typography variant="h4" component="h1">
-            {description}
-          </Typography>
+        {photoPreview && (
+          <img
+            src={photoPreview}
+            alt={description}
+            css={css`
+              width: 100%;
+            `}
+          />
         )}
-      </Box>
-      {photoPreview && (
-        <img
-          src={photoPreview}
-          alt={description}
-          css={css`
-            width: 100%;
-          `}
-        />
-      )}
-    </Card>
+      </Card>
+      <ConfirmationDeleteMenu
+        onAgree={() => removePost(id)}
+        onClose={handleClose}
+        open={isOpenConfirmation}
+        deleteItem="post"
+      />
+    </>
   )
 }
 

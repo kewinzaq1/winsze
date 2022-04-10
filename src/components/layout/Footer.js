@@ -9,6 +9,7 @@ import NewspaperIcon from '@mui/icons-material/Newspaper'
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {useAuth} from '../../Auth'
+import {maxWidth} from '.'
 
 export const Footer = () => {
   const {user} = useAuth()
@@ -32,17 +33,21 @@ export const Footer = () => {
   return (
     <footer
       css={css`
-        margin-top: 50px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
       `}
     >
       <BottomNavigation
-        css={css`
-          position: fixed;
-          width: 100vw;
-          bottom: 0;
-        `}
         value={path}
         onChange={handleChange}
+        css={css`
+          width: 100%;
+          max-width: ${maxWidth};
+          display: flex;
+          justify-content: space-between;
+          margin: 0 auto;
+        `}
       >
         <BottomNavigationAction
           label="Feed"

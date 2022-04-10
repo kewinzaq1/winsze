@@ -10,7 +10,12 @@ import {
   Button,
 } from '@mui/material'
 
-export const ConfirmationMenu = ({open, onClose, onAgree}) => {
+export const ConfirmationDeleteMenu = ({
+  deleteItem,
+  open,
+  onClose,
+  onAgree,
+}) => {
   return (
     <Dialog
       open={open}
@@ -22,15 +27,15 @@ export const ConfirmationMenu = ({open, onClose, onAgree}) => {
       <DialogTitle
         css={css`
           font-weight: 500;
-          font-size: 1.5rem;
+          font-size: 2rem;
+          line-height: 1.5;
         `}
       >
-        {'You want to delete your account?'}
+        {`You want to delete ${deleteItem}`}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-confirmation-delete-description">
-          This is an irreversible process, all data will be lost and all your
-          subscriptions will be lost
+          This is an irreversible process, all data will be lost
         </DialogContentText>
       </DialogContent>
       <DialogActions>

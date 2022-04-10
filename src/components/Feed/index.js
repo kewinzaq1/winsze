@@ -16,17 +16,22 @@ import {db, storage} from '../../Auth'
 import {FeedHeading} from './FeedHeading'
 import {v4 as uuidv4} from 'uuid'
 import React, {lazy, Suspense} from 'react'
-import {Progress} from '../layout'
+import {maxWidth, Progress} from '../layout'
 const Posts = lazy(() => import('./Posts'))
 
 export const Feed = () => {
   return (
-    <>
+    <main
+      css={css`
+        max-width: ${maxWidth};
+        margin: 0 auto;
+      `}
+    >
       <FeedHeading />
       <Suspense key={'suspense-feed'} fallback={<Progress />}>
         <Posts />
       </Suspense>
-    </>
+    </main>
   )
 }
 
@@ -43,6 +48,7 @@ export const uploadPost = async (user, desc, photo) => {
           description: desc,
           photo: photoURL,
           id: postUid,
+          authorId: user.uid,
         })
       })
     })
@@ -53,6 +59,7 @@ export const uploadPost = async (user, desc, photo) => {
       date: `${new Date().toISOString()}`,
       description: desc,
       id: postUid,
+      authorId: user.uid,
     })
 }
 

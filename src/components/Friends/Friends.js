@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+// eslint-disable-next-line no-unused-vars
+import {css, jsx} from '@emotion/react'
 import {Divider, Stack} from '@mui/material'
 import React, {useEffect, useState} from 'react'
 import {streamFriends} from '.'
@@ -25,7 +28,14 @@ export const Friends = () => {
   }
 
   return (
-    <Stack divider={<Divider />} maxWidth={maxWidth}>
+    <Stack
+      divider={<Divider />}
+      css={css`
+        margin: 0 auto;
+        width: 100%;
+        max-width: ${maxWidth};
+      `}
+    >
       {friends.map(({id, displayName, email, photoURL, registerDate}) => (
         <User
           key={id}

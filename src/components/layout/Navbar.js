@@ -3,73 +3,94 @@ import React from 'react'
 // eslint-disable-next-line no-unused-vars
 import {jsx, css} from '@emotion/react'
 import {
-    Button, Typography, AppBar as Bar, Avatar, LinearProgress,
+  Button,
+  Typography,
+  AppBar as Bar,
+  Avatar,
+  LinearProgress,
 } from '@mui/material'
 import styled from '@emotion/styled'
 import {myBlue} from '.'
 import {NavbarMenu} from './NavbarMenu'
 import {Link} from 'react-router-dom'
-import {useAuth} from "../../Auth";
+import {useAuth} from '../../Auth'
 
 // FIXME: update photo
 
 export const Navbar = () => {
-    const {isLogin, isRegister, setLogin, setRegister, isAuthenticated, user, logout, isLoading} = useAuth()
-    const [anchorEl, setAnchorEl] = React.useState(null)
-    const open = Boolean(anchorEl)
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget)
-    }
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
-    const usernameShortcut = (user) => user?.displayName[0]
-    const emailShortcut = (user) => user?.email?.split('@')[0][0]
+  const {
+    isLogin,
+    isRegister,
+    setLogin,
+    setRegister,
+    isAuthenticated,
+    user,
+    logout,
+    isLoading,
+  } = useAuth()
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+  const usernameShortcut = user => user?.displayName[0]
+  const emailShortcut = user => user?.email?.split('@')[0][0]
 
-    return (<AppBar position="sticky">
-        <Nav>
-            <Typography
-                variant="h1"
-                css={css`
-                  font-weight: 400;
-                  color: #111;
-                `}
-            >
-                <Link to="/">
-                    win<span>sze</span>
-                </Link>
-            </Typography>
-            <NavActions>
-                {isRegister && (<Button variant="contained" onClick={setLogin}>
-                    Log In
-                </Button>)}
-                {isLogin && (<Button variant="outlined" onClick={setRegister}>
-                    Sign Up
-                </Button>)}
-                {isAuthenticated && (<>
-                    <Avatar
-                        variant={'rounded'}
-                        onClick={handleClick}
-                        sx={{bgcolor: myBlue, cursor: 'pointer'}}
-                        alt={user?.displayName ?? user?.email}
-                        src={user?.photoURL}
-                    >
-                        {!user?.displayName && !user?.photoURL && emailShortcut(user)}
-                        {user?.displayName && !user?.photoURL && usernameShortcut(user)}
-                    </Avatar>
-                    <NavbarMenu
-                        anchorEl={anchorEl}
-                        open={open}
-                        handleClick={handleClick}
-                        handleClose={handleClose}
-                        user={user}
-                        logout={logout}
-                    />
-                </>)}
-            </NavActions>
-        </Nav>
-        {isLoading && <LinearProgress/>}
-    </AppBar>)
+  return (
+    <AppBar position="sticky">
+      <Nav>
+        <Typography
+          variant="h1"
+          css={css`
+            font-weight: 400;
+            color: #111;
+          `}
+        >
+          <Link to="/">
+            win<span>sze</span>
+          </Link>
+        </Typography>
+        <NavActions>
+          {isRegister && (
+            <Button variant="contained" onClick={setLogin}>
+              Log In
+            </Button>
+          )}
+          {isLogin && (
+            <Button variant="outlined" onClick={setRegister}>
+              Sign Up
+            </Button>
+          )}
+          {isAuthenticated && (
+            <>
+              <Avatar
+                variant={'rounded'}
+                onClick={handleClick}
+                sx={{bgcolor: myBlue, cursor: 'pointer'}}
+                alt={user?.displayName ?? user?.email}
+                src={user?.photoURL}
+              >
+                {!user?.displayName && !user?.photoURL && emailShortcut(user)}
+                {user?.displayName && !user?.photoURL && usernameShortcut(user)}
+              </Avatar>
+              <NavbarMenu
+                anchorEl={anchorEl}
+                open={open}
+                handleClick={handleClick}
+                handleClose={handleClose}
+                user={user}
+                logout={logout}
+              />
+            </>
+          )}
+        </NavActions>
+      </Nav>
+      {isLoading && <LinearProgress />}
+    </AppBar>
+  )
 }
 
 const AppBar = styled(Bar)`
@@ -85,7 +106,8 @@ const baseFlex = css`
 
 const Nav = styled.nav`
   ${baseFlex};
-  width: 90%;
+  width: 100%;
+  padding: 1rem;
   height: 100px;
   justify-content: space-between;
   max-width: 1400px;
