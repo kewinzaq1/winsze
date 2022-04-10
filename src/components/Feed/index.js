@@ -72,10 +72,13 @@ export const removePost = async (id, photo) => {
   }
 }
 
-export const updatePost = async (id, {editPhoto, overrides} = {}) => {
-  if (editPhoto) {
+export const updatePost = async (
+  id,
+  {editPhotoFile, originalPhoto, overrides} = {},
+) => {
+  if (editPhotoFile) {
     const imageRef = ref(storage, `PostsPhotos/${id}`)
-    return uploadBytes(imageRef, editPhoto).then(() => {
+    return uploadBytes(imageRef, editPhotoFile).then(() => {
       getDownloadURL(imageRef).then(async photo => {
         await updateDoc(doc(db, 'posts', id), {
           ...overrides,
@@ -83,9 +86,14 @@ export const updatePost = async (id, {editPhoto, overrides} = {}) => {
         })
       })
     })
-  } else
+  } else if (!originalPhoto) {
     return await updateDoc(doc(db, 'posts', id), {
       ...overrides,
       photo: null,
     })
+  } else {
+    return await updateDoc(doc(db, 'posts', id), {
+      ...overrides,
+    })
+  }
 }

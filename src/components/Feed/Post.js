@@ -27,13 +27,24 @@ import CloseIcon from '@mui/icons-material/Close'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography'
 import {removePost, updatePost} from '.'
+import {useAuth} from '../../Auth'
 
-const Post = ({author, description, date, photo, avatar, id} = {}) => {
+const Post = ({
+  author,
+  description,
+  date,
+  photo: originalPhoto,
+  avatar,
+  id,
+} = {}) => {
+  const {
+    user: {displayName: user},
+  } = useAuth()
   const [anchorEl, setAnchorEl] = useState(null)
   const [isEdit, setIsEdit] = useState(false)
   const [desc, setDesc] = useState(description)
-  const [editPhoto, setEditPhoto] = useState(null)
-  const [preview, setPreview] = useState(photo)
+  const [editPhotoFile, setEditPhotoFile] = useState(null)
+  const [photoPreview, setPhotoPreview] = useState(originalPhoto)
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -51,18 +62,18 @@ const Post = ({author, description, date, photo, avatar, id} = {}) => {
   }
 
   const onPhotoChange = ({target: {files}}) => {
-    setPreview(URL.createObjectURL(files[0]))
-    setEditPhoto(files[0])
+    setPhotoPreview(URL.createObjectURL(files[0]))
+    setEditPhotoFile(files[0])
   }
   const cancelEdit = () => {
     setDesc(description)
     setIsEdit(false)
-    setPreview(photo)
+    setPhotoPreview(originalPhoto)
   }
 
   const removePhoto = () => {
-    setPreview(null)
-    setEditPhoto(null)
+    setPhotoPreview(null)
+    setEditPhotoFile(null)
   }
 
   const uploadChanges = async e => {
@@ -71,7 +82,7 @@ const Post = ({author, description, date, photo, avatar, id} = {}) => {
       description: desc,
       date: `${new Date().toISOString()}`,
     }
-    await updatePost(id, {editPhoto, overrides})
+    await updatePost(id, {editPhotoFile, originalPhoto, overrides})
     handleClose()
   }
 
@@ -142,7 +153,7 @@ const Post = ({author, description, date, photo, avatar, id} = {}) => {
             </Box>
           </Box>
           {isEdit ? (
-            preview ? (
+            photoPreview ? (
               <IconButton
                 onClick={removePhoto}
                 aria-label="leave changes"
@@ -173,62 +184,64 @@ const Post = ({author, description, date, photo, avatar, id} = {}) => {
                   css={css`
                     display: none;
                   `}
-                  value={editPhoto?.[0]}
+                  value={editPhotoFile?.[0]}
                   onChange={onPhotoChange}
                 />
               </IconButton>
             )
           ) : (
-            <Box>
-              <MoreHorizIcon
-                onClick={handleClick}
-                role={'button'}
-                css={css`
-                  cursor: pointer;
-                  align-self: flex-start;
-                `}
-              />
-              <Popover
-                css={css`
-                  border-radius: 0.5rem;
-                `}
-                id={'action-post-popover'}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                elevation={2}
-              >
-                <List>
-                  <ListItem onClick={editPost}>
-                    <Button
-                      size={'small'}
-                      css={css`
-                        color: #2b2b2b;
-                      `}
-                      startIcon={<EditIcon />}
-                    >
-                      Edit
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      size={'small'}
-                      css={css`
-                        color: #2b2b2b;
-                      `}
-                      startIcon={<DeleteIcon />}
-                      onClick={() => removePost(id)}
-                    >
-                      Delete
-                    </Button>
-                  </ListItem>
-                </List>
-              </Popover>
-            </Box>
+            user === author && (
+              <Box>
+                <MoreHorizIcon
+                  onClick={handleClick}
+                  role={'button'}
+                  css={css`
+                    cursor: pointer;
+                    align-self: flex-start;
+                  `}
+                />
+                <Popover
+                  css={css`
+                    border-radius: 0.5rem;
+                  `}
+                  id={'action-post-popover'}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  elevation={2}
+                >
+                  <List>
+                    <ListItem onClick={editPost}>
+                      <Button
+                        size={'small'}
+                        css={css`
+                          color: #2b2b2b;
+                        `}
+                        startIcon={<EditIcon />}
+                      >
+                        Edit
+                      </Button>
+                    </ListItem>
+                    <ListItem>
+                      <Button
+                        size={'small'}
+                        css={css`
+                          color: #2b2b2b;
+                        `}
+                        startIcon={<DeleteIcon />}
+                        onClick={() => removePost(id)}
+                      >
+                        Delete
+                      </Button>
+                    </ListItem>
+                  </List>
+                </Popover>
+              </Box>
+            )
           )}
         </Box>
         {isEdit ? (
@@ -249,10 +262,11 @@ const Post = ({author, description, date, photo, avatar, id} = {}) => {
               <CloseIcon />
             </IconButton>
             <IconButton
+              onClick={uploadChanges}
               color="primary"
               aria-label="upload changes"
               component="span"
-              type="submit"
+              role="button"
             >
               <SaveAsIcon />
             </IconButton>
@@ -263,9 +277,9 @@ const Post = ({author, description, date, photo, avatar, id} = {}) => {
           </Typography>
         )}
       </Box>
-      {preview && (
+      {photoPreview && (
         <img
-          src={preview}
+          src={photoPreview}
           alt={description}
           css={css`
             width: 100%;
