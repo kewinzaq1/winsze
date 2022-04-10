@@ -1,6 +1,7 @@
 import React from 'react'
 import {Route, Routes} from 'react-router-dom'
 import {Feed} from './Feed'
+import {Friends} from './Friends/Friends'
 import {SettingsProvider, Settings} from './settings'
 
 export const AuthenticatedApp = () => {
@@ -15,6 +16,7 @@ export const AuthenticatedApp = () => {
         }
       />
       <Route path="/" element={<Feed />}></Route>
+      <Route path="/friends" element={<Friends />}></Route>
     </Routes>
   )
 }
