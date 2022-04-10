@@ -40,11 +40,8 @@ export const Layout = ({children}) => {
   )
 }
 
-export const Progress = styled(Skeleton)`
-  margin: 0 auto;
-  width: 90%;
-  height: 300px;
-  margin: 1rem;
+export const Progress = styled(CircularProgress)`
+  margin: 1rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
