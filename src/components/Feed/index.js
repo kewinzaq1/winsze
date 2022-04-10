@@ -122,3 +122,25 @@ export const toggleLike = async (id, {isLiked, userId} = {}) => {
     })
   }
 }
+
+export const addComment = async (id, {userId, comment} = {}) => {
+  await updateDoc(doc(db, 'posts', id), {
+    comments: arrayUnion(
+      JSON.stringify({
+        authorId: userId,
+        content: comment,
+      }),
+    ),
+  })
+}
+
+export const removeComment = async (id, {userId, comment} = {}) => {
+  await updateDoc(doc(db, 'posts', id), {
+    comments: arrayRemove(
+      JSON.stringify({
+        authorId: userId,
+        content: comment,
+      }),
+    ),
+  })
+}
