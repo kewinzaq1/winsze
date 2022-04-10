@@ -3,7 +3,6 @@
 import {jsx, css} from '@emotion/react'
 import {deleteObject, getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {
-  addDoc,
   collection,
   query,
   orderBy,

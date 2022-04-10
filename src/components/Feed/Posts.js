@@ -1,21 +1,11 @@
 import {Divider, Stack} from '@mui/material'
-import {onSnapshot} from 'firebase/firestore'
 import React, {lazy, useEffect, useState} from 'react'
 import {maxWidth, Progress} from '../layout'
-import {q, streamPosts} from './index'
+import {streamPosts} from './index'
 const Post = lazy(() => import('./Post'))
 
 const Posts = () => {
   const [posts, setPosts] = useState(null)
-
-  // useEffect(() => {
-  //   const unsubscribe = onSnapshot(q, querySnapshot => {
-  //     console.log(querySnapshot)
-  //     const updatedPosts = querySnapshot.docs.map(docSnapshot => docSnapshot)
-  //     // setPosts(updatedPosts)
-  //   })
-  //   return unsubscribe
-  // }, [posts])
 
   useEffect(() => {
     const unsubscribe = streamPosts(
@@ -29,8 +19,6 @@ const Posts = () => {
     )
     return unsubscribe
   }, [])
-
-  console.log(posts)
 
   if (!posts) {
     return <Progress />
