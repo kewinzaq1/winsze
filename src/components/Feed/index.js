@@ -25,6 +25,7 @@ export const Feed = () => {
       css={css`
         max-width: ${maxWidth};
         margin: 0 auto;
+        padding-bottom: 50px;
       `}
     >
       <FeedHeading />

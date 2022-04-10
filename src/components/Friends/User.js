@@ -45,9 +45,11 @@ export const User = ({nickname, email, photoURL, registerDate}) => {
           {user.displayName === nickname ? 'You' : `@${nickname}`}
         </Typography>
         <Typography variant="subtitle1" component="p">
-          On winsze from:
+          On winsze:{' '}
           <b>
-            <Moment fromNow>{registerDate}</Moment>
+            <Moment toNow ago>
+              {registerDate}
+            </Moment>
           </b>
         </Typography>
       </Box>

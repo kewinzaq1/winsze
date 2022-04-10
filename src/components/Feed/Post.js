@@ -82,12 +82,12 @@ const Post = ({
 
   const uploadChanges = async e => {
     e.preventDefault()
+    handleClose()
     const overrides = {
       description: desc,
       date: `${new Date().toISOString()}`,
     }
     await updatePost(id, {editPhotoFile, originalPhoto, overrides})
-    handleClose()
   }
 
   return (
@@ -153,7 +153,7 @@ const Post = ({
                     gap: 1rem;
                   `}
                 >
-                  @{author}
+                  {authorId === userId ? 'You' : `@${author}`}
                 </Typography>
               </Box>
             </Box>
@@ -288,6 +288,7 @@ const Post = ({
             alt={description}
             css={css`
               width: 100%;
+              border-radius: 0.5rem;
             `}
           />
         )}

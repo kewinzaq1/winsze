@@ -17,6 +17,8 @@ export const Footer = () => {
   const [path, setPath] = useState(pathname)
   const navigate = useNavigate()
 
+  // TODO: fix style bottom post bug
+
   useEffect(() => {
     setPath(pathname)
   }, [pathname])
@@ -42,7 +44,6 @@ export const Footer = () => {
         value={path}
         onChange={handleChange}
         css={css`
-          width: 100%;
           max-width: ${maxWidth};
           display: flex;
           justify-content: space-between;
