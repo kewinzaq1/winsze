@@ -11,6 +11,9 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  increment,
+  arrayUnion,
+  arrayRemove,
 } from 'firebase/firestore'
 import {db, storage} from '../../Auth'
 import {FeedHeading} from './FeedHeading'
@@ -25,7 +28,7 @@ export const Feed = () => {
       css={css`
         max-width: ${maxWidth};
         margin: 0 auto;
-        padding-bottom: 50px;
+        padding-bottom: 56px;
       `}
     >
       <FeedHeading />
@@ -102,6 +105,20 @@ export const updatePost = async (
   } else {
     return await updateDoc(doc(db, 'posts', id), {
       ...overrides,
+    })
+  }
+}
+
+export const toggleLike = async (id, {isLiked, userId} = {}) => {
+  if (isLiked) {
+    await updateDoc(doc(db, 'posts', id), {
+      likes: increment(-1),
+      usersLiked: arrayRemove(userId),
+    })
+  } else {
+    await updateDoc(doc(db, 'posts', id), {
+      likes: increment(1),
+      usersLiked: arrayUnion(userId),
     })
   }
 }
