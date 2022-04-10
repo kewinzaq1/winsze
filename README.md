@@ -3,11 +3,11 @@
 <br>
 
 <p align="center">
-<img src=""  alt="Logo">
+<img src="public/logo192.png"  alt="Logo">
 </p>
+winsze
 
 <br>
-
 <br>
 
 </h1>
