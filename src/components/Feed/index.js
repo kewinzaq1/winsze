@@ -113,34 +113,37 @@ export const toggleLike = async (id, {isLiked, userId} = {}) => {
   if (isLiked) {
     await updateDoc(doc(db, 'posts', id), {
       likes: increment(-1),
-      usersLiked: arrayRemove(userId),
+      usersWhoLiked: arrayRemove(userId),
     })
   } else {
     await updateDoc(doc(db, 'posts', id), {
       likes: increment(1),
-      usersLiked: arrayUnion(userId),
+      usersWhoLiked: arrayUnion(userId),
     })
   }
 }
 
-export const addComment = async (id, {userId, comment} = {}) => {
-  await updateDoc(doc(db, 'posts', id), {
+export const addComment = async (postId, {user, content} = {}) => {
+  await updateDoc(doc(db, 'posts', postId), {
     comments: arrayUnion(
       JSON.stringify({
-        authorId: userId,
-        content: comment,
+        authorAvatar: user.photoURL,
+        authorNickname: user.displayName,
+        content: content,
+        date: `${new Date().toISOString()}`,
+        authorId: user.uid,
+        id: uuidv4(),
       }),
     ),
   })
 }
 
-export const removeComment = async (id, {userId, comment} = {}) => {
-  await updateDoc(doc(db, 'posts', id), {
-    comments: arrayRemove(
-      JSON.stringify({
-        authorId: userId,
-        content: comment,
-      }),
-    ),
+export const removeComment = async (
+  postId,
+  commentId,
+  {user, comment} = {},
+) => {
+  await updateDoc(doc(db, 'posts', postId), {
+    comments: arrayRemove(comment),
   })
 }
