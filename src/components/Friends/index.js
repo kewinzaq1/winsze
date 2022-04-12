@@ -1,23 +1,16 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars
 import {css, jsx} from '@emotion/react'
-import {Box, Typography} from '@mui/material'
+import {Box, Divider, Typography} from '@mui/material'
 import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 import {lazy, Suspense} from 'react'
 import {db} from '../../Auth'
-import {maxWidth, Progress} from '../layout'
+import {Progress, styleFlexColumn} from '../layout'
 const Users = lazy(() => import('./Users'))
 
 export const Friends = () => (
-  <Box
-    css={css`
-      margin: 0 auto;
-      width: 100%;
-      max-width: ${maxWidth};
-      padding: 1rem;
-    `}
-  >
-    <Box>
+  <>
+    <Box css={styleFlexColumn}>
       <Typography variant="h2" component="h1">
         Friends
       </Typography>
@@ -25,10 +18,11 @@ export const Friends = () => (
         Check all users
       </Typography>
     </Box>
+    <Divider />
     <Suspense fallback={<Progress />}>
       <Users />
     </Suspense>
-  </Box>
+  </>
 )
 
 export const streamFriends = (snapshot, error) => {

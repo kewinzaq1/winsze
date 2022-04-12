@@ -79,15 +79,15 @@ export const FeedHeading = () => {
         css={css`
           flex-direction: row;
           justify-content: space-between;
-          gap: 0.5rem;
           flex-wrap: nowrap;
           padding: 2rem 1rem 1rem 1rem;
+          gap: 1rem;
           border-radius: 0.5rem;
         `}
         elevation={0}
       >
         <Form onSubmit={submitPost}>
-          <Typography variant="h3" component="h1" fontWeight={500}>
+          <Typography variant="h2" component="h1">
             Share this with friends
           </Typography>
           <FormGroup

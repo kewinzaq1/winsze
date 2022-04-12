@@ -18,7 +18,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined'
 import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined'
 import {ConfirmationDeleteMenu} from '../layout/ConfirmationDeleteMenu'
-import {alertRed} from '../layout'
+import {alertRed, styleFlexColumn} from '../layout'
 import {SettingsForm} from './SettingsForm'
 import {useSettings} from './index'
 
@@ -43,30 +43,17 @@ export const Settings = () => {
   } = useSettings()
 
   return (
-    <main
-      css={css`
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        margin: 0 auto;
-        max-width: 1400px;
-        /* width: 90%; */
-        padding: 2rem 1rem;
-        gap: 1rem;
-      `}
-    >
+    <main css={styleFlexColumn}>
       <Typography variant="h2" component="h1">
         Settings
       </Typography>
       <Typography variant="h5" component="h2">
         Personalize account for your preferences
       </Typography>
+      <Divider />
       <Box>
         <List
           css={css`
-            margin-top: 1rem;
-            margin: 1rem auto;
             width: 100%;
             li {
               cursor: pointer;

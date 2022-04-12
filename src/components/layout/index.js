@@ -23,6 +23,16 @@ export const mobileBreakpoint = '600px'
 export const maxWidth = '1400px'
 export const padEl = '1rem'
 
+export const styleFlexColumn = css`
+  margin: 0 auto;
+  width: 100%;
+  max-width: ${maxWidth};
+  padding: 2rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`
+
 export const Layout = ({children}) => {
   return (
     <>
