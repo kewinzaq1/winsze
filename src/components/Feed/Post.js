@@ -104,6 +104,24 @@ const Post = ({
     })
   }
 
+  const handleDelete = async () => {
+    removePost(id)
+
+    toast.promise(
+      removePost(id, originalPhoto),
+      {
+        loading: 'Removing',
+        success: 'Removed',
+        error: 'Try again',
+      },
+      {
+        success: {
+          icon: '❌',
+        },
+      },
+    )
+  }
+
   return (
     <>
       <Card elevation={0}>
@@ -324,25 +342,29 @@ const Post = ({
               <FavoriteIcon
                 css={css`
                   color: ${alertRed};
+                  font-family: inherit;
                 `}
               />
             ) : (
               <FavoriteBorderIcon />
             )}
-            {likes > 0 && likes}
+            <span>{likes > 0 && likes}</span>
           </IconButton>
           <IconButton
             aria-label="open comments"
             onClick={() => setIsOpenComment(true)}
+            css={css`
+              font-family: inherit;
+            `}
           >
             <ChatBubbleOutlineIcon />
-            {comments?.length}
+            <span>{comments?.length}</span>
           </IconButton>
         </Box>
         <Divider />
       </Card>
       <ConfirmationDeleteMenu
-        onAgree={() => removePost(id)}
+        onAgree={handleDelete}
         onClose={handleClose}
         open={isOpenConfirmation}
         deleteItem="post"

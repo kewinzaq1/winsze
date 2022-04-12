@@ -32,7 +32,6 @@ export const Comment = ({comment, postId}) => {
       },
       {
         success: {
-          duration: 5000,
           icon: '❌',
         },
       },

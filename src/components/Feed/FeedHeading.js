@@ -18,6 +18,7 @@ import {uploadPost} from '.'
 import {useAuth} from '../../Auth'
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
+import toast from 'react-hot-toast'
 
 export const FeedHeading = () => {
   const {user} = useAuth()
@@ -52,18 +53,22 @@ export const FeedHeading = () => {
   }
 
   const submitPost = e => {
-    setStatus('loading')
-    scrollToButton(e)
     e.preventDefault()
-    uploadPost(user, desc, photo)
-      .then(() => {
+    scrollToButton(e)
+    setStatus('loading')
+    toast.promise(uploadPost(user, desc, photo), {
+      loading: 'Adding',
+      success: () => {
         setStatus(null)
         clearAll()
         e.target.blur()
-      })
-      .catch(e => {
+        return 'Added'
+      },
+      error: () => {
         setStatus('error')
-      })
+        return 'Try again'
+      },
+    })
   }
 
   const scrollToButton = e => {
