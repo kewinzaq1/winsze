@@ -2,26 +2,14 @@
 // eslint-disable-next-line no-unused-vars
 import {css, jsx} from '@emotion/react'
 import {Divider, Stack} from '@mui/material'
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {streamFriends} from '.'
+import {useStream} from '../../Utils/hooks'
 import {Progress} from '../layout'
 import {User} from './User'
 
 const Users = () => {
-  const [users, setUsers] = useState(null)
-
-  useEffect(() => {
-    const unsubscribe = streamFriends(
-      querySnapshot => {
-        const updatedFriend = querySnapshot.docs.map(docSnapshot =>
-          docSnapshot.data(),
-        )
-        setUsers(updatedFriend)
-      },
-      error => console.error(error.message),
-    )
-    return unsubscribe
-  }, [])
+  const {streamData: users} = useStream(streamFriends)
 
   if (!users) {
     return <Progress />

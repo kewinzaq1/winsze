@@ -4,16 +4,14 @@ import {jsx, css} from '@emotion/react'
 import {LoadingButton} from '@mui/lab'
 import {
   Box,
-  Card,
   Dialog,
   Divider,
   FormGroup,
-  List,
   Stack,
   TextField,
   Typography,
 } from '@mui/material'
-import React, {createRef, useState} from 'react'
+import React, {useState} from 'react'
 import {addComment} from '..'
 import {useAuth} from '../../../Auth'
 import {useStatus} from '../../../Utils/hooks'

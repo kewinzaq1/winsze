@@ -1,24 +1,12 @@
 import {Stack} from '@mui/material'
-import React, {lazy, useEffect, useState} from 'react'
+import React, {lazy} from 'react'
+import {useStream} from '../../Utils/hooks'
 import {Progress} from '../layout'
 import {streamPosts} from './index'
 const Post = lazy(() => import('./Post'))
 
 const Posts = () => {
-  const [posts, setPosts] = useState(null)
-
-  useEffect(() => {
-    const unsubscribe = streamPosts(
-      querySnapshot => {
-        const updatedPosts = querySnapshot.docs.map(docSnapshot =>
-          docSnapshot.data(),
-        )
-        setPosts(updatedPosts)
-      },
-      error => console.error(error.message),
-    )
-    return unsubscribe
-  }, [])
+  const {streamData: posts} = useStream(streamPosts)
 
   if (!posts) {
     return <Progress />
