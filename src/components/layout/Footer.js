@@ -17,13 +17,11 @@ export const Footer = () => {
   const [path, setPath] = useState(pathname)
   const navigate = useNavigate()
 
-  // TODO: fix style bottom post bug
-
   useEffect(() => {
     setPath(pathname)
   }, [pathname])
 
-  const handleChange = (event: React.SyntheticEvent, newPath: string) => {
+  const handleChange = (event, newPath) => {
     setPath(newPath)
     navigate(newPath)
   }

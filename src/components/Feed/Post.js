@@ -150,7 +150,7 @@ const Post = ({
                     height: 45px;
                   `}
                 >
-                  {author[0]}
+                  {author?.[0]}
                 </Avatar>
               )}
               <Box>
@@ -241,6 +241,7 @@ const Post = ({
                             color: #2b2b2b;
                           `}
                           startIcon={<EditIcon />}
+                          aria-label="Edit post"
                         >
                           Edit
                         </Button>
@@ -253,6 +254,7 @@ const Post = ({
                           `}
                           startIcon={<DeleteIcon />}
                           onClick={() => setIsOpenConfirmation(true)}
+                          aria-label="Delete post"
                         >
                           Delete
                         </Button>
@@ -312,7 +314,7 @@ const Post = ({
           `}
         >
           <IconButton
-            aria-label="like"
+            aria-label={isLiked ? 'remove like' : 'add like'}
             onClick={() => {
               setIsLiked(!isLiked)
               toggleLike(id, {isLiked, userId: user.uid})
@@ -330,7 +332,7 @@ const Post = ({
             {likes > 0 && likes}
           </IconButton>
           <IconButton
-            aria-label="comment"
+            aria-label="open comments"
             onClick={() => setIsOpenComment(true)}
           >
             <ChatBubbleOutlineIcon />
