@@ -1,5 +1,6 @@
 import {screen} from '@testing-library/react'
 import {Comment} from '../../components/Feed/Comment/Comment'
+import {FeedHeading} from '../../components/Feed/FeedHeading'
 import Post from '../../components/Feed/Post'
 import {buildUser} from '../../Utils/Builders'
 import {renderLayout} from '../../Utils/tests'
@@ -34,4 +35,14 @@ test('render comment', () => {
   expect(screen.getByText(user.username[0])).toBeInTheDocument()
   expect(screen.getByText(user.username)).toBeInTheDocument()
   expect(screen.getByText(/a few seconds ago/i)).toBeInTheDocument()
+})
+
+test('render feed heading', () => {
+  renderLayout(<FeedHeading />, {user})
+
+  expect(
+    screen.getByRole('heading', {name: /share this with friends/i}),
+  ).toBeInTheDocument()
+  expect(screen.getByRole('button', {name: /publish/i})).toBeInTheDocument()
+  expect(screen.getByRole('button', {name: /publish/i})).toBeInTheDocument()
 })
