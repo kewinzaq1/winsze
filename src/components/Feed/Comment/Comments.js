@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars
 import {jsx, css} from '@emotion/react'
-import {LoadingButton} from '@mui/lab'
 import {
   Box,
+  Button,
   Dialog,
   Divider,
   FormGroup,
@@ -12,28 +12,24 @@ import {
   Typography,
 } from '@mui/material'
 import React, {useState} from 'react'
+import toast from 'react-hot-toast'
 import {addComment} from '..'
 import {useAuth} from '../../../Auth'
-import {useStatus} from '../../../Utils/hooks'
 import {Comment} from './Comment'
 
 export const Comments = ({open, onClose, comments, postId} = {}) => {
   const {user} = useAuth()
-  const {setStatus, isError, isLoading} = useStatus()
   const [content, setContent] = useState('')
 
   const handleSubmit = e => {
     e.preventDefault()
     setContent('')
-    setStatus('loading')
-    addComment(postId, {user, content}).then(
-      () => {
-        setStatus(null)
-      },
-      () => {
-        setStatus('error')
-      },
-    )
+
+    toast.promise(addComment(postId, {user, content}), {
+      loading: 'Adding',
+      success: 'Added',
+      error: 'Try again',
+    })
   }
   const commentOnChange = ({target: {value}}) => setContent(value)
 
@@ -82,18 +78,16 @@ export const Comments = ({open, onClose, comments, postId} = {}) => {
                 width: 80%;
               `}
             />
-            <LoadingButton
+            <Button
               variant="contained"
-              loading={isLoading}
               type="submit"
               css={css`
                 width: 20%;
               `}
-              color={!isError ? 'primary' : 'warning'}
               disabled={!content?.length}
             >
-              {!isError ? 'Add' : 'retry'}
-            </LoadingButton>
+              Add
+            </Button>
           </FormGroup>
         </form>
       </Box>

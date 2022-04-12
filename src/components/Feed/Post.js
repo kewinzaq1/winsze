@@ -30,10 +30,11 @@ import NoPhotographyIcon from '@mui/icons-material/NoPhotography'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import {addComment, removePost, toggleLike, updatePost} from '.'
+import {removePost, toggleLike, updatePost} from '.'
 import {useAuth} from '../../Auth'
 import {ConfirmationDeleteMenu} from '../layout/ConfirmationDeleteMenu'
 import {Comments} from './Comment/Comments'
+import toast from 'react-hot-toast'
 
 const Post = ({
   author,
@@ -95,10 +96,13 @@ const Post = ({
       description: desc,
       date: `${new Date().toISOString()}`,
     }
-    await updatePost(id, {editPhotoFile, originalPhoto, overrides})
-  }
 
-  // TODO: add comment to post
+    toast.promise(updatePost(id, {editPhotoFile, originalPhoto, overrides}), {
+      loading: 'Updating',
+      success: 'Updated',
+      error: 'Try again',
+    })
+  }
 
   return (
     <>

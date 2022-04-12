@@ -4,10 +4,9 @@ import {jsx, css} from '@emotion/react'
 import {
   Avatar,
   Box,
-  Divider,
+  Button,
   ListItem,
   ListItemAvatar,
-  ListItemButton,
   ListItemText,
   Typography,
 } from '@mui/material'
@@ -16,23 +15,26 @@ import {alertRed} from '../../layout'
 import Moment from 'react-moment'
 import {useAuth} from '../../../Auth'
 import {removeComment} from '..'
-import {LoadingButton} from '@mui/lab'
-import {useStatus} from '../../../Utils/hooks'
+import toast from 'react-hot-toast'
 
 export const Comment = ({comment, postId}) => {
   const {user} = useAuth()
   const {id, authorId, date, authorNickname, authorAvatar, content} =
     JSON.parse(comment)
-  const {setStatus, isLoading} = useStatus()
 
   const handleRemove = () => {
-    setStatus('loading')
-    removeComment(postId, id, {comment}).then(
-      () => {
-        setStatus(null)
+    toast.promise(
+      removeComment(postId, id, {comment}),
+      {
+        loading: 'Removing',
+        success: 'Removed',
+        error: 'Try again',
       },
-      () => {
-        setStatus('error')
+      {
+        success: {
+          duration: 5000,
+          icon: '❌',
+        },
       },
     )
   }
@@ -64,8 +66,7 @@ export const Comment = ({comment, postId}) => {
         </Typography>
       </Box>
       {user.uid === authorId && (
-        <LoadingButton
-          loading={isLoading}
+        <Button
           aria-label="remove comment"
           onClick={handleRemove}
           css={css`
@@ -80,7 +81,7 @@ export const Comment = ({comment, postId}) => {
               color: ${alertRed};
             `}
           />
-        </LoadingButton>
+        </Button>
       )}
     </ListItem>
   )
