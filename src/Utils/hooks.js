@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react'
+import toast from 'react-hot-toast'
 
 const useOverflowHidden = () => {
   return useEffect(() => {
@@ -20,8 +21,8 @@ const useLocalStorageState = (name, initValue = '') => {
   return [state, setState]
 }
 
-const useStatus = () => {
-  const [status, setStatus] = useState(null)
+const useStatus = (initStatus = null) => {
+  const [status, setStatus] = useState(initStatus)
 
   const isSuccess = status === null
   const isError = status === 'error'
@@ -30,4 +31,24 @@ const useStatus = () => {
   return {status, setStatus, isSuccess, isError, isLoading}
 }
 
-export {useOverflowHidden, useLocalStorageState, useStatus}
+const useStream = streamFn => {
+  const [streamData, setStreamData] = useState(null)
+  const {setStatus, isError} = useStatus()
+
+  useEffect(() => {
+    const unsubscribe = streamFn(
+      querySnapshot => {
+        const updatedData = querySnapshot.docs.map(docSnapshot =>
+          docSnapshot.data(),
+        )
+        setStreamData(updatedData)
+      },
+      error => setStatus('error'),
+    )
+    return unsubscribe
+  }, [setStatus, streamFn])
+
+  return {streamData, isError}
+}
+
+export {useOverflowHidden, useLocalStorageState, useStatus, useStream}
