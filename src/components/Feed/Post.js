@@ -30,9 +30,10 @@ import NoPhotographyIcon from '@mui/icons-material/NoPhotography'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import {removePost, toggleLike, updatePost} from '.'
+import {addComment, removePost, toggleLike, updatePost} from '.'
 import {useAuth} from '../../Auth'
 import {ConfirmationDeleteMenu} from '../layout/ConfirmationDeleteMenu'
+import {Comments} from './Comment/Comments'
 
 const Post = ({
   author,
@@ -43,18 +44,18 @@ const Post = ({
   id,
   authorId,
   likes,
-  usersLiked,
+  usersWhoLiked,
+  comments,
 } = {}) => {
-  const {
-    user: {uid: userId},
-  } = useAuth()
+  const {user} = useAuth()
   const [anchorEl, setAnchorEl] = useState(null)
   const [isEdit, setIsEdit] = useState(false)
   const [desc, setDesc] = useState(description)
   const [editPhotoFile, setEditPhotoFile] = useState(null)
   const [photoPreview, setPhotoPreview] = useState(originalPhoto)
   const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
-  const [isLiked, setIsLiked] = useState(usersLiked?.includes(userId))
+  const [isLiked, setIsLiked] = useState(usersWhoLiked?.includes(user.uid))
+  const [isOpenComment, setIsOpenComment] = useState(false)
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -162,7 +163,7 @@ const Post = ({
                     gap: 1rem;
                   `}
                 >
-                  {authorId === userId ? 'You' : `@${author}`}
+                  {authorId === user.uid ? 'You' : `@${author}`}
                 </Typography>
               </Box>
             </Box>
@@ -204,7 +205,7 @@ const Post = ({
                 </IconButton>
               )
             ) : (
-              userId === authorId && (
+              user.uid === authorId && (
                 <Box>
                   <MoreHorizIcon
                     onClick={handleClick}
@@ -310,7 +311,7 @@ const Post = ({
             aria-label="like"
             onClick={() => {
               setIsLiked(!isLiked)
-              toggleLike(id, {isLiked, userId})
+              toggleLike(id, {isLiked, userId: user.uid})
             }}
           >
             {isLiked ? (
@@ -324,9 +325,12 @@ const Post = ({
             )}
             {likes > 0 && likes}
           </IconButton>
-          <IconButton aria-label="comment">
+          <IconButton
+            aria-label="comment"
+            onClick={() => setIsOpenComment(true)}
+          >
             <ChatBubbleOutlineIcon />
-            {/* {comments.length} */}
+            {comments?.length}
           </IconButton>
         </Box>
         <Divider />
@@ -336,6 +340,12 @@ const Post = ({
         onClose={handleClose}
         open={isOpenConfirmation}
         deleteItem="post"
+      />
+      <Comments
+        open={isOpenComment}
+        onClose={() => setIsOpenComment(false)}
+        comments={comments}
+        postId={id}
       />
     </>
   )

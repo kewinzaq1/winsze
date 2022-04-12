@@ -1,4 +1,4 @@
-import {Divider, Stack} from '@mui/material'
+import {Stack} from '@mui/material'
 import React, {lazy, useEffect, useState} from 'react'
 import {Progress} from '../layout'
 import {streamPosts} from './index'
@@ -25,19 +25,35 @@ const Posts = () => {
   }
 
   return (
-    <Stack divider={<Divider />}>
-      {posts.map(({author, avatar, date, description, photo, id, authorId}) => (
-        <Post
-          key={id}
-          avatar={avatar}
-          date={date}
-          description={description}
-          photo={photo}
-          author={author}
-          id={id}
-          authorId={authorId}
-        />
-      ))}
+    <Stack>
+      {posts.map(
+        ({
+          author,
+          avatar,
+          date,
+          description,
+          photo,
+          id,
+          authorId,
+          likes,
+          usersWhoLiked,
+          comments,
+        }) => (
+          <Post
+            key={id}
+            avatar={avatar}
+            date={date}
+            description={description}
+            photo={photo}
+            author={author}
+            id={id}
+            authorId={authorId}
+            likes={likes}
+            usersWhoLiked={usersWhoLiked}
+            comments={comments}
+          />
+        ),
+      )}
     </Stack>
   )
 }
