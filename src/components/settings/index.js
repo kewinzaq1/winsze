@@ -63,29 +63,30 @@ export const SettingsProvider = ({children}) => {
         displayName: newName,
       }),
       {
-        loading: 'Changing nickname',
+        loading: 'Changing',
         success: () => {
           closeAll()
           updateUserInFirestore({nickname: newName}).then(() => {})
-          return `Successful changed @${newName}`
+          return `Changed`
         },
-        error: e => e.code,
+        error: e => e.message,
       },
     )
 
   const updatePassword = newPassword =>
     toast.promise(updatePasswd(currentUser, newPassword), {
-      loading: 'Password is changing',
+      loading: 'Changing',
       success: () => {
         closeAll()
-        return `Password successful changed`
+        return `Changed`
       },
-      error: e => e.code,
+      error: e => e.message,
     })
+
   const updatePhoto = photo => {
     const imageRef = ref(storage, `ProfilePictures/${currentUser.uid}`)
     return toast.promise(uploadBytes(imageRef, photo), {
-      loading: 'Photo is changing',
+      loading: 'Changing',
       success: () => {
         getDownloadURL(imageRef).then(async url => {
           updateProfile(currentUser, {
@@ -93,27 +94,28 @@ export const SettingsProvider = ({children}) => {
           }).then(() => updateUserInFirestore({photoURL: url}))
         })
         closeAll()
-        return `That's look great!`
+        return `Look's great!`
       },
-      error: e => e.code,
+      error: e => e.message,
     })
   }
+
   const verifyEmail = () => {
     return toast.promise(sendEmailVerification(auth.currentUser), {
-      loading: 'Email sending',
-      success: `Email delivered`,
-      error: e => e.code,
+      loading: 'Sending',
+      success: `Delivered`,
+      error: e => e.message,
     })
   }
 
   const updateEmail = email => {
     return toast.promise(updateMail(auth.currentUser, email), {
-      loading: 'Email has been updated',
+      loading: 'Updating',
       success: () => {
         updateUserInFirestore({email: email}).then(() => {})
-        return `Email updated`
+        return `Updated`
       },
-      error: e => e.code,
+      error: e => e.message,
     })
   }
 
