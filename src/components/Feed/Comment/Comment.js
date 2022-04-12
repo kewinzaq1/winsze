@@ -4,6 +4,7 @@ import {jsx, css} from '@emotion/react'
 import {
   Avatar,
   Box,
+  Divider,
   ListItem,
   ListItemAvatar,
   ListItemButton,
@@ -15,56 +16,58 @@ import {alertRed} from '../../layout'
 import Moment from 'react-moment'
 import {useAuth} from '../../../Auth'
 import {removeComment} from '..'
-import {useState} from 'react'
 import {LoadingButton} from '@mui/lab'
+import {useStatus} from '../../../Utils/hooks'
 
 export const Comment = ({comment, postId}) => {
   const {user} = useAuth()
   const {id, authorId, date, authorNickname, authorAvatar, content} =
     JSON.parse(comment)
-  const [isLoading, setIsLoading] = useState(false)
+  const {setStatus, isLoading} = useStatus()
+
+  const handleRemove = () => {
+    setStatus('loading')
+    removeComment(postId, id, {comment}).then(
+      () => {
+        setStatus(null)
+      },
+      () => {
+        setStatus('error')
+      },
+    )
+  }
 
   return (
-    <ListItem disablePadding>
-      <ListItemButton>
-        <ListItemAvatar>
-          <Avatar variant="rounded" src={authorAvatar}>
-            {!authorAvatar && authorNickname[0]}
-          </Avatar>
-        </ListItemAvatar>
-        <Box
+    <ListItem>
+      <ListItemAvatar>
+        <Avatar variant="rounded" src={authorAvatar}>
+          {!authorAvatar && authorNickname[0]}
+        </Avatar>
+      </ListItemAvatar>
+      <Box
+        css={css`
+          width: 100%;
+        `}
+      >
+        <ListItemText
+          primary={authorId === user.uid ? 'You' : authorNickname}
+          secondary={<Moment fromNow>{date}</Moment>}
+        />
+        <Typography
+          variant="subtitle1"
+          component="p"
           css={css`
-            width: 100%;
+            word-break: break-all;
           `}
         >
-          <ListItemText
-            primary={authorId === user.uid ? 'You' : authorNickname}
-            secondary={<Moment fromNow>{date}</Moment>}
-          />
-          <Typography
-            variant="subtitle1"
-            component="p"
-            css={css`
-              word-break: break-all;
-            `}
-          >
-            {content}
-          </Typography>
-        </Box>
+          {content}
+        </Typography>
+      </Box>
+      {user.uid === authorId && (
         <LoadingButton
           loading={isLoading}
           aria-label="remove comment"
-          onClick={() => {
-            setIsLoading(true)
-            removeComment(postId, id, {comment}).then(
-              () => {
-                setIsLoading(false)
-              },
-              () => {
-                setIsLoading(false)
-              },
-            )
-          }}
+          onClick={handleRemove}
           css={css`
             align-items: center;
             display: flex;
@@ -78,7 +81,7 @@ export const Comment = ({comment, postId}) => {
             `}
           />
         </LoadingButton>
-      </ListItemButton>
+      )}
     </ListItem>
   )
 }
