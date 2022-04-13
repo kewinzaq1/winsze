@@ -41,6 +41,7 @@ export const Feed = () => {
 
 export const uploadPost = async (user, desc, photo) => {
   const postUid = uuidv4()
+
   if (photo) {
     const imageRef = ref(storage, `PostsPhotos/${postUid}`)
     return uploadBytes(imageRef, photo).then(() => {
@@ -85,9 +86,9 @@ export const removePost = async (id, photo) => {
 
 export const updatePost = async (
   id,
-  {editPhotoFile, originalPhoto, overrides} = {},
+  {editPhotoFile, originalPhoto, isPhotoChanged, overrides} = {},
 ) => {
-  if (editPhotoFile) {
+  if (editPhotoFile && isPhotoChanged) {
     const imageRef = ref(storage, `PostsPhotos/${id}`)
     return uploadBytes(imageRef, editPhotoFile).then(() => {
       getDownloadURL(imageRef).then(async photo => {
@@ -97,7 +98,12 @@ export const updatePost = async (
         })
       })
     })
-  } else if (!originalPhoto) {
+  } else if (!originalPhoto && isPhotoChanged) {
+    return await updateDoc(doc(db, 'posts', id), {
+      ...overrides,
+      photo: null,
+    })
+  } else if (originalPhoto && isPhotoChanged && !editPhotoFile) {
     return await updateDoc(doc(db, 'posts', id), {
       ...overrides,
       photo: null,
@@ -110,17 +116,10 @@ export const updatePost = async (
 }
 
 export const toggleLike = async (id, {isLiked, userId} = {}) => {
-  if (isLiked) {
-    await updateDoc(doc(db, 'posts', id), {
-      likes: increment(-1),
-      usersWhoLiked: arrayRemove(userId),
-    })
-  } else {
-    await updateDoc(doc(db, 'posts', id), {
-      likes: increment(1),
-      usersWhoLiked: arrayUnion(userId),
-    })
-  }
+  await updateDoc(doc(db, 'posts', id), {
+    likes: increment(isLiked ? -1 : 1),
+    usersWhoLiked: isLiked ? arrayRemove(userId) : arrayUnion(userId),
+  })
 }
 
 export const addComment = async (postId, {user, content} = {}) => {
