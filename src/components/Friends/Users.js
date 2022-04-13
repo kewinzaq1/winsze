@@ -5,7 +5,7 @@ import {Divider, Stack} from '@mui/material'
 import React from 'react'
 import {streamFriends} from '.'
 import {useStream} from '../../Utils/hooks'
-import {maxWidth, Progress} from '../layout'
+import {maxWidth, Progress} from '../Layout'
 import {User} from './User'
 
 const Users = () => {

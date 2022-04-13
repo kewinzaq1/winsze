@@ -1,7 +1,7 @@
 import {Stack} from '@mui/material'
 import React, {lazy} from 'react'
 import {useStream} from '../../Utils/hooks'
-import {Progress} from '../layout'
+import {Progress} from '../Layout'
 import {streamPosts} from './index'
 const Post = lazy(() => import('./Post'))
 

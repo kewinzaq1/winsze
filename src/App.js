@@ -1,7 +1,7 @@
 import {AuthenticatedApp} from './components/Authenticated'
 import {useAuth} from './Auth'
 import {UnAuthenticatedApp} from './components/UnAuthenticated'
-import {Layout} from './components/layout'
+import {Layout} from './components/Layout'
 
 function App() {
   const {user} = useAuth()

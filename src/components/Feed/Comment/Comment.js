@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import {alertRed} from '../../layout'
+import {alertRed} from '../../Layout'
 import Moment from 'react-moment'
 import {useAuth} from '../../../Auth'
 import {removeComment} from '..'

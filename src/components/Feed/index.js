@@ -19,7 +19,7 @@ import {db, storage} from '../../Auth'
 import {FeedHeading} from './FeedHeading'
 import {v4 as uuidv4} from 'uuid'
 import React, {lazy, Suspense} from 'react'
-import {maxWidth, Progress} from '../layout'
+import {maxWidth, Progress} from '../Layout'
 const Posts = lazy(() => import('./Posts'))
 
 export const Feed = () => {

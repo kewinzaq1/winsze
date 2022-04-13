@@ -2,7 +2,7 @@ import React from 'react'
 import {Route, Routes} from 'react-router-dom'
 import {Feed} from './Feed'
 import {Friends} from './Friends'
-import {SettingsProvider, Settings} from './settings'
+import {SettingsProvider, Settings} from './Settings'
 
 export const AuthenticatedApp = () => {
   return (

@@ -28,7 +28,7 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import {db, useAuth} from '../../Auth'
-import {baseFlex, mobileBreakpoint, myBlue} from '../layout'
+import {baseFlex, mobileBreakpoint, myBlue} from '../Layout'
 import {useOverflowHidden} from '../../Utils/hooks'
 import {AnimatePresence, motion} from 'framer-motion'
 import {setDoc, doc} from 'firebase/firestore'

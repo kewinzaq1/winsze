@@ -8,11 +8,6 @@ import {BrowserRouter} from 'react-router-dom'
 import {AuthProvider} from '../../Auth'
 import {Navbar} from '../../components/layout/Navbar'
 import App from '../../App'
-import {buildUser} from '../../Utils/Builders'
-
-jest.fn('firebase')
-jest.fn('firebase/auth')
-jest.fn('firebase/app')
 
 const renderLoginScreen = () => {
   const Wrapper = ({children}) => (

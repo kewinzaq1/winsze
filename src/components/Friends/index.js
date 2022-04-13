@@ -5,7 +5,7 @@ import {Box, Divider, Typography} from '@mui/material'
 import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 import {lazy, Suspense} from 'react'
 import {db} from '../../Auth'
-import {Progress, styleFlexColumn} from '../layout'
+import {Progress, styleFlexColumn} from '../Layout'
 const Users = lazy(() => import('./Users'))
 
 export const Friends = () => (
