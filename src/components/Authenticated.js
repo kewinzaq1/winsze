@@ -1,8 +1,9 @@
 import React from 'react'
 import {Route, Routes} from 'react-router-dom'
 import {Feed} from './Feed'
-import {Friends} from './Friends'
 import {SettingsProvider, Settings} from './Settings'
+import {Friends} from './Users'
+import {SingleUser} from './Users/SingleUser'
 
 export const AuthenticatedApp = () => {
   return (
@@ -16,7 +17,8 @@ export const AuthenticatedApp = () => {
         }
       />
       <Route path="/" element={<Feed />}></Route>
-      <Route path="/friends" element={<Friends />}></Route>
+      <Route path="/users" element={<Friends />}></Route>
+      <Route path="/users/:id" element={<SingleUser />}></Route>
     </Routes>
   )
 }
