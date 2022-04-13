@@ -57,6 +57,8 @@ const Post = ({
   const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
   const [isLiked, setIsLiked] = useState(usersWhoLiked?.includes(user.uid))
   const [isOpenComment, setIsOpenComment] = useState(false)
+  const isPhotoChanged = originalPhoto !== photoPreview
+
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -97,11 +99,14 @@ const Post = ({
       date: `${new Date().toISOString()}`,
     }
 
-    toast.promise(updatePost(id, {editPhotoFile, originalPhoto, overrides}), {
-      loading: 'Updating',
-      success: 'Updated',
-      error: 'Try again',
-    })
+    toast.promise(
+      updatePost(id, {editPhotoFile, originalPhoto, isPhotoChanged, overrides}),
+      {
+        loading: 'Updating',
+        success: 'Updated',
+        error: 'Try again',
+      },
+    )
   }
 
   const handleDelete = async () => {

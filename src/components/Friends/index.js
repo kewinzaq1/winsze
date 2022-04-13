@@ -25,7 +25,6 @@ export const Friends = () => (
   </>
 )
 
-// TODO: to custom hook?
 export const streamFriends = (snapshot, error) => {
   const itemsColRef = collection(db, 'users')
   const itemsQuery = query(itemsColRef, orderBy('registerDate', 'desc'))
