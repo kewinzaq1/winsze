@@ -80,7 +80,7 @@ export const streamPosts = (snapshot, error) => {
 export const removePost = async (id, photo) => {
   await deleteDoc(doc(db, 'posts', id))
   if (photo) {
-    await deleteObject(ref(storage, `PostPhotos/${id}`))
+    await deleteObject(ref(storage, `PostsPhotos/${id}`))
   }
 }
 
