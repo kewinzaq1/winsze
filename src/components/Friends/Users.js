@@ -5,7 +5,7 @@ import {Divider, Stack} from '@mui/material'
 import React from 'react'
 import {streamFriends} from '.'
 import {useStream} from '../../Utils/hooks'
-import {Progress} from '../layout'
+import {maxWidth, Progress} from '../layout'
 import {User} from './User'
 
 const Users = () => {
@@ -16,7 +16,14 @@ const Users = () => {
   }
 
   return (
-    <Stack divider={<Divider />}>
+    <Stack
+      divider={<Divider />}
+      css={css`
+        max-width: ${maxWidth};
+        margin: 0 auto;
+      `}
+      disabledPadding
+    >
       {users.map(({id, displayName, email, photoURL, registerDate}) => (
         <User
           key={id}

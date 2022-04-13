@@ -17,14 +17,15 @@ export const Friends = () => (
       <Typography variant="h5" component="h2">
         Check all users
       </Typography>
+      <Divider />
     </Box>
-    <Divider />
     <Suspense fallback={<Progress />}>
       <Users />
     </Suspense>
   </>
 )
 
+// TODO: to custom hook?
 export const streamFriends = (snapshot, error) => {
   const itemsColRef = collection(db, 'users')
   const itemsQuery = query(itemsColRef, orderBy('registerDate', 'desc'))

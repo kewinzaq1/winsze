@@ -16,7 +16,7 @@ export const User = ({nickname, email, photoURL, registerDate}) => {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 1rem;
+        padding: 0 1rem;
       `}
     >
       {photoURL ? (
