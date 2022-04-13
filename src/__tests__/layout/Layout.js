@@ -1,6 +1,4 @@
-import {render, screen} from '@testing-library/react'
-import {AuthProvider} from '../../Auth'
-import {BrowserRouter} from 'react-router-dom'
+import {screen} from '@testing-library/react'
 import {Navbar} from '../../components/layout/Navbar'
 import {Footer} from '../../components/layout/Footer'
 import {renderLayout} from '../../Utils/tests'
