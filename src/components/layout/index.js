@@ -38,6 +38,8 @@ export const Layout = ({children}) => {
     <>
       <Toaster
         toastOptions={{
+          duration: 1500,
+
           style: {
             fontFamily: 'Poppins',
           },
