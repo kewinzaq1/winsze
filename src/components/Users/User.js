@@ -17,7 +17,7 @@ export const User = ({nickname, email, avatar, registerDate, id}) => {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 0 1rem;
+        padding: 0.5rem 1rem;
       `}
     >
       {avatar ? (
@@ -43,7 +43,7 @@ export const User = ({nickname, email, avatar, registerDate, id}) => {
       )}
       <Box>
         <Typography variant="h4" component="h1">
-          <Link to={id}>
+          <Link to={`/users/${id}`}>
             {user.displayName === nickname ? 'You' : `@${nickname}`}
           </Link>
         </Typography>

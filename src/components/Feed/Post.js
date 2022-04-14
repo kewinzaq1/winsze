@@ -35,6 +35,7 @@ import {useAuth} from '../../Auth'
 import {ConfirmationDeleteMenu} from '../Layout/ConfirmationDeleteMenu'
 import {Comments} from './Comment/Comments'
 import toast from 'react-hot-toast'
+import {Link} from 'react-router-dom'
 
 const Post = ({
   author,
@@ -110,8 +111,6 @@ const Post = ({
   }
 
   const handleDelete = async () => {
-    removePost(id)
-
     toast.promise(
       removePost(id, originalPhoto),
       {
@@ -182,13 +181,14 @@ const Post = ({
                 </Typography>
                 <Typography
                   variant="h5"
-                  component="p"
                   css={css`
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     gap: 1rem;
                   `}
+                  component={Link}
+                  to={`/users/${authorId}`}
                 >
                   {authorId === user.uid ? 'You' : `@${author}`}
                 </Typography>

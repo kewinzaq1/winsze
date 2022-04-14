@@ -21,6 +21,7 @@ const Users = () => {
       css={css`
         max-width: ${maxWidth};
         margin: 0 auto;
+        padding-bottom: 56px;
       `}
     >
       {users.map(({id, nickname, email, avatar, registerDate}) => (

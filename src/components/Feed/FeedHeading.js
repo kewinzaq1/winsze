@@ -20,7 +20,7 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
 import toast from 'react-hot-toast'
 
-export const FeedHeading = () => {
+export const FeedHeading = ({disableTitle} = {}) => {
   const {user} = useAuth()
   const [photo, setPhoto] = useState(null)
   const [preview, setPreview] = useState(null)
@@ -92,9 +92,11 @@ export const FeedHeading = () => {
         elevation={0}
       >
         <Form onSubmit={submitPost}>
-          <Typography variant="h2" component="h1">
-            Share this with friends
-          </Typography>
+          {!disableTitle && (
+            <Typography variant="h2" component="h1">
+              Share with friends
+            </Typography>
+          )}
           <FormGroup
             css={css`
               height: 100%;

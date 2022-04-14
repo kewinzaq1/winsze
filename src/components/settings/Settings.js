@@ -47,6 +47,7 @@ export const Settings = () => {
       css={css`
         max-width: ${maxWidth};
         margin: 0 auto;
+        padding-bottom: 56px;
       `}
     >
       <Box css={styleFlexColumn}>

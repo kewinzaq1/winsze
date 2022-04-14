@@ -39,7 +39,8 @@ export const AuthProvider = ({initUser, children} = {}) => {
         setUser(user)
         setStatus('authenticated')
       } else {
-        setUser('')
+        setUser(null)
+        console.log(user)
         setStatus('login')
       }
     })

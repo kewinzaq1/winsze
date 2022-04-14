@@ -3,7 +3,7 @@
 import {css, jsx} from '@emotion/react'
 import {Avatar, Card, Divider, Stack, Typography} from '@mui/material'
 import React from 'react'
-import {useParams} from 'react-router-dom'
+import {useMatch, useParams} from 'react-router-dom'
 import {streamFriends} from '.'
 import {useAuth} from '../../Auth'
 import {useStream} from '../../Utils/hooks'
@@ -25,11 +25,8 @@ export const SingleUser = () => {
   const {streamData: posts} = useStream(streamPosts)
 
   let {id} = useParams()
-  console.log('id', id)
   const user = users?.find(user => user.id === id)
   const filteredPosts = posts?.filter(post => post.authorId === id)
-  console.log('user', user)
-  console.log('filteredPosts', filteredPosts)
 
   if (!user) {
     return null
@@ -39,6 +36,7 @@ export const SingleUser = () => {
     <>
       <main
         css={css`
+          word-break: break-word;
           @media (max-width: ${mobileBreakpoint}) {
             ${styleFlexColumn}
           }
@@ -53,12 +51,7 @@ export const SingleUser = () => {
             justify-items: end;
             align-items: center;
             grid-template-columns: 20% 80%;
-            word-break: break-all;
           }
-
-          /* @media (min-width: ${mobileBreakpoint}) {
-            grid-template-columns: 10% 90%;
-          } */
         `}
       >
         {user?.avatar && (
@@ -73,9 +66,6 @@ export const SingleUser = () => {
               @media (min-width: ${tabletBreakpoint}) {
                 grid-column: 1;
               }
-              /* img {
-                object-fit: contain;
-              } */
             `}
           ></Avatar>
         )}
@@ -83,13 +73,7 @@ export const SingleUser = () => {
           variant="h2"
           component="h1"
           css={css`
-            /* @media (min-width: ${mobileBreakpoint}) {
-              grid-column: 2;
-            }
-
-            /* @media (max-width: ${mobileBreakpoint}) {
-              grid-column: 1;
-            } */ */
+            grid-column: 2;
           `}
         >
           {user?.nickname}
@@ -101,44 +85,62 @@ export const SingleUser = () => {
             grid-column: 2;
           `}
         >
-          Check out {id === currentUserId ? 'own' : user?.nickname} posts
+          {id === currentUserId
+            ? 'Check or write own posts'
+            : `Check ${user?.nickname} posts`}
         </Typography>
       </main>
-
-      {id === currentUserId && <FeedHeading disableTitle />}
-
-      {Boolean(filteredPosts) && (
-        <Stack>
-          {filteredPosts.map(
-            ({
-              author,
-              avatar,
-              date,
-              description,
-              photo,
-              id,
-              authorId,
-              likes,
-              usersWhoLiked,
-              comments,
-            }) => (
-              <Post
-                key={id}
-                avatar={avatar}
-                date={date}
-                description={description}
-                photo={photo}
-                author={author}
-                id={id}
-                authorId={authorId}
-                likes={likes}
-                usersWhoLiked={usersWhoLiked}
-                comments={comments}
-              />
-            ),
-          )}
-        </Stack>
+      {id !== currentUserId && (
+        <Divider
+          css={css`
+            margin: 0 auto;
+            max-width: ${maxWidth};
+          `}
+        />
       )}
+
+      <section
+        css={css`
+          margin: 0 auto;
+          max-width: ${maxWidth};
+          padding-bottom: 56px;
+        `}
+      >
+        {id === currentUserId && <FeedHeading disableTitle />}
+
+        {Boolean(filteredPosts) && (
+          <Stack>
+            {filteredPosts.map(
+              ({
+                author,
+                avatar,
+                date,
+                description,
+                photo,
+                id,
+                authorId,
+                likes,
+                usersWhoLiked,
+                comments,
+              }) => (
+                <Post
+                  key={id}
+                  avatar={avatar}
+                  date={date}
+                  description={description}
+                  photo={photo}
+                  author={author}
+                  id={id}
+                  authorId={authorId}
+                  likes={likes}
+                  usersWhoLiked={usersWhoLiked}
+                  comments={comments}
+                />
+              ),
+            )}
+          </Stack>
+        )}
+      </section>
     </>
   )
 }
