@@ -59,9 +59,9 @@ export const Login = () => {
 
   const addUserToFirestore = async () =>
     await setDoc(doc(db, 'users', auth.currentUser.uid), {
-      displayName:
+      nickname:
         auth.currentUser.displayName ?? auth.currentUser.email.split('@')[0],
-      photoURL: auth.currentUser.photoURL ?? null,
+      avatar: auth.currentUser.photoURL ?? null,
       email: auth.currentUser.email,
       registerDate: `${new Date().toISOString()}`,
       id: auth.currentUser.uid,

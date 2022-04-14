@@ -91,7 +91,7 @@ export const SettingsProvider = ({children}) => {
         getDownloadURL(imageRef).then(async url => {
           updateProfile(currentUser, {
             photoURL: url,
-          }).then(() => updateUserInFirestore({photoURL: url}))
+          }).then(() => updateUserInFirestore({avatar: url}))
         })
         closeAll()
         return `Look's great!`
