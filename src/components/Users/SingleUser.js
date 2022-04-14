@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars
 import {css, jsx} from '@emotion/react'
-import {Avatar, Card, Divider, Stack, Typography} from '@mui/material'
+import {Avatar, Divider, Stack, Typography} from '@mui/material'
 import React from 'react'
-import {useMatch, useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import {streamFriends} from '.'
 import {useAuth} from '../../Auth'
 import {useStream} from '../../Utils/hooks'
@@ -17,7 +17,7 @@ import {
   tabletBreakpoint,
 } from '../Layout'
 
-export const SingleUser = () => {
+const SingleUser = () => {
   const {
     user: {uid: currentUserId},
   } = useAuth()
@@ -29,7 +29,7 @@ export const SingleUser = () => {
   const filteredPosts = posts?.filter(post => post.authorId === id)
 
   if (!user) {
-    return null
+    return
   }
 
   return (
@@ -144,3 +144,4 @@ export const SingleUser = () => {
     </>
   )
 }
+export default SingleUser

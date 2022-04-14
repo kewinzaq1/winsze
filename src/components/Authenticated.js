@@ -1,9 +1,12 @@
 import React from 'react'
+import {lazy} from 'react'
+import {Suspense} from 'react'
 import {Route, Routes} from 'react-router-dom'
 import {Feed} from './Feed'
+import {Progress} from './Layout'
 import {SettingsProvider, Settings} from './Settings'
 import {Friends} from './Users'
-import {SingleUser} from './Users/SingleUser'
+const SingleUser = lazy(() => import('./Users/SingleUser'))
 
 export const AuthenticatedApp = () => {
   return (
@@ -18,7 +21,14 @@ export const AuthenticatedApp = () => {
       />
       <Route path="/" element={<Feed />}></Route>
       <Route path="/users" element={<Friends />}></Route>
-      <Route path="/users/:id" element={<SingleUser />}></Route>
+      <Route
+        path="/users/:id"
+        element={
+          <Suspense fallback={<Progress />}>
+            <SingleUser />
+          </Suspense>
+        }
+      ></Route>
     </Routes>
   )
 }
