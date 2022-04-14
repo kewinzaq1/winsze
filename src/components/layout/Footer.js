@@ -7,7 +7,8 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import Settings from '@mui/icons-material/Settings'
 import ArticleIcon from '@mui/icons-material/Article'
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
-import {useLocation, useNavigate} from 'react-router-dom'
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
+import {useLocation, useMatch, useNavigate, useParams} from 'react-router-dom'
 import {useAuth} from '../../Auth'
 import {maxWidth} from '.'
 
@@ -18,7 +19,7 @@ export const Footer = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    setPath(pathname)
+    setPath(pathname.includes('users') ? '/users' : pathname)
   }, [pathname])
 
   const handleChange = (event, newPath) => {
@@ -50,9 +51,14 @@ export const Footer = () => {
       >
         <BottomNavigationAction label="Feed" value="/" icon={<ArticleIcon />} />
         <BottomNavigationAction
-          label="Friends"
-          value="/friends"
+          label="Users"
+          value={'/users'}
           icon={<PeopleAltIcon />}
+        />
+        <BottomNavigationAction
+          label="You"
+          value={`/${user.uid}`}
+          icon={<AccountBoxIcon />}
         />
         <BottomNavigationAction
           label="Settings"
