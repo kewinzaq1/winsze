@@ -61,7 +61,6 @@ export const FeedHeading = ({disableTitle} = {}) => {
       success: () => {
         setStatus(null)
         clearAll()
-        e.target.blur()
         return 'Added'
       },
       error: () => {
@@ -73,7 +72,7 @@ export const FeedHeading = ({disableTitle} = {}) => {
 
   const scrollToButton = e => {
     window.scrollTo({
-      top: e.target.offsetHeight - 50,
+      top: e.target.offsetHeight,
       behavior: 'smooth',
     })
   }
