@@ -21,9 +21,27 @@ export const SettingsProvider = ({children}) => {
   const [isOpenConfirmation, setIsConfirmationOpen] = useState(false)
   const [settings, setSettings] = useState('')
   const deleteAccount = async () => {
-    await deleteDoc(doc(db, 'users', auth.currentUser.uid))
-    await deleteObject(ref(storage, `ProfilePictures/${auth.currentUser.uid}`))
-    await deleteUser(currentUser)
+    toast.promise(
+      Promise.all(
+        user.photoURL
+          ? [
+              deleteDoc(doc(db, 'users', auth.currentUser.uid)),
+              deleteObject(
+                ref(storage, `ProfilePictures/${auth.currentUser.uid}`),
+              ),
+              deleteUser(currentUser),
+            ]
+          : [
+              deleteDoc(doc(db, 'users', auth.currentUser.uid)),
+              deleteUser(currentUser),
+            ],
+      ),
+      {
+        loading: 'Removing',
+        success: `Removed`,
+        error: 'Try again',
+      },
+    )
   }
 
   const closeAll = () => {
