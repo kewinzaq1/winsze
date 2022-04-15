@@ -50,14 +50,14 @@ export const NavbarMenu = ({anchorEl, open, handleClose, user, logout}) => {
       </MenuItem>
       <Divider />
       <Link to="/settings">
-        <MenuItem>
+        <MenuItem aria-label="settings">
           <ListItemIcon>
             <SettingsIcon fontSize="small" />
           </ListItemIcon>
           Settings
         </MenuItem>
       </Link>
-      <MenuItem onClick={logout}>
+      <MenuItem onClick={logout} aria-label="logout">
         <ListItemIcon>
           <LogoutIcon fontSize="small" />
         </ListItemIcon>
