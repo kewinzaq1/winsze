@@ -39,10 +39,14 @@ export const ConfirmationDeleteMenu = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onAgree} autoFocus>
+        <Button onClick={onAgree} autoFocus aria-label="accept confirmation">
           Agree
         </Button>
-        <Button onClick={onClose} variant="outlined">
+        <Button
+          onClick={onClose}
+          variant="outlined"
+          aria-label="disagree confirmation"
+        >
           Disagree
         </Button>
       </DialogActions>
