@@ -12,7 +12,9 @@ const useOverflowHidden = () => {
 const useLocalStorageState = (name, initValue = null) => {
   const getValueFromLocalStorage = window.localStorage.getItem(name)
 
-  const [state, setState] = useState(getValueFromLocalStorage ?? initValue)
+  const [state, setState] = useState(
+    JSON.parse(getValueFromLocalStorage) ?? initValue,
+  )
 
   useEffect(() => {
     if (state) {
