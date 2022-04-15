@@ -126,6 +126,11 @@ const Post = ({
     )
   }
 
+  const handleLike = async () => {
+    setIsLiked(!isLiked)
+    await toggleLike(id, {isLiked, userId: user.uid})
+  }
+
   return (
     <>
       <Card elevation={0}>
@@ -235,6 +240,7 @@ const Post = ({
               user.uid === authorId && (
                 <Box>
                   <MoreHorizIcon
+                    aria-label="open post menu"
                     onClick={handleClick}
                     role={'button'}
                     css={css`
@@ -246,7 +252,6 @@ const Post = ({
                     css={css`
                       border-radius: 0.5rem;
                     `}
-                    id={'action-post-popover'}
                     open={open}
                     anchorEl={anchorEl}
                     onClose={handleClose}
@@ -255,6 +260,7 @@ const Post = ({
                       horizontal: 'left',
                     }}
                     elevation={2}
+                    role="dialog"
                   >
                     <List>
                       <ListItem onClick={editPost}>
@@ -323,10 +329,12 @@ const Post = ({
         </Box>
         {photoPreview && (
           <img
+            onDoubleClick={handleLike}
             src={photoPreview}
             alt={description}
             css={css`
               width: 100%;
+              object-fit: cover;
             `}
           />
         )}
@@ -338,10 +346,7 @@ const Post = ({
         >
           <IconButton
             aria-label={isLiked ? 'remove like' : 'add like'}
-            onClick={() => {
-              setIsLiked(!isLiked)
-              toggleLike(id, {isLiked, userId: user.uid})
-            }}
+            onClick={handleLike}
           >
             {isLiked ? (
               <FavoriteIcon
@@ -353,7 +358,7 @@ const Post = ({
             ) : (
               <FavoriteBorderIcon />
             )}
-            <span>{likes > 0 && likes}</span>
+            <span aria-label="likes counter">{likes > 0 && likes}</span>
           </IconButton>
           <IconButton
             aria-label="open comments"
@@ -363,7 +368,7 @@ const Post = ({
             `}
           >
             <ChatBubbleOutlineIcon />
-            <span>{comments?.length}</span>
+            <span aria-label="comments counter">{comments?.length}</span>
           </IconButton>
         </Box>
         <Divider />
