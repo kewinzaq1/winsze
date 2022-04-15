@@ -29,9 +29,8 @@ import {
 } from 'firebase/auth'
 import {db, useAuth} from '../../Auth'
 import {baseFlex, mobileBreakpoint, myBlue} from '../Layout'
-import {useOverflowHidden} from '../../Utils/hooks'
-import {AnimatePresence, motion} from 'framer-motion'
 import {setDoc, doc} from 'firebase/firestore'
+import {Transition} from 'react-transition-group'
 
 export const Login = () => {
   const auth = getAuth()
@@ -81,82 +80,71 @@ export const Login = () => {
     )
   }
 
-  useOverflowHidden()
-
   return (
     <LoginWrapper>
       <Form onSubmit={isRegister ? handleRegister : handleLogin} method="post">
-        <AnimatePresence initial={true}>
-          <motion.div
-            key="modal"
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
-            exit={{opacity: 0}}
-          >
+        <FormGroup>
+          <FormGroup>
+            <Typography variant="h2" component="h1">
+              {textData?.title}
+            </Typography>
+            <Typography variant="subtitle1" component="h2">
+              {textData?.subtitle}
+            </Typography>
+            {isError && <Alert severity="error">{errorMessage}</Alert>}
+          </FormGroup>
+          <FormGroup>
+            <FormLabel htmlFor="email">email</FormLabel>
+            <Input
+              id="email"
+              name="email"
+              placeholder="example@some.ex"
+              value={email}
+              onChange={({target}) => inputEmail(dispatch, target.value)}
+            />
+          </FormGroup>
+          {isRegister && (
             <FormGroup>
-              <FormGroup>
-                <Typography variant="h2" component="h1">
-                  {textData?.title}
-                </Typography>
-                <Typography variant="subtitle1" component="h2">
-                  {textData?.subtitle}
-                </Typography>
-                {isError && <Alert severity="error">{errorMessage}</Alert>}
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="email">email</FormLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  placeholder="example@some.ex"
-                  value={email}
-                  onChange={({target}) => inputEmail(dispatch, target.value)}
-                />
-              </FormGroup>
-              {isRegister && (
-                <FormGroup>
-                  <FormLabel htmlFor="nickname">nickname</FormLabel>
-                  <Input
-                    type="text"
-                    id="nickname"
-                    name="nickname"
-                    placeholder="eg. fancyplayer1992"
-                    value={login}
-                    onChange={({target}) => inputLogin(dispatch, target.value)}
-                  />
-                </FormGroup>
-              )}
-
-              <FormGroup>
-                <FormLabel htmlFor="password">password</FormLabel>
-                <Input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="eg. i<3React"
-                  value={password}
-                  onChange={({target}) => inputPassword(dispatch, target.value)}
-                />
-              </FormGroup>
-              <FormActions>
-                <Button
-                  type="submit"
-                  onClick={status === 'register' ? handleRegister : handleLogin}
-                  variant="contained"
-                  endIcon={
-                    <Send
-                      css={css`
-                        fill: white;
-                      `}
-                    />
-                  }
-                >
-                  {textData?.btnText}
-                </Button>
-              </FormActions>
+              <FormLabel htmlFor="nickname">nickname</FormLabel>
+              <Input
+                type="text"
+                id="nickname"
+                name="nickname"
+                placeholder="eg. fancyplayer1992"
+                value={login}
+                onChange={({target}) => inputLogin(dispatch, target.value)}
+              />
             </FormGroup>
-          </motion.div>
-        </AnimatePresence>
+          )}
+
+          <FormGroup>
+            <FormLabel htmlFor="password">password</FormLabel>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="eg. i<3React"
+              value={password}
+              onChange={({target}) => inputPassword(dispatch, target.value)}
+            />
+          </FormGroup>
+          <FormActions>
+            <Button
+              type="submit"
+              onClick={status === 'register' ? handleRegister : handleLogin}
+              variant="contained"
+              endIcon={
+                <Send
+                  css={css`
+                    fill: white;
+                  `}
+                />
+              }
+            >
+              {textData?.btnText}
+            </Button>
+          </FormActions>
+        </FormGroup>
       </Form>
       <FormWallpaper />
     </LoginWrapper>

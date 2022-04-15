@@ -20,11 +20,11 @@ export const Footer = () => {
 
   useEffect(() => {
     setPath(
-      pathname.includes('users') && !pathname.includes(user.uid)
+      pathname.includes('users') && !pathname.includes(user?.uid)
         ? '/users'
         : pathname,
     )
-  }, [pathname, user.uid])
+  }, [pathname, user?.uid])
 
   const handleChange = (event, newPath) => {
     setPath(newPath)
@@ -41,6 +41,7 @@ export const Footer = () => {
         position: fixed;
         width: 100%;
         bottom: 0;
+        background: #fff;
       `}
     >
       <BottomNavigation
@@ -53,18 +54,26 @@ export const Footer = () => {
           margin: 0 auto;
         `}
       >
-        <BottomNavigationAction label="Feed" value="/" icon={<ArticleIcon />} />
         <BottomNavigationAction
+          aria-label="go to feed"
+          label="Feed"
+          value="/"
+          icon={<ArticleIcon />}
+        />
+        <BottomNavigationAction
+          aria-label="go to users"
           label="Users"
           value={'/users'}
           icon={<PeopleAltIcon />}
         />
         <BottomNavigationAction
+          aria-label="go to you"
           label="You"
-          value={`/users/${user.uid}`}
+          value={`/users/${user?.uid}`}
           icon={<AccountBoxIcon />}
         />
         <BottomNavigationAction
+          aria-label="go to settings"
           label="Settings"
           value="/settings"
           icon={<Settings />}

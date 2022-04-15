@@ -1,11 +1,17 @@
 import React from 'react'
 import {useContext, createContext, useState} from 'react'
 import {initializeApp} from 'firebase/app'
-import {getStorage} from 'firebase/storage'
-import {getFirestore} from 'firebase/firestore'
-import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth'
+import {connectStorageEmulator, getStorage} from 'firebase/storage'
+import {connectFirestoreEmulator, getFirestore} from 'firebase/firestore'
+import {
+  getAuth,
+  signOut,
+  onAuthStateChanged,
+  connectAuthEmulator,
+} from 'firebase/auth'
 import {useEffect} from 'react'
 import {useLocalStorageState} from '../Utils/hooks'
+import {useNavigate} from 'react-router-dom'
 
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_API_KEY}`,
@@ -22,6 +28,10 @@ export const storage = getStorage(app)
 export const AuthContext = createContext()
 export const db = getFirestore(app)
 
+connectAuthEmulator(auth, 'http://localhost:1111')
+connectFirestoreEmulator(db, 'localhost', 1112)
+connectStorageEmulator(storage, 'localhost', 1113)
+
 export const AuthProvider = ({initUser, children} = {}) => {
   const [user, setUser] = useLocalStorageState('user', initUser)
   const [status, setStatus] = useState(user ? 'authenticated' : 'login')
@@ -31,7 +41,8 @@ export const AuthProvider = ({initUser, children} = {}) => {
   const isAuthenticated = status === 'authenticated'
   const setLogin = () => setStatus('login')
   const setRegister = () => setStatus('register')
-  const logout = async () => signOut(auth)
+  const logout = async () => await signOut(auth)
+  const navigate = useNavigate()
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -42,9 +53,10 @@ export const AuthProvider = ({initUser, children} = {}) => {
         setUser(null)
         console.log(user)
         setStatus('login')
+        navigate('/')
       }
     })
-  }, [setUser])
+  }, [navigate, setUser])
 
   return (
     <AuthContext.Provider

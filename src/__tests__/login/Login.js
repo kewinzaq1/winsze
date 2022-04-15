@@ -74,6 +74,10 @@ describe('unauth app', () => {
 })
 
 describe('integration with firebase', () => {
+  beforeEach(() => {
+    indexedDB.deleteDatabase('firebaseLocalStorageDb')
+  })
+
   test('login as user', async () => {
     const {emailInput, passwordInput, loginButton} = renderLoginScreen()
 

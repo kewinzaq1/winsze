@@ -10,7 +10,7 @@ import {
   LinearProgress,
 } from '@mui/material'
 import styled from '@emotion/styled'
-import {myBlue} from '.'
+import {maxWidth, myBlue} from '.'
 import {NavbarMenu} from './NavbarMenu'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../../Auth'
@@ -27,6 +27,7 @@ export const Navbar = () => {
     user,
     logout,
     isLoading,
+    status,
   } = useAuth()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
@@ -41,7 +42,7 @@ export const Navbar = () => {
 
   return (
     <AppBar position="sticky">
-      <Nav>
+      <Nav status={status}>
         <Typography
           variant="h1"
           css={css`
@@ -67,6 +68,7 @@ export const Navbar = () => {
           {isAuthenticated && (
             <>
               <Avatar
+                aria-label="account-menu"
                 variant={'rounded'}
                 onClick={handleClick}
                 sx={{bgcolor: myBlue, cursor: 'pointer'}}
@@ -110,7 +112,8 @@ const Nav = styled.nav`
   padding: 1rem;
   height: 100px;
   justify-content: space-between;
-  max-width: 1400px;
+  max-width: ${({status}) =>
+    status === 'authenticated' ? maxWidth : '1400px'};
   margin: 0 auto;
 
   h1 {
