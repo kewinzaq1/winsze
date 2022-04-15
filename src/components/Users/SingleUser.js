@@ -13,9 +13,11 @@ import Post from '../Feed/Post'
 import {
   maxWidth,
   mobileBreakpoint,
+  myBlue,
   styleFlexColumn,
   tabletBreakpoint,
 } from '../Layout'
+import PersonIcon from '@mui/icons-material/Person'
 
 const SingleUser = () => {
   const {
@@ -54,21 +56,26 @@ const SingleUser = () => {
           }
         `}
       >
-        {user?.avatar && (
-          <Avatar
-            src={user?.avatar}
-            alt={user?.displayName}
-            variant="rounded"
-            css={css`
-              width: 100%;
-              height: 150px;
-              grid-row: span 2;
-              @media (min-width: ${tabletBreakpoint}) {
-                grid-column: 1;
-              }
-            `}
-          ></Avatar>
-        )}
+        <Avatar
+          src={user?.avatar}
+          alt={user?.nickname}
+          variant="rounded"
+          css={css`
+            width: 100%;
+            height: 150px;
+            grid-row: span 2;
+            @media (min-width: ${tabletBreakpoint}) {
+              grid-column: 1;
+            }
+            background-color: ${myBlue};
+            svg {
+              font-size: 5rem;
+            }
+          `}
+          color={user?.avatar && 'primary'}
+        >
+          {!user?.avatar && <PersonIcon />}
+        </Avatar>
         <Typography
           variant="h2"
           component="h1"
