@@ -20,6 +20,7 @@ const Posts = () => {
           avatar,
           date,
           description,
+          photo,
           id,
           authorId,
           likes,
@@ -31,6 +32,7 @@ const Posts = () => {
             avatar={avatar}
             date={date}
             description={description}
+            photo={photo}
             author={author}
             id={id}
             authorId={authorId}
