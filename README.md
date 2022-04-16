@@ -45,7 +45,7 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
     <img src="public/assets/screens/unauth-mobile.png" alt="unauth-mobile">
 </p>
 
-## Firebase
+## Firebase 🔥
 
 ### Posts firestore
 
