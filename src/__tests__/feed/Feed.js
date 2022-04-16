@@ -1,5 +1,5 @@
 import {screen} from '@testing-library/react'
-import {Comment} from '../../components/Feed/Comment/Comment'
+import {Comment} from '../../components/Feed/Comments/Comment'
 import {FeedHeading} from '../../components/Feed/FeedHeading'
 import Post from '../../components/Feed/Post'
 import {buildUser} from '../../Utils/Builders'

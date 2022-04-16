@@ -16,7 +16,8 @@
     "@testing-library/user-event": "^14.0.0",
     "espree": "^9.3.1",
     "firebase": "^9.6.10",
-    "framer-motion": "^6.2.8",
+    "framer-motion": "^6.3.0",
+    "html-entities": "^2.3.3",
     "moment": "^2.29.2",
     "normalize.css": "^8.0.1",
     "react": "^18.0.0",
@@ -27,6 +28,7 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "react-service-worker": "^0.1.1",
+    "react-transition-group": "^4.4.2",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -35,15 +37,18 @@
     "@babel/preset-react": "^7.16.7",
     "@emotion/babel-plugin": "^11.7.2",
     "@faker-js/faker": "^6.1.1",
+    "@testing-library/cypress": "^8.0.2",
     "@testing-library/dom": "^8.12.0",
-    "cypress": "^9.5.3",
+    "cypress": "^9.5.4",
+    "fake-indexeddb": "^3.1.7",
     "msw": "^0.39.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cy": "cypress open"
   },
   "eslintConfig": {
     "extends": [
