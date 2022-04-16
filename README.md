@@ -45,7 +45,37 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
     <img src="public/assets/screens/unauth-mobile.png" alt="unauth-mobile">
 </p>
 
-## Code Example/Issues 🔍
+## Firebase
+
+### Posts firestore
+
+| Name          | Type   | Description                        |
+| ------------- | ------ | ---------------------------------- |
+| id            | string | uuidv4 generated when posting      |
+| authorId      | string | uid from Firebase Auth             |
+| date          | string | date in iso generated when posting |
+| author        | string | displayName from Firebase Auth     |
+| avatar        | string | photoURL from Firebase Auth        |
+| description   | string | content entered by user            |
+| photo         | string | content selected by user           |
+| likes         | number | like counter                       |
+| usersWhoLiked | array  | array containing users id          |
+
+### Users firestore
+
+| Name         | Type   | Description                                                   |
+| ------------ | ------ | ------------------------------------------------------------- |
+| avatar       | string | photoURL from Firebase Auth                                   |
+| id           | string | uid from Firebase Auth                                        |
+| nickname     | string | displayName from Firebase Auth                                |
+| registerDate | string | and if it doesn't exist then the email address cut off at '@' |
+
+### Storage
+
+| Name            | Type | Description                               |
+| --------------- | ---- | ----------------------------------------- |
+| PhotosPosts     | img  | Images for posts, saved using the post id |
+| ProfilePictures | img  | Images for posts, saved using the user id |
 
 ## Installation 💾
 
