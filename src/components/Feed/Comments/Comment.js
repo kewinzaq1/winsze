@@ -51,7 +51,7 @@ export const Comment = ({comment, postId}) => {
         `}
       >
         <ListItemText
-          primary={authorId === user.uid ? 'You' : authorNickname}
+          primary={authorId === user?.uid ? 'You' : authorNickname}
           secondary={<Moment fromNow>{date}</Moment>}
         />
         <Typography
@@ -64,7 +64,7 @@ export const Comment = ({comment, postId}) => {
           {content}
         </Typography>
       </Box>
-      {user.uid === authorId && (
+      {user?.uid === authorId && (
         <Button
           aria-label="remove comment"
           onClick={handleRemove}

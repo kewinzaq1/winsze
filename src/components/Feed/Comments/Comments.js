@@ -49,9 +49,9 @@ export const Comments = ({open, onClose, comments, postId} = {}) => {
             padding: 1rem;
           `}
         >
-          {comments?.length
-            ? `${comments?.length} Comments:`
-            : 'Write first comment '}
+          {comments?.length === 1 && `${comments.length} Comment`}
+          {comments?.length > 1 && `${comments.length} Comments`}
+          {!comments?.length && `Write first comment`}
         </Typography>
         <form
           css={css`
