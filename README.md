@@ -32,7 +32,7 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 | React            | Main JS Library       |
 | Firebase         | Serverless backend    |
 | Jest             | Unit Tests            |
-| Jest             | E2E Tests             |
+| Cypress          | E2E Tests             |
 | React Router Dom | Routing               |
 | Emotion          | Styling (css in js)   |
 | Material UI      | Styling (components)  |
