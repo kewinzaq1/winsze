@@ -128,7 +128,7 @@ const Post = ({
 
   const handleLike = async () => {
     setIsLiked(!isLiked)
-    await toggleLike(id, {isLiked, userId: user?.uid})
+    await toggleLike(id, {isLiked, userId: user.uid})
   }
 
   return (
@@ -195,7 +195,7 @@ const Post = ({
                   component={Link}
                   to={`/users/${authorId}`}
                 >
-                  {authorId === user?.uid ? 'You' : `@${author}`}
+                  {authorId === user.uid ? 'You' : `@${author}`}
                 </Typography>
               </Box>
             </Box>
@@ -237,7 +237,7 @@ const Post = ({
                 </IconButton>
               )
             ) : (
-              user?.uid === authorId && (
+              user.uid === authorId && (
                 <Box>
                   <MoreHorizIcon
                     aria-label="open post menu"
