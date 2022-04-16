@@ -28,9 +28,9 @@ export const storage = getStorage(app)
 export const AuthContext = createContext()
 export const db = getFirestore(app)
 
-connectAuthEmulator(auth, 'http://localhost:1111')
-connectFirestoreEmulator(db, 'localhost', 1112)
-connectStorageEmulator(storage, 'localhost', 1113)
+// connectAuthEmulator(auth, 'http://localhost:1111')
+// connectFirestoreEmulator(db, 'localhost', 1112)
+// connectStorageEmulator(storage, 'localhost', 1113)
 
 export const AuthProvider = ({initUser, children} = {}) => {
   const [user, setUser] = useLocalStorageState('user', initUser)
