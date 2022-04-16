@@ -27,16 +27,17 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 
 ## Tech/framework used 🔧
 
-| Tech             | Description                |
-| ---------------- | -------------------------- |
-| React            | Main JS Library            |
-| Firebase         | Serverless backend         |
-| Jest             | Unit and Integration Tests |
-| React Router Dom | Routing                    |
-| Emotion          | Styling (css in js)        |
-| Material UI      | Styling (components)       |
-| React Hot Toast  | Notifications              |
-| React Moment     | Improved date display      |
+| Tech             | Description           |
+| ---------------- | --------------------- |
+| React            | Main JS Library       |
+| Firebase         | Serverless backend    |
+| Jest             | Unit Tests            |
+| Jest             | E2E Tests             |
+| React Router Dom | Routing               |
+| Emotion          | Styling (css in js)   |
+| Material UI      | Styling (components)  |
+| React Hot Toast  | Notifications         |
+| React Moment     | Improved date display |
 
 ## Screenshots 📺
 
@@ -54,7 +55,8 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 | --------------- | ---------------------- |
 | `npm run start` | Open local server      |
 | `npm run build` | Create optimized build |
-| `npm run test`  | Run tests              |
+| `npm run test`  | Run jest tests         |
+| `npm run cy`    | Run cypress test       |
 
 ## Live 📍
 
