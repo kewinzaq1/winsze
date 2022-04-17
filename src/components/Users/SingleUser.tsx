@@ -18,13 +18,14 @@ import {
   tabletBreakpoint,
 } from '../Layout'
 import PersonIcon from '@mui/icons-material/Person'
+import {Posts, Users} from '../../Utils/models'
 
 const SingleUser = () => {
   const {
     user: {uid: currentUserId},
   } = useAuth()
-  const {streamData: users} = useStream(streamFriends)
-  const {streamData: posts} = useStream(streamPosts)
+  const users: Users[] = useStream(streamFriends)
+  const posts: Posts[] = useStream(streamPosts)
 
   let {id} = useParams()
   const user = users?.find(user => user.id === id)
