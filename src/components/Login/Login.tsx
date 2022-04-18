@@ -2,14 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {css, jsx} from '@emotion/react'
 import React, {FormEvent} from 'react'
-import {
-  loginReducer,
-  initialState,
-  inputEmail,
-  inputLogin,
-  inputPassword,
-  setError,
-} from './index'
+import {loginReducer, initialState, ActionType} from './index'
 import {
   FormGroup,
   Typography,
@@ -36,7 +29,7 @@ export const Login = () => {
   const [{nickname, email, password, isError, errorMessage}, dispatch] =
     React.useReducer(loginReducer, initialState)
 
-  const handleRegister = e => {
+  const handleRegister = (e: FormEvent<HTMLElement>) => {
     e.preventDefault()
     setIsLoading(true)
 
@@ -47,11 +40,19 @@ export const Login = () => {
         await addUserToFirestore()
       },
       error => {
-        setError(dispatch, error.message)
+        dispatch({type: ActionType.INPUT_ERROR, errorMessage: error.message})
         setIsLoading(false)
       },
     )
   }
+
+  React.useEffect(() => {
+    if (isError) {
+      setTimeout(() => {
+        dispatch({type: ActionType.OFF_ERROR})
+      }, 5000)
+    }
+  }, [isError])
 
   const addUserToFirestore = async () =>
     await setDoc(doc(db, 'users', auth.currentUser.uid), {
@@ -71,7 +72,7 @@ export const Login = () => {
         setIsLoading(false)
       },
       error => {
-        setError(dispatch, error.message)
+        dispatch({type: ActionType.INPUT_ERROR, errorMessage: error.message})
         setIsLoading(false)
       },
     )
@@ -99,7 +100,9 @@ export const Login = () => {
               name="email"
               placeholder="eg. kewin@winsze.pl"
               value={email}
-              onChange={({target}) => inputEmail(dispatch, target.value)}
+              onChange={({target: {value: email}}) =>
+                dispatch({type: ActionType.INPUT_EMAIL, email})
+              }
             />
           </FormGroup>
           {isRegister && (
@@ -111,7 +114,9 @@ export const Login = () => {
                 name="nickname"
                 placeholder="Enter your nickname"
                 value={nickname}
-                onChange={({target}) => inputLogin(dispatch, target.value)}
+                onChange={({target: {value: nickname}}) =>
+                  dispatch({type: ActionType.INPUT_NICKNAME, nickname})
+                }
               />
             </FormGroup>
           )}
@@ -124,7 +129,9 @@ export const Login = () => {
               name="password"
               placeholder="Enter your password"
               value={password}
-              onChange={({target}) => inputPassword(dispatch, target.value)}
+              onChange={({target: {value: password}}) =>
+                dispatch({type: ActionType.INPUT_PASSWORD, password})
+              }
             />
           </FormGroup>
           <FormActions>
