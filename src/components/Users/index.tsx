@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars
 import {css, jsx} from '@emotion/react'
+import React from 'react'
 import {Box, Divider, Typography} from '@mui/material'
 import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 import {lazy, Suspense} from 'react'

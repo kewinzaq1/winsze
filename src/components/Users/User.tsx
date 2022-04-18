@@ -6,8 +6,9 @@ import React from 'react'
 import Moment from 'react-moment'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../../Auth'
+import {User as ModelUser} from '../../Utils/models'
 
-export const User = ({nickname, email, avatar, registerDate, id}) => {
+export const User = ({nickname, avatar, registerDate, id}: ModelUser) => {
   const {user} = useAuth()
 
   return (
