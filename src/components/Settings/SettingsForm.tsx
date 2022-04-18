@@ -1,20 +1,30 @@
 /** @jsxImportSource @emotion/react */
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {css, jsx} from '@emotion/react'
 import {useState} from 'react'
 import {FormGroup, Input, Button, Dialog, DialogContent} from '@mui/material'
 import styled from '@emotion/styled'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import React from 'react'
+import {UploadResult} from 'firebase/storage'
+interface Props {
+  open: boolean
+  onClose: () => void
+  placeholder: string
+  type: string
+  onSubmit: (
+    submittedVal: string | File,
+  ) => Promise<UploadResult> | Promise<void>
+}
 
 export const SettingsForm = ({
   open,
   onClose,
-  label,
   placeholder,
   type,
   onSubmit,
-} = {}) => {
-  const [val, setVal] = useState('')
+}: Props) => {
+  const [val, setVal] = useState<File | string>('')
 
   return (
     <Dialog
@@ -46,14 +56,14 @@ export const SettingsForm = ({
           >
             <Input
               value={type !== 'file' ? val : val[0]}
-              onChange={({target}) => {
+              onChange={({target}: React.ChangeEvent<HTMLInputElement>) => {
                 if (type === 'file') {
                   setVal(target.files[0])
                 } else setVal(target.value)
               }}
               type={type}
               placeholder={placeholder}
-              error={val.length < 6}
+              error={typeof val === 'string' && val.length < 6}
             />
             <Button
               type="submit"
@@ -61,7 +71,7 @@ export const SettingsForm = ({
               css={css`
                 margin-left: 0.5rem;
               `}
-              disabled={val.length < 6}
+              disabled={typeof val === 'string' && val.length < 6}
             >
               <ExpandMoreIcon
                 css={css`
