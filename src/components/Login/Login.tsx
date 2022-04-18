@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {css, jsx} from '@emotion/react'
-import React, {useReducer} from 'react'
-import unauthData from '../unauth.json'
+import React, {FormEvent} from 'react'
 import {
   loginReducer,
   initialState,
@@ -30,14 +29,12 @@ import {
 import {db, useAuth} from '../../Auth'
 import {baseFlex, mobileBreakpoint, myBlue} from '../Layout'
 import {setDoc, doc} from 'firebase/firestore'
-import {Transition} from 'react-transition-group'
 
 export const Login = () => {
   const auth = getAuth()
   const {isRegister, status, setIsLoading} = useAuth()
-  const [state, dispatch] = useReducer(loginReducer, initialState)
-  const {login, email, password, isError, errorMessage} = state
-  const {[status]: textData} = unauthData
+  const [{nickname, email, password, isError, errorMessage}, dispatch] =
+    React.useReducer(loginReducer, initialState)
 
   const handleRegister = e => {
     e.preventDefault()
@@ -46,8 +43,8 @@ export const Login = () => {
     createUserWithEmailAndPassword(auth, email, password).then(
       async () => {
         setIsLoading(false)
-        await updateProfile(auth.currentUser, {displayName: login})
-        await addUserToFirestore(auth.currentUser)
+        await updateProfile(auth.currentUser, {displayName: nickname})
+        await addUserToFirestore()
       },
       error => {
         setError(dispatch, error.message)
@@ -66,7 +63,7 @@ export const Login = () => {
       id: auth.currentUser.uid,
     })
 
-  const handleLogin = e => {
+  const handleLogin = (e: FormEvent<HTMLElement>) => {
     e.preventDefault()
     setIsLoading(true)
     signInWithEmailAndPassword(auth, email, password).then(
@@ -86,10 +83,12 @@ export const Login = () => {
         <FormGroup>
           <FormGroup>
             <Typography variant="h2" component="h1">
-              {textData?.title}
+              {status === 'register' ? 'Nice to Meet You' : 'Welcome back'}
             </Typography>
             <Typography variant="subtitle1" component="h2">
-              {textData?.subtitle}
+              {status === 'register'
+                ? 'First time? Create Free Account Now. Its 100% free'
+                : 'Nice that you are still with us'}
             </Typography>
             {isError && <Alert severity="error">{errorMessage}</Alert>}
           </FormGroup>
@@ -98,7 +97,7 @@ export const Login = () => {
             <Input
               id="email"
               name="email"
-              placeholder="example@some.ex"
+              placeholder="eg. kewin@winsze.pl"
               value={email}
               onChange={({target}) => inputEmail(dispatch, target.value)}
             />
@@ -110,8 +109,8 @@ export const Login = () => {
                 type="text"
                 id="nickname"
                 name="nickname"
-                placeholder="eg. fancyplayer1992"
-                value={login}
+                placeholder="Enter your nickname"
+                value={nickname}
                 onChange={({target}) => inputLogin(dispatch, target.value)}
               />
             </FormGroup>
@@ -123,7 +122,7 @@ export const Login = () => {
               type="password"
               id="password"
               name="password"
-              placeholder="eg. i<3React"
+              placeholder="Enter your password"
               value={password}
               onChange={({target}) => inputPassword(dispatch, target.value)}
             />
@@ -141,7 +140,7 @@ export const Login = () => {
                 />
               }
             >
-              {textData?.btnText}
+              {status === 'register' ? 'register' : 'login'}
             </Button>
           </FormActions>
         </FormGroup>

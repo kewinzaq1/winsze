@@ -1,38 +1,49 @@
-const initialState = {
+interface State {
+  option: string
+  email: string
+  nickname: string
+  password: string
+  isLoading: boolean
+  isError: boolean
+  errorMessage: string
+}
+
+enum Actions {
+  INPUT_NICKNAME = 'INPUT_NICKNAME',
+  INPUT_EMAIL = 'INPUT_EMAIL',
+  INPUT_PASSWORD = 'INPUT_PASSWORD',
+  INPUT_ERROR = 'INPUT_ERROR',
+  SET_LOADING = 'SET_LOADING',
+}
+
+const initialState: State = {
   option: 'register',
   email: '',
-  login: '',
+  nickname: '',
   password: '',
   isLoading: false,
   isError: false,
-  errorMessage: null,
+  errorMessage: '',
 }
 
-function loginReducer(state, action) {
+function loginReducer(state: State, action: {type: Actions} & State) {
   switch (action.type) {
-    case 'INPUT_LOGIN': {
-      return {...state, login: action.login}
+    case Actions.INPUT_NICKNAME: {
+      return {...state, login: action.nickname}
     }
-    case 'INPUT_EMAIL': {
+    case Actions.INPUT_EMAIL: {
       return {...state, email: action.email}
     }
-    case 'INPUT_PASSWORD': {
+    case Actions.INPUT_PASSWORD: {
       return {...state, password: action.password}
     }
-    case 'INPUT_ERROR': {
+    case Actions.SET_LOADING: {
       return {
         ...state,
         type: 'INPUT_ERROR',
         isLoading: false,
         isError: true,
         errorMessage: action.errorMessage,
-      }
-    }
-    case 'SET_LOADING': {
-      return {
-        ...state,
-        isError: false,
-        isLoading: action.isLoading,
       }
     }
     default: {
