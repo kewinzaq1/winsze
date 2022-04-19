@@ -61,43 +61,48 @@ export const SettingsProvider = ({ children }: Props) => {
     settings: "",
   };
 
-  enum Actions {
-    PICTURE = "OPEN_UPDATE_PICTURE",
-    NICKNAME = "OPEN_UPDATE_NICKNAME",
-    PASSWORD = "OPEN_UPDATE_PASSWORD",
-    EMAIL = "OPEN_UPDATE_EMAIL",
-    CONFIRMATION = "OPEN_CONFIRMATION",
-    RESET = "RESET_ALL",
-  }
-
   interface State {
     isOpenConfirmation: boolean;
     isFormOpen: boolean;
     settings: string;
   }
 
-  function settingsReducer(state: State, action: { type: Actions }) {
+  enum ActionType {
+    OPEN_UPDATE_PICTURE = "OPEN_UPDATE_PICTURE",
+    OPEN_UPDATE_NICKNAME = "OPEN_UPDATE_NICKNAME",
+    OPEN_UPDATE_PASSWORD = "OPEN_UPDATE_PASSWORD",
+    OPEN_UPDATE_EMAIL = "OPEN_UPDATE_EMAIL",
+    OPEN_CONFIRMATION = "OPEN_CONFIRMATION",
+    RESET_ALL = "RESET_ALL",
+  }
+
+  type Action =
+    | { type: ActionType.OPEN_UPDATE_PICTURE }
+    | { type: ActionType.OPEN_UPDATE_NICKNAME }
+    | { type: ActionType.OPEN_UPDATE_PASSWORD }
+    | { type: ActionType.OPEN_UPDATE_EMAIL }
+    | { type: ActionType.OPEN_CONFIRMATION }
+    | { type: ActionType.RESET_ALL };
+
+  function settingsReducer(state: State, action: Action): State {
     switch (action.type) {
-      case "OPEN_UPDATE_PICTURE": {
+      case ActionType.OPEN_UPDATE_PICTURE: {
         return { ...state, isFormOpen: true, settings: "picture" };
       }
-      case "OPEN_UPDATE_NICKNAME": {
+      case ActionType.OPEN_UPDATE_NICKNAME: {
         return { ...state, isFormOpen: true, settings: "nickname" };
       }
-      case "OPEN_UPDATE_PASSWORD": {
+      case ActionType.OPEN_UPDATE_EMAIL: {
+        return { ...state, isFormOpen: true, settings: "nickname" };
+      }
+      case ActionType.OPEN_UPDATE_PASSWORD: {
         return { ...state, isFormOpen: true, settings: "password" };
       }
-      case "OPEN_UPDATE_EMAIL": {
-        return { ...state, isFormOpen: true, settings: "email" };
+      case ActionType.OPEN_CONFIRMATION: {
+        return { ...state, isOpenConfirmation: true, settings: "confirmation" };
       }
-      case "OPEN_CONFIRMATION": {
-        return { ...state, isFormOpen: true, settings: "email" };
-      }
-      case "RESET_ALL": {
+      case ActionType.RESET_ALL: {
         return initialState;
-      }
-      default: {
-        throw new Error(`Unhandled action type: ${action.type}`);
       }
     }
   }
@@ -105,12 +110,17 @@ export const SettingsProvider = ({ children }: Props) => {
   const [{ isOpenConfirmation, settings, isFormOpen }, dispatch] =
     React.useReducer(settingsReducer, initialState);
 
-  const closeAll = () => dispatch({ type: Actions.RESET });
-  const openUpdatePicture = () => dispatch({ type: Actions.PICTURE });
-  const openUpdateUsername = () => dispatch({ type: Actions.NICKNAME });
-  const openUpdatePassword = () => dispatch({ type: Actions.PASSWORD });
-  const openUpdateEmail = () => dispatch({ type: Actions.EMAIL });
-  const openConfirmation = () => dispatch({ type: Actions.CONFIRMATION });
+  const closeAll = () => dispatch({ type: ActionType.RESET_ALL });
+  const openUpdatePicture = () =>
+    dispatch({ type: ActionType.OPEN_UPDATE_PICTURE });
+  const openUpdateUsername = () =>
+    dispatch({ type: ActionType.OPEN_UPDATE_NICKNAME });
+  const openUpdatePassword = () =>
+    dispatch({ type: ActionType.OPEN_UPDATE_PASSWORD });
+  const openUpdateEmail = () =>
+    dispatch({ type: ActionType.OPEN_UPDATE_EMAIL });
+  const openConfirmation = () =>
+    dispatch({ type: ActionType.OPEN_CONFIRMATION });
 
   const currentUser = auth.currentUser;
 
