@@ -29,8 +29,6 @@ export const Login = () => {
   const [{ nickname, email, password, isError, errorMessage }, dispatch] =
     React.useReducer(loginReducer, initialState);
 
-  const currentUser = auth.currentUser;
-
   const handleRegister = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     if (setIsLoading) {
@@ -38,9 +36,10 @@ export const Login = () => {
 
       createUserWithEmailAndPassword(auth, email, password).then(
         async () => {
-          if (currentUser) {
-            setIsLoading(false);
-            await updateProfile(currentUser, { displayName: nickname });
+          setIsLoading(false);
+          if (auth.currentUser) {
+            console.log(auth.currentUser);
+            await updateProfile(auth.currentUser, { displayName: nickname });
             await addUserToFirestore();
           }
         },
@@ -64,13 +63,14 @@ export const Login = () => {
   }, [isError]);
 
   const addUserToFirestore = async () =>
-    currentUser &&
-    (await setDoc(doc(db, "users", currentUser.uid), {
-      nickname: currentUser.displayName ?? currentUser.email?.split("@")[0],
-      avatar: currentUser.photoURL ?? null,
-      email: currentUser.email,
+    auth.currentUser &&
+    (await setDoc(doc(db, "users", auth.currentUser.uid), {
+      nickname:
+        auth.currentUser.displayName ?? auth.currentUser.email?.split("@")[0],
+      avatar: auth.currentUser.photoURL ?? null,
+      email: auth.currentUser.email,
       registerDate: `${new Date().toISOString()}`,
-      id: currentUser.uid,
+      id: auth.currentUser.uid,
     }));
 
   const handleLogin = (e: React.FormEvent<HTMLElement>) => {
