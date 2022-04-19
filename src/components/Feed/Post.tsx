@@ -247,7 +247,6 @@ const Post = ({
                     css={css`
                       display: none;
                     `}
-                    value={editPhotoFile}
                     onChange={onPhotoChange}
                   />
                 </IconButton>
