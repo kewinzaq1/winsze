@@ -1,9 +1,18 @@
-import { screen, fireEvent } from "@testing-library/react";
-import App from "../../App";
+import { screen, waitFor } from "@testing-library/react";
 import { renderLayout } from "../../Utils/tests";
+import userEvent from "@testing-library/user-event";
+import { Login } from "../../components/Login/Login";
+
+import { Layout } from "../../components/Layout";
 
 const renderLoginScreen = () => {
-  renderLayout({ ui: <App /> });
+  renderLayout({
+    ui: (
+      <Layout>
+        <Login />
+      </Layout>
+    ),
+  });
 
   const emailInput = screen.getByLabelText(/email/i);
   const passwordInput = screen.getByLabelText(/password/i);
@@ -18,9 +27,9 @@ const renderLoginScreen = () => {
   };
 };
 
-const renderRegisterScreen = () => {
+const renderRegisterScreen = async () => {
   const { emailInput, passwordInput, registerButton } = renderLoginScreen();
-  fireEvent.click(registerButton);
+  await userEvent.click(registerButton);
   const usernameInput = screen.getByLabelText(/nickname/i);
   const sendForm = screen.getByRole("button", { name: /register/i });
 
@@ -32,9 +41,12 @@ const renderRegisterScreen = () => {
   };
 };
 
-test("display login page", () => {
+test("display login page", async () => {
   const { emailInput, passwordInput, loginButton, registerButton } =
     renderLoginScreen();
+
+  await waitFor(() => screen.getByRole("button", { name: /sign up/i }));
+
   expect(emailInput).toBeInTheDocument();
   expect(passwordInput).toBeInTheDocument();
   expect(loginButton).toBeInTheDocument();
@@ -45,9 +57,12 @@ test("display login page", () => {
   ).toBeInTheDocument();
 });
 
-test("display register page", () => {
+test("display register page", async () => {
   const { emailInput, passwordInput, sendForm, usernameInput } =
-    renderRegisterScreen();
+    await renderRegisterScreen();
+
+  await waitFor(() => screen.getByRole("button", { name: /log in/i }));
+
   expect(emailInput).toBeInTheDocument();
   expect(passwordInput).toBeInTheDocument();
   expect(usernameInput).toBeInTheDocument();
