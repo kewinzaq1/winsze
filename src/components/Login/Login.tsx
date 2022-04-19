@@ -1,82 +1,96 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {css, jsx} from '@emotion/react'
-import React, {FormEvent} from 'react'
-import {loginReducer, initialState, ActionType} from './index'
+import { css } from "@emotion/react";
+import React from "react";
+import { ActionType, initialState, loginReducer } from "./index";
 import {
+  Alert,
+  Button,
   FormGroup,
-  Typography,
   FormLabel,
   Input,
-  Button,
-  Alert,
-} from '@mui/material'
-import styled from '@emotion/styled'
-import {Send} from '@mui/icons-material'
+  Typography,
+} from "@mui/material";
+import styled from "@emotion/styled";
+import { Send } from "@mui/icons-material";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
+  getAuth,
   signInWithEmailAndPassword,
   updateProfile,
-} from 'firebase/auth'
-import {db, useAuth} from '../../Auth'
-import {baseFlex, mobileBreakpoint, myBlue} from '../Layout'
-import {setDoc, doc} from 'firebase/firestore'
+} from "firebase/auth";
+import { db, useAuth } from "../../Auth";
+import { baseFlex, mobileBreakpoint, myBlue } from "../Layout";
+import { doc, setDoc } from "firebase/firestore";
 
 export const Login = () => {
-  const auth = getAuth()
-  const {isRegister, status, setIsLoading} = useAuth()
-  const [{nickname, email, password, isError, errorMessage}, dispatch] =
-    React.useReducer(loginReducer, initialState)
+  const auth = getAuth();
+  const { isRegister, status, setIsLoading } = useAuth();
+  const [{ nickname, email, password, isError, errorMessage }, dispatch] =
+    React.useReducer(loginReducer, initialState);
 
-  const handleRegister = (e: FormEvent<HTMLElement>) => {
-    e.preventDefault()
-    setIsLoading(true)
+  const currentUser = auth.currentUser;
 
-    createUserWithEmailAndPassword(auth, email, password).then(
-      async () => {
-        setIsLoading(false)
-        await updateProfile(auth.currentUser, {displayName: nickname})
-        await addUserToFirestore()
-      },
-      error => {
-        dispatch({type: ActionType.INPUT_ERROR, errorMessage: error.message})
-        setIsLoading(false)
-      },
-    )
-  }
+  const handleRegister = (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (setIsLoading) {
+      setIsLoading(true);
+
+      createUserWithEmailAndPassword(auth, email, password).then(
+        async () => {
+          if (currentUser) {
+            setIsLoading(false);
+            await updateProfile(currentUser, { displayName: nickname });
+            await addUserToFirestore();
+          }
+        },
+        (error) => {
+          dispatch({
+            type: ActionType.INPUT_ERROR,
+            errorMessage: error.message,
+          });
+          setIsLoading(false);
+        }
+      );
+    }
+  };
 
   React.useEffect(() => {
     if (isError) {
       setTimeout(() => {
-        dispatch({type: ActionType.OFF_ERROR})
-      }, 5000)
+        dispatch({ type: ActionType.OFF_ERROR });
+      }, 5000);
     }
-  }, [isError])
+  }, [isError]);
 
   const addUserToFirestore = async () =>
-    await setDoc(doc(db, 'users', auth.currentUser.uid), {
-      nickname:
-        auth.currentUser.displayName ?? auth.currentUser.email.split('@')[0],
-      avatar: auth.currentUser.photoURL ?? null,
-      email: auth.currentUser.email,
+    currentUser &&
+    (await setDoc(doc(db, "users", currentUser.uid), {
+      nickname: currentUser.displayName ?? currentUser.email?.split("@")[0],
+      avatar: currentUser.photoURL ?? null,
+      email: currentUser.email,
       registerDate: `${new Date().toISOString()}`,
-      id: auth.currentUser.uid,
-    })
+      id: currentUser.uid,
+    }));
 
-  const handleLogin = (e: FormEvent<HTMLElement>) => {
-    e.preventDefault()
-    setIsLoading(true)
-    signInWithEmailAndPassword(auth, email, password).then(
-      () => {
-        setIsLoading(false)
-      },
-      error => {
-        dispatch({type: ActionType.INPUT_ERROR, errorMessage: error.message})
-        setIsLoading(false)
-      },
-    )
-  }
+  const handleLogin = (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (setIsLoading) {
+      setIsLoading(true);
+      signInWithEmailAndPassword(auth, email, password).then(
+        () => {
+          setIsLoading(false);
+        },
+        (error) => {
+          dispatch({
+            type: ActionType.INPUT_ERROR,
+            errorMessage: error.message,
+          });
+          setIsLoading(false);
+        }
+      );
+    }
+  };
 
   return (
     <LoginWrapper>
@@ -84,12 +98,12 @@ export const Login = () => {
         <FormGroup>
           <FormGroup>
             <Typography variant="h2" component="h1">
-              {status === 'register' ? 'Nice to Meet You' : 'Welcome back'}
+              {status === "register" ? "Nice to Meet You" : "Welcome back"}
             </Typography>
             <Typography variant="subtitle1" component="h2">
-              {status === 'register'
-                ? 'First time? Create Free Account Now. Its 100% free'
-                : 'Nice that you are still with us'}
+              {status === "register"
+                ? "First time? Create Free Account Now. Its 100% free"
+                : "Nice that you are still with us"}
             </Typography>
             {isError && <Alert severity="error">{errorMessage}</Alert>}
           </FormGroup>
@@ -100,8 +114,8 @@ export const Login = () => {
               name="email"
               placeholder="eg. kewin@winsze.pl"
               value={email}
-              onChange={({target: {value: email}}) =>
-                dispatch({type: ActionType.INPUT_EMAIL, email})
+              onChange={({ target: { value: email } }) =>
+                dispatch({ type: ActionType.INPUT_EMAIL, email })
               }
             />
           </FormGroup>
@@ -114,8 +128,8 @@ export const Login = () => {
                 name="nickname"
                 placeholder="Enter your nickname"
                 value={nickname}
-                onChange={({target: {value: nickname}}) =>
-                  dispatch({type: ActionType.INPUT_NICKNAME, nickname})
+                onChange={({ target: { value: nickname } }) =>
+                  dispatch({ type: ActionType.INPUT_NICKNAME, nickname })
                 }
               />
             </FormGroup>
@@ -129,15 +143,15 @@ export const Login = () => {
               name="password"
               placeholder="Enter your password"
               value={password}
-              onChange={({target: {value: password}}) =>
-                dispatch({type: ActionType.INPUT_PASSWORD, password})
+              onChange={({ target: { value: password } }) =>
+                dispatch({ type: ActionType.INPUT_PASSWORD, password })
               }
             />
           </FormGroup>
           <FormActions>
             <Button
               type="submit"
-              onClick={status === 'register' ? handleRegister : handleLogin}
+              onClick={status === "register" ? handleRegister : handleLogin}
               variant="contained"
               endIcon={
                 <Send
@@ -147,15 +161,15 @@ export const Login = () => {
                 />
               }
             >
-              {status === 'register' ? 'register' : 'login'}
+              {status === "register" ? "register" : "login"}
             </Button>
           </FormActions>
         </FormGroup>
       </Form>
       <FormWallpaper />
     </LoginWrapper>
-  )
-}
+  );
+};
 
 const LoginWrapper = styled.main`
   ${baseFlex};
@@ -167,7 +181,7 @@ const LoginWrapper = styled.main`
   span {
     color: ${myBlue};
   }
-`
+`;
 
 const Form = styled.form`
   ${baseFlex};
@@ -191,20 +205,20 @@ const Form = styled.form`
     align-items: center;
     height: calc(100vh - 100px);
   }
-`
+`;
 
 const FormActions = styled(FormGroup)`
   margin-top: 2rem;
   gap: 0.5rem;
-`
+`;
 
 const FormWallpaper = styled.div`
   width: 50%;
   min-height: 100vh;
-  background-image: url('assets/login.jpg');
+  background-image: url("assets/login.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   @media (max-width: ${mobileBreakpoint}) {
     display: none;
   }
-`
+`;

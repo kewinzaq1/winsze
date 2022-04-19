@@ -3,10 +3,19 @@
 import {css, jsx} from '@emotion/react'
 import React from 'react'
 import {Box, Divider, Typography} from '@mui/material'
-import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
+import {
+  collection,
+  DocumentData,
+  FirestoreError,
+  onSnapshot,
+  orderBy,
+  query,
+  QuerySnapshot,
+  SnapshotListenOptions,
+} from 'firebase/firestore'
 import {lazy, Suspense} from 'react'
-import {db} from '../../Auth'
-import {Progress, styleFlexColumn} from '../Layout'
+import {db} from '../../Auth/index'
+import {Progress, styleFlexColumn} from '../Layout/index'
 const Users = lazy(() => import('./Users'))
 
 export const Friends = () => (
@@ -26,7 +35,14 @@ export const Friends = () => (
   </>
 )
 
-export const streamFriends = (snapshot, error) => {
+export const streamFriends = (
+  snapshot: SnapshotListenOptions,
+  error: {
+    next?: (snapshot: QuerySnapshot<DocumentData>) => void
+    error?: (error: FirestoreError) => void
+    complete?: () => void
+  },
+) => {
   const itemsColRef = collection(db, 'users')
   const itemsQuery = query(itemsColRef, orderBy('registerDate', 'desc'))
   return onSnapshot(itemsQuery, snapshot, error)

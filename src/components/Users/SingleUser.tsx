@@ -1,38 +1,37 @@
 /** @jsxImportSource @emotion/react */
-// eslint-disable-next-line no-unused-vars
-import {css, jsx} from '@emotion/react'
-import {Avatar, Divider, Stack, Typography} from '@mui/material'
-import React from 'react'
-import {useParams} from 'react-router-dom'
-import {streamFriends} from '.'
-import {useAuth} from '../../Auth'
-import {useStream} from '../../Utils/hooks'
-import {streamPosts} from '../Feed'
-import {FeedHeading} from '../Feed/FeedHeading'
-import Post from '../Feed/Post'
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+import { css } from "@emotion/react";
+import { Avatar, Divider, Stack, Typography } from "@mui/material";
+import React from "react";
+import { useParams } from "react-router-dom";
+import { streamFriends } from ".";
+import { useAuth } from "../../Auth";
+import { useStream } from "../../Utils/hooks";
+import { streamPosts } from "../Feed";
+import { FeedHeading } from "../Feed/FeedHeading";
+import Post from "../Feed/Post";
 import {
   maxWidth,
   mobileBreakpoint,
   myBlue,
+  Progress,
   styleFlexColumn,
   tabletBreakpoint,
-} from '../Layout'
-import PersonIcon from '@mui/icons-material/Person'
-import {Posts, Users} from '../../Utils/models'
+} from "../Layout";
+import PersonIcon from "@mui/icons-material/Person";
+import { Post as PostModel, User } from "../../Utils/models";
 
 const SingleUser = () => {
-  const {
-    user: {uid: currentUserId},
-  } = useAuth()
-  const users: Users[] = useStream(streamFriends)
-  const posts: Posts[] = useStream(streamPosts)
+  const { user: fireAuthUser } = useAuth();
+  const users: User[] = useStream(streamFriends);
+  const posts: PostModel[] = useStream(streamPosts);
 
-  let {id} = useParams()
-  const user = users?.find(user => user.id === id)
-  const filteredPosts = posts?.filter(post => post.authorId === id)
+  const { id } = useParams();
+  const user = users ? users.find((user) => user.id === id) : undefined;
+  const filteredPosts = posts?.filter((post) => post.authorId === id);
 
   if (!user) {
-    return
+    return <Progress />;
   }
 
   return (
@@ -69,11 +68,12 @@ const SingleUser = () => {
               grid-column: 1;
             }
             background-color: ${myBlue};
+
             svg {
               font-size: 5rem;
             }
           `}
-          color={user?.avatar && 'primary'}
+          color={user?.avatar && "primary"}
         >
           {!user?.avatar && <PersonIcon />}
         </Avatar>
@@ -93,12 +93,12 @@ const SingleUser = () => {
             grid-column: 2;
           `}
         >
-          {id === currentUserId
-            ? 'Check or write own posts'
+          {id === fireAuthUser?.uid
+            ? "Check or write own posts"
             : `Check ${user?.nickname} posts`}
         </Typography>
       </main>
-      {id !== currentUserId && (
+      {id !== fireAuthUser?.uid && (
         <Divider
           css={css`
             margin: 0 auto;
@@ -114,7 +114,7 @@ const SingleUser = () => {
           padding-bottom: 56px;
         `}
       >
-        {id === currentUserId && <FeedHeading disableTitle />}
+        {id === fireAuthUser?.uid && <FeedHeading disableTitle />}
 
         {Boolean(filteredPosts) && (
           <Stack>
@@ -144,12 +144,12 @@ const SingleUser = () => {
                   usersWhoLiked={usersWhoLiked}
                   comments={comments}
                 />
-              ),
+              )
             )}
           </Stack>
         )}
       </section>
     </>
-  )
-}
-export default SingleUser
+  );
+};
+export default SingleUser;

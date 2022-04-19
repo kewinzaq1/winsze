@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-import {css, jsx} from '@emotion/react'
-import React from 'react'
-import {Typography} from '@mui/material'
+import { css, jsx } from "@emotion/react";
+import React from "react";
+import { Typography } from "@mui/material";
 import {
   ListItem,
   ListItemAvatar,
@@ -11,17 +11,17 @@ import {
   Box,
   List,
   ListItemText,
-} from '@mui/material'
-import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined'
-import PortraitIcon from '@mui/icons-material/Portrait'
-import PasswordIcon from '@mui/icons-material/Password'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import MailOutlinedIcon from '@mui/icons-material/MailOutlined'
-import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined'
-import {ConfirmationDeleteMenu} from '../Layout/ConfirmationDeleteMenu'
-import {alertRed, maxWidth, styleFlexColumn} from '../Layout'
-import {SettingsForm} from './SettingsForm'
-import {useSettings} from './index'
+} from "@mui/material";
+import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import PortraitIcon from "@mui/icons-material/Portrait";
+import PasswordIcon from "@mui/icons-material/Password";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
+import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
+import { ConfirmationDeleteMenu } from "../Layout/ConfirmationDeleteMenu";
+import { alertRed, maxWidth, styleFlexColumn } from "../Layout";
+import { SettingsForm } from "./SettingsForm";
+import { useSettings } from "./index";
 
 export const Settings = () => {
   const {
@@ -38,9 +38,8 @@ export const Settings = () => {
     openConfirmation,
     isFormOpen,
     verifyEmail,
-    submitValidation,
     typeValidation,
-  } = useSettings()
+  } = useSettings();
 
   return (
     <main
@@ -64,6 +63,7 @@ export const Settings = () => {
           css={css`
             width: 100%;
             padding: 0 1rem;
+
             li {
               cursor: pointer;
               padding-left: 0;
@@ -80,7 +80,7 @@ export const Settings = () => {
             <ListItemText
               primary="Nickname"
               secondary={`${
-                user?.displayName ? `@${user?.displayName}` : 'Set nickname'
+                user?.displayName ? `@${user?.displayName}` : "Set nickname"
               }`}
             />
           </ListItem>
@@ -152,8 +152,9 @@ export const Settings = () => {
       <SettingsForm
         open={isFormOpen}
         onClose={closeAll}
-        placeholder={`${settings?.[0]?.toUpperCase() + settings?.slice(1)}`}
-        onSubmit={submitValidation}
+        placeholder={
+          settings && `${settings?.[0]?.toUpperCase() + settings?.slice(1)}`
+        }
         type={typeValidation}
       />
       <ConfirmationDeleteMenu
@@ -163,5 +164,5 @@ export const Settings = () => {
         deleteItem="account"
       />
     </main>
-  )
-}
+  );
+};
