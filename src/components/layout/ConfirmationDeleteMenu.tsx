@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
-// eslint-disable-next-line no-unused-vars
-import {css, jsx} from '@emotion/react'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { css, jsx } from "@emotion/react";
+import React from "react";
 import {
   Dialog,
   DialogTitle,
@@ -8,17 +9,24 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-} from '@mui/material'
+} from "@mui/material";
+
+interface Props {
+  deleteItem?: string;
+  open?: boolean;
+  onClose?: () => void;
+  onAgree?: () => void;
+}
 
 export const ConfirmationDeleteMenu = ({
   deleteItem,
   open,
   onClose,
   onAgree,
-}) => {
+}: Props) => {
   return (
     <Dialog
-      open={open}
+      open={open ?? false}
       onClose={onClose}
       css={css`
         border-radius: 0.5rem;
@@ -51,5 +59,5 @@ export const ConfirmationDeleteMenu = ({
         </Button>
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
