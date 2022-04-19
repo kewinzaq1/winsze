@@ -27,7 +27,7 @@ const SingleUser = () => {
   const posts: PostModel[] = useStream(streamPosts);
 
   const { id } = useParams();
-  const user = users ? users.find((user) => user.id === id) : undefined;
+  const user = users?.find((user) => user.id === id);
   const filteredPosts = posts?.filter((post) => post.authorId === id);
 
   if (!user) {
