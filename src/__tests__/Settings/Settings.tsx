@@ -1,26 +1,23 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { AuthProvider } from "../../Auth";
+import { screen, waitFor } from "@testing-library/react";
 import { SettingsProvider } from "../../components/Settings";
 import { Settings } from "../../components/Settings";
-
-interface RenderSettings {
-  children: JSX.Element;
-}
+import { renderLayout } from "../../Utils/tests";
+import userEvent from "@testing-library/user-event";
 
 const renderSettings = () => {
-  const Wrapper = ({ children }: RenderSettings) => {
-    return (
-      <AuthProvider>
-        <SettingsProvider>{children}</SettingsProvider>
-      </AuthProvider>
-    );
-  };
-
-  return render(<Settings />, { wrapper: Wrapper });
+  return renderLayout({
+    ui: (
+      <SettingsProvider>
+        <Settings />
+      </SettingsProvider>
+    ),
+  });
 };
 
-test("render settings", () => {
+test("render settings", async () => {
   renderSettings();
+
+  await waitFor(() => screen.getByRole("heading", { name: /settings/i }));
 
   expect(
     screen.getByRole("heading", { name: /settings/i })
@@ -42,7 +39,7 @@ test("render settings", () => {
     screen.getByText(/nickname/i, { selector: "span" })
   ).toBeInTheDocument();
   expect(
-    screen.getByText(/@undefined/i, { selector: "p" })
+    screen.getByText(/set nickname/i, { selector: "p" })
   ).toBeInTheDocument();
   // @undefined yes this is ok, because my user doesn't exist
 
@@ -73,38 +70,41 @@ test("render settings", () => {
   ).toBeInTheDocument();
 });
 
-test("open confirmation modal", () => {
+test("open confirmation modal", async () => {
   renderSettings();
 
-  fireEvent.click(screen.getByText(/delete account/i, { selector: "span" }));
+  await userEvent.click(
+    screen.getByText(/delete account/i, { selector: "span" })
+  );
+
+  await waitFor(() => screen.getByRole("dialog"));
 
   expect(
-    screen.getByText(/you want to delete your account/i, { selector: "h2" })
+    screen.getByText(/you want to delete account/i, { selector: "h2" })
   ).toBeInTheDocument();
   expect(
     screen.getByText(
-      /this is an irreversible process, all data will be lost and all your subscriptions will be lost/i,
+      /this is an irreversible process, all data will be lost/i,
       { selector: "p" }
     )
   ).toBeInTheDocument();
-
-  // eslint-disable-next-line testing-library/no-debugging-utils
-  screen.debug();
 });
 
-test("open form modal", () => {
+test("open form modal", async () => {
   renderSettings();
 
-  fireEvent.click(screen.getByText(/profile picture/i, { selector: "span" }));
+  await userEvent.click(
+    screen.getByText(/profile picture/i, { selector: "span" })
+  );
   expect(screen.getByRole("dialog")).toBeInTheDocument();
   expect(screen.getByRole("button")).toBeInTheDocument();
 
-  fireEvent.click(screen.getByText(/password/i, { selector: "span" }));
+  await userEvent.click(screen.getByText(/password/i, { selector: "span" }));
   expect(screen.getByRole("dialog")).toBeInTheDocument();
   expect(screen.getByRole("button")).toBeInTheDocument();
   expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
 
-  fireEvent.click(screen.getByText(/nickname/i, { selector: "span" }));
+  await userEvent.click(screen.getByText(/nickname/i, { selector: "span" }));
   expect(screen.getByRole("dialog")).toBeInTheDocument();
   expect(screen.getByRole("button")).toBeInTheDocument();
   expect(screen.getByPlaceholderText(/nickname/i)).toBeInTheDocument();
