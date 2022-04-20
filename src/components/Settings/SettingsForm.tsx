@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 import { FormGroup, Input, Button, Dialog, DialogContent } from "@mui/material";
 import styled from "@emotion/styled";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
-import { UploadResult } from "firebase/storage";
 import { useSettings } from "./index";
 
 interface Props {
