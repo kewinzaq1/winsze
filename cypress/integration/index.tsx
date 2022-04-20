@@ -20,7 +20,7 @@ describe("Fully functionality app", () => {
     cy.findByRole("button", { name: /register/i }).click();
   });
 
-  it("Publish post", () => {
+  it("Publish post add like and write comment", () => {
     cy.findByRole("heading", { name: /share with friends/i }).should("exist");
 
     cy.findByPlaceholderText(/what's up/i)
@@ -47,10 +47,22 @@ describe("Fully functionality app", () => {
       .type("Goodbye everyone{enter}");
 
     cy.findByRole("button", { name: /upload changes/i }).click();
+
+    cy.findByLabelText(/add like/i).click();
+    cy.findByLabelText(/likes counter/i).should("have.text", "1");
+
+    cy.findByRole("button", { name: /open comment/i }).click();
+
+    cy.findByRole("dialog").within(() => {
+      cy.findByPlaceholderText(/write a comment/i).type("look nice");
+      cy.findByRole("button", { name: /add/i }).click();
+    });
   });
 
   it("back to feed page and remove post", () => {
-    cy.findByLabelText(/go to feed/i).click();
+    // I used force true, because previously opened comment's dialog wherefor
+    // bottom navigation has aria label hidden true
+    cy.findByLabelText(/go to feed/i).click({ force: true });
 
     cy.findByText("Hello everyone").should("not.exist");
     cy.findByText("Goodbye everyone").should("exist");
