@@ -22,7 +22,7 @@ winsze
 
 ## Project Overview 🎉
 
-Winsze social app, is a progressive web app built using ReactJS and Firebase
+Winsze social app, is a progressive web app built using ReactTS and Firebase
 (CRUD).
 
 ## Tech/framework used 🔧
