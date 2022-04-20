@@ -42,15 +42,25 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 ## Screenshots 📺
 
 <p align="center">
-    <img src="public/assets/screens/unauth-mobile.png" alt="unauth-mobile">
+    <img src="public/assets/screens/feed.png" alt="feed">
 </p>
+
+## This important ⚠
+
+### To run the application locally you need the firebase emulator
+
+| Command                         | Description                                                |
+|---------------------------------|------------------------------------------------------------|
+| `npm install -g firebase-tools` | Install firebase CLI                                       |
+| `firebase init`                 | Initialize app and configure  emulator (default is enough) |
+| `firebase emulators:start`      | Run jest tests                                             |
 
 ## Firebase 🔥
 
 ### Posts firestore
 
 | Name          | Type   | Description                        |
-| ------------- | ------ | ---------------------------------- |
+|---------------|--------|------------------------------------|
 | id            | string | uuidv4 generated when posting      |
 | authorId      | string | uid from Firebase Auth             |
 | date          | string | date in iso generated when posting |
@@ -64,7 +74,7 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 ### Users firestore
 
 | Name         | Type   | Description                                                   |
-| ------------ | ------ | ------------------------------------------------------------- |
+|--------------|--------|---------------------------------------------------------------|
 | avatar       | string | photoURL from Firebase Auth                                   |
 | id           | string | uid from Firebase Auth                                        |
 | nickname     | string | displayName from Firebase Auth                                |
@@ -73,7 +83,7 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 ### Storage
 
 | Name            | Type | Description                               |
-| --------------- | ---- | ----------------------------------------- |
+|-----------------|------|-------------------------------------------|
 | PhotosPosts     | img  | Images for posts, saved using the post id |
 | ProfilePictures | img  | Images for posts, saved using the user id |
 
@@ -82,7 +92,7 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 ## Available scripts
 
 | Command         | Description            |
-| --------------- | ---------------------- |
+|-----------------|------------------------|
 | `npm run start` | Open local server      |
 | `npm run build` | Create optimized build |
 | `npm run test`  | Run jest tests         |
