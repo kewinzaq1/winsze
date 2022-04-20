@@ -53,7 +53,7 @@ Winsze social app, is a progressive web app built using ReactJS and Firebase
 |---------------------------------|------------------------------------------------------------|
 | `npm install -g firebase-tools` | Install firebase CLI                                       |
 | `firebase init`                 | Initialize app and configure  emulator (default is enough) |
-| `firebase emulators:start`      | Run jest tests                                             |
+| `firebase emulators:start`      | Run emulator                                               |
 
 ## Firebase 🔥
 
