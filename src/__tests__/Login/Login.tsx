@@ -1,12 +1,12 @@
 import { screen, waitFor } from "@testing-library/react";
-import { renderLayout } from "../../Utils/tests";
+import { render } from "../../Utils/tests";
 import userEvent from "@testing-library/user-event";
 import { Login } from "../../components/Login/Login";
 
 import { Layout } from "../../components/Layout";
 
 const renderLoginScreen = () => {
-  renderLayout({
+  render({
     ui: (
       <Layout>
         <Login />

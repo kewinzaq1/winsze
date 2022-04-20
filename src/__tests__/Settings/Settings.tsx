@@ -1,11 +1,11 @@
 import { screen, waitFor } from "@testing-library/react";
 import { SettingsProvider } from "../../components/Settings";
 import { Settings } from "../../components/Settings";
-import { renderLayout } from "../../Utils/tests";
+import { render } from "../../Utils/tests";
 import userEvent from "@testing-library/user-event";
 
 const renderSettings = () => {
-  return renderLayout({
+  return render({
     ui: (
       <SettingsProvider>
         <Settings />

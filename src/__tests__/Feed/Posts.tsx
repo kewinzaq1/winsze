@@ -1,9 +1,9 @@
-import { screen } from "@testing-library/react";
-import { renderLayout } from "../../Utils/tests";
+import { screen, waitFor } from "@testing-library/react";
+import { render } from "../../Utils/tests";
 import Post from "../../components/Feed/Post";
 import { Post as ModelPost } from "../../Utils/models";
 
-test("display post", () => {
+test("display post", async () => {
   const {
     avatar,
     date,
@@ -25,7 +25,7 @@ test("display post", () => {
     authorId: "fakeAuthorId",
   };
 
-  renderLayout({
+  render({
     ui: (
       <Post
         key={id}
@@ -42,6 +42,8 @@ test("display post", () => {
       />
     ),
   });
+
+  await waitFor(() => screen.findByText(/author/i));
 
   expect(screen.getByRole("link")).toHaveTextContent(`@${author}`);
 

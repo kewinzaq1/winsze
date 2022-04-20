@@ -323,7 +323,7 @@ const Post = ({
 
               <IconButton
                 onClick={cancelEdit}
-                aria-label="upload changes"
+                aria-label="decline changes"
                 color="primary"
                 role="button"
               >

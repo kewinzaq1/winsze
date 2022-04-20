@@ -1,18 +1,37 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { Navbar } from "../../components/Layout/Navbar";
 import { Footer } from "../../components/Layout/Footer";
-import { renderLayout } from "../../Utils/tests";
+import { render } from "../../Utils/tests";
+import { User } from "firebase/auth";
 
 test("render navbar", async () => {
-  renderLayout({ ui: <Navbar /> });
+  render({ ui: <Navbar /> });
+  await waitFor(() => screen.getByRole("heading"));
+
   expect(screen.getByRole("heading")).toHaveTextContent("winsze");
   expect(screen.getByRole("button", { name: /sign up/i })).toBeInTheDocument();
 });
 
-test("render footer", async () => {
-  renderLayout({ ui: <Footer />, user: { name: "FAKE_USER" } });
+test("render footer", () => {
+  const user: Partial<User> = {
+    displayName: "",
+    email: "",
+    emailVerified: false,
+    isAnonymous: false,
+    phoneNumber: "",
+    photoURL: "",
+    providerData: [],
+    providerId: "",
+    refreshToken: "",
+    tenantId: "",
+    uid: "",
+  };
 
-  expect(screen.getByRole("button", { name: /friends/i })).toBeInTheDocument();
+  render({ ui: <Footer />, user: user });
+  waitFor(() => screen.getByLabelText(/go to feed/i));
+
+  expect(screen.getByRole("button", { name: /users/i })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /you/i })).toBeInTheDocument();
   expect(screen.getByRole("button", { name: /feed/i })).toBeInTheDocument();
   expect(screen.getByRole("button", { name: /settings/i })).toBeInTheDocument();
 });
