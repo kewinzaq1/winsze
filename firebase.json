@@ -9,14 +9,17 @@
     "ui": {
       "enabled": true
     },
-
     "storage": {
       "port": 1113
     }
   },
   "hosting": {
     "public": "build",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   },
   "storage": {
     "rules": "storage.rules"

@@ -1,13 +1,15 @@
-import React from 'react'
-import {AuthenticatedApp} from './components/Authenticated'
-import {useAuth} from './Auth'
-import {UnAuthenticatedApp} from './components/UnAuthenticated'
-import {Layout} from './components/Layout'
+import React from "react";
+import { AuthenticatedApp } from "./components/Authenticated";
+import { useAuth } from "./Auth";
+import { UnAuthenticatedApp } from "./components/UnAuthenticated";
+import { Layout } from "./components/Layout";
 
 function App() {
-  const {user} = useAuth()
+  const { user } = useAuth();
 
-  return <Layout>{user ? <AuthenticatedApp /> : <UnAuthenticatedApp />}</Layout>
+  return (
+    <Layout>{user ? <AuthenticatedApp /> : <UnAuthenticatedApp />}</Layout>
+  );
 }
 
-export default App
+export default App;

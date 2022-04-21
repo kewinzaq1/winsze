@@ -1,16 +1,17 @@
-import {Stack} from '@mui/material'
-import React, {lazy} from 'react'
-import {useStream} from '../../Utils/hooks'
-import {Post as PostModel} from '../../Utils/models'
-import {Progress} from '../Layout'
-import {streamPosts} from './index'
-const Post = lazy(() => import('./Post'))
+import { Stack } from "@mui/material";
+import React, { lazy } from "react";
+import { useStream } from "../../Utils/hooks";
+import { Post as PostModel } from "../../Utils/models";
+import { Progress } from "../Layout";
+import { streamPosts } from "./index";
+
+const Post = lazy(() => import("./Post"));
 
 const Posts = () => {
-  const posts = useStream(streamPosts)
+  const posts = useStream(streamPosts);
 
   if (!posts) {
-    return <Progress />
+    return <Progress />;
   }
 
   return (
@@ -41,10 +42,10 @@ const Posts = () => {
             usersWhoLiked={usersWhoLiked}
             comments={comments}
           />
-        ),
+        )
       )}
     </Stack>
-  )
-}
+  );
+};
 
-export default Posts
+export default Posts;

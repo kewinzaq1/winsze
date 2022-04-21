@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {css, jsx} from '@emotion/react'
-import React from 'react'
-import {Avatar, Box, Card, Typography} from '@mui/material'
-import Moment from 'react-moment'
-import {Link} from 'react-router-dom'
-import {useAuth} from '../../Auth/index'
-import {User as ModelUser} from '../../Utils/models'
+import { css } from "@emotion/react";
+import React from "react";
+import { Avatar, Box, Card, Typography } from "@mui/material";
+import Moment from "react-moment";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../Auth";
+import { User as ModelUser } from "../../Utils/models";
 
-export const User = ({nickname, avatar, registerDate, id}: ModelUser) => {
-  const {user} = useAuth()
+export const User = ({ nickname, avatar, registerDate, id }: ModelUser) => {
+  const { user } = useAuth();
 
   return (
     <Card
@@ -45,11 +45,11 @@ export const User = ({nickname, avatar, registerDate, id}: ModelUser) => {
       <Box>
         <Typography variant="h4" component="h1">
           <Link to={`/users/${id}`}>
-            {user?.displayName === nickname ? 'You' : `@${nickname}`}
+            {user?.displayName === nickname ? "You" : `@${nickname}`}
           </Link>
         </Typography>
         <Typography variant="subtitle1" component="p">
-          On winsze:{' '}
+          On winsze:{" "}
           <b>
             <Moment toNow ago>
               {registerDate}
@@ -58,5 +58,5 @@ export const User = ({nickname, avatar, registerDate, id}: ModelUser) => {
         </Typography>
       </Box>
     </Card>
-  )
-}
+  );
+};

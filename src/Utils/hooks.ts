@@ -1,56 +1,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {DocumentData, DocumentSnapshot, QuerySnapshot} from 'firebase/firestore'
-import React, {useEffect, useState} from 'react'
-import {Post, User} from './models'
+import { DocumentSnapshot, QuerySnapshot } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 
 const useLocalStorageState = (name: string, initValue: unknown) => {
-  const getValueFromLocalStorage = window.localStorage.getItem(name)
+  const getValueFromLocalStorage = window.localStorage.getItem(name);
 
   const [state, setState] = React.useState(
-    getValueFromLocalStorage ? JSON.parse(getValueFromLocalStorage) : initValue,
-  )
+    getValueFromLocalStorage ? JSON.parse(getValueFromLocalStorage) : initValue
+  );
 
   useEffect(() => {
     if (state) {
-      window.localStorage.setItem(name, JSON.stringify(state))
+      window.localStorage.setItem(name, JSON.stringify(state));
     } else {
-      window.localStorage.removeItem(name)
+      window.localStorage.removeItem(name);
     }
-  }, [name, state])
+  }, [name, state]);
 
-  return [state, setState]
-}
+  return [state, setState];
+};
 
 const useStatus = (initStatus?: string) => {
-  const [status, setStatus] = useState<string>(initStatus ?? '')
+  const [status, setStatus] = useState<string>(initStatus ?? "");
 
-  const isSuccess = status === ''
-  const isError = status === 'error'
-  const isLoading = status === 'loading'
+  const isSuccess = status === "";
+  const isError = status === "error";
+  const isLoading = status === "loading";
 
-  return {status, setStatus, isSuccess, isError, isLoading}
-}
+  return { status, setStatus, isSuccess, isError, isLoading };
+};
 
 const useStream = (streamFn: unknown) => {
-  const [streamData, setStreamData] = useState<any>()
-  const {setStatus, isError} = useStatus()
+  const [streamData, setStreamData] = useState<any>();
+  const { setStatus } = useStatus();
 
   useEffect(() => {
-    if (typeof streamFn === 'function') {
+    if (typeof streamFn === "function") {
       const unsubscribe = streamFn(
         (querySnapshot: QuerySnapshot) => {
           const updatedData = querySnapshot.docs.map(
-            (docSnapshot: DocumentSnapshot) => docSnapshot.data(),
-          )
-          setStreamData(updatedData)
+            (docSnapshot: DocumentSnapshot) => docSnapshot.data()
+          );
+          setStreamData(updatedData);
         },
-        () => setStatus('error'),
-      )
-      return unsubscribe
+        () => setStatus("error")
+      );
+      return unsubscribe;
     }
-  }, [setStatus, streamFn])
+  }, [setStatus, streamFn]);
 
-  return streamData
-}
+  return streamData;
+};
 
-export {useLocalStorageState, useStatus, useStream}
+export { useLocalStorageState, useStatus, useStream };

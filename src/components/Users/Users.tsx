@@ -1,19 +1,19 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-import {css, jsx} from '@emotion/react'
-import {Divider, Stack} from '@mui/material'
-import React from 'react'
-import {streamFriends} from '.'
-import {useStream} from '../../Utils/hooks'
-import {User as UserModel} from '../../Utils/models'
-import {maxWidth, Progress} from '../Layout/index'
-import {User} from './User'
+import { css } from "@emotion/react";
+import { Divider, Stack } from "@mui/material";
+import React from "react";
+import { streamFriends } from ".";
+import { useStream } from "../../Utils/hooks";
+import { User as UserModel } from "../../Utils/models";
+import { maxWidth, Progress } from "../Layout";
+import { User } from "./User";
 
 const Users = () => {
-  const users: UserModel[] = useStream(streamFriends)
+  const users: UserModel[] = useStream(streamFriends);
 
   if (!users) {
-    return <Progress />
+    return <Progress />;
   }
 
   return (
@@ -25,7 +25,7 @@ const Users = () => {
         padding-bottom: 56px;
       `}
     >
-      {users?.map(({id, nickname, avatar, registerDate}) => (
+      {users?.map(({ id, nickname, avatar, registerDate }) => (
         <User
           key={id}
           nickname={nickname}
@@ -35,7 +35,7 @@ const Users = () => {
         />
       ))}
     </Stack>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;
