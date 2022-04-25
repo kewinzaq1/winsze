@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 import {
   Box,
   Button,
@@ -33,17 +33,14 @@ export const Comments = ({
   const { user } = useAuth();
   const [content, setContent] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (user) {
-      setContent("");
-      toast.promise(addComment({ postId, user, content }), {
-        loading: "Adding",
-        success: "Added",
-        error: "Try again",
-      });
-    }
+    setContent("");
+    await toast.promise(addComment({ postId, user, content }), {
+      loading: "Adding",
+      success: "Added",
+      error: "Try again",
+    });
   };
   const commentOnChange = ({
     target: { value: content },

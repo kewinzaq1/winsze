@@ -31,27 +31,24 @@ export const Login = () => {
 
   const handleRegister = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    if (setIsLoading) {
-      setIsLoading(true);
-
-      createUserWithEmailAndPassword(auth, email, password).then(
-        async () => {
-          setIsLoading(false);
-          if (auth.currentUser) {
-            console.log(auth.currentUser);
-            await updateProfile(auth.currentUser, { displayName: nickname });
-            await addUserToFirestore();
-          }
-        },
-        (error) => {
-          dispatch({
-            type: ActionType.INPUT_ERROR,
-            errorMessage: error.message,
-          });
-          setIsLoading(false);
+    setIsLoading(true);
+    createUserWithEmailAndPassword(auth, email, password).then(
+      async () => {
+        setIsLoading(false);
+        if (auth.currentUser) {
+          console.log(auth.currentUser);
+          await updateProfile(auth.currentUser, { displayName: nickname });
+          await addUserToFirestore();
         }
-      );
-    }
+      },
+      (error) => {
+        dispatch({
+          type: ActionType.INPUT_ERROR,
+          errorMessage: error.message,
+        });
+        setIsLoading(false);
+      }
+    );
   };
 
   React.useEffect(() => {
@@ -75,21 +72,19 @@ export const Login = () => {
 
   const handleLogin = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    if (setIsLoading) {
-      setIsLoading(true);
-      signInWithEmailAndPassword(auth, email, password).then(
-        () => {
-          setIsLoading(false);
-        },
-        (error) => {
-          dispatch({
-            type: ActionType.INPUT_ERROR,
-            errorMessage: error.message,
-          });
-          setIsLoading(false);
-        }
-      );
-    }
+    setIsLoading(true);
+    signInWithEmailAndPassword(auth, email, password).then(
+      () => {
+        setIsLoading(false);
+      },
+      (error) => {
+        dispatch({
+          type: ActionType.INPUT_ERROR,
+          errorMessage: error.message,
+        });
+        setIsLoading(false);
+      }
+    );
   };
 
   return (

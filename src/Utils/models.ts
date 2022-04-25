@@ -41,7 +41,7 @@ export interface AuthProps {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface SettingsProps extends AuthProps {
+export interface SettingsProps extends Partial<AuthProps> {
   userEmailVerified: boolean;
   isOpenConfirmation: boolean;
   settings: string;

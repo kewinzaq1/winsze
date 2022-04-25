@@ -139,10 +139,8 @@ const Post = ({
   };
 
   const handleLike = async () => {
-    if (user) {
-      setIsLiked(!isLiked);
-      await toggleLike({ id, isLiked, userId: user.uid });
-    }
+    setIsLiked(!isLiked);
+    await toggleLike({ id, isLiked, userId: user.uid });
   };
 
   const closeConfirmation = () => setIsOpenComment(false);
@@ -252,8 +250,7 @@ const Post = ({
                 </IconButton>
               )
             ) : (
-              user &&
-              user.uid === authorId && (
+              user?.uid === authorId && (
                 <Box>
                   <IconButton
                     aria-label="open post menu"

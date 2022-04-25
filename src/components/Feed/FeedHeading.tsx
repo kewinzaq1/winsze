@@ -66,23 +66,21 @@ export const FeedHeading = ({ disableTitle }: Props) => {
   const submitPost = async (
     e: React.ChangeEvent<HTMLFormElement> & React.FormEvent<HTMLFormElement>
   ) => {
-    if (user) {
-      e.preventDefault();
-      scrollToButton(e.target.offsetHeight);
-      setStatus("loading");
-      await toast.promise(uploadPost({ user, desc, photo }), {
-        loading: "Adding",
-        success: () => {
-          setStatus("");
-          clearAll();
-          return "Added";
-        },
-        error: () => {
-          setStatus("error");
-          return "Try again";
-        },
-      });
-    }
+    e.preventDefault();
+    scrollToButton(e.target.offsetHeight);
+    setStatus("loading");
+    await toast.promise(uploadPost({ user, desc, photo }), {
+      loading: "Adding",
+      success: () => {
+        setStatus("");
+        clearAll();
+        return "Added";
+      },
+      error: () => {
+        setStatus("error");
+        return "Try again";
+      },
+    });
   };
 
   const scrollToButton = (height: number) => {

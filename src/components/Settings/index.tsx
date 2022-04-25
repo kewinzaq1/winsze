@@ -19,7 +19,7 @@ import { Settings } from "./Settings";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { SettingsProps } from "../../Utils/models";
 
-const SettingsContext = React.createContext<Partial<SettingsProps>>({});
+const SettingsContext = React.createContext<SettingsProps | null>(null);
 
 interface Props {
   children: JSX.Element;
@@ -27,7 +27,7 @@ interface Props {
 
 export const SettingsProvider = ({ children }: Props) => {
   const { user } = useAuth();
-  const userEmailVerified = user?.emailVerified;
+  const userEmailVerified = user?.emailVerified ?? false;
 
   const deleteAccount = async () => {
     if (currentUser) {
@@ -228,8 +228,9 @@ export const SettingsProvider = ({ children }: Props) => {
 
 export const useSettings = () => {
   const context = React.useContext(SettingsContext);
-  if (!context)
+  if (!context) {
     throw new Error("useSettings() only used within SettingsProvider");
+  }
   return context;
 };
 
