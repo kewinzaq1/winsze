@@ -14,11 +14,6 @@ winsze
 
 <h4 align="center">winsze - social app</h4>
 
-<p align="center">
-  <a >
-      <img src="public/assets/screens/auth-feed.png" alt="auth-feed">
-  </a>
-</p>
 
 ## Project Overview 🎉
 
