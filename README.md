@@ -14,7 +14,6 @@ winsze
 
 <h4 align="center">winsze - social app</h4>
 
-
 ## Project Overview 🎉
 
 Winsze social app, is a progressive web app built using ReactTS and Firebase
@@ -23,7 +22,7 @@ Winsze social app, is a progressive web app built using ReactTS and Firebase
 ## Tech/framework used 🔧
 
 | Tech             | Description           |
-| ---------------- | --------------------- |
+|------------------|-----------------------|
 | React            | Main JS Library       |
 | Firebase         | Serverless backend    |
 | Jest             | Unit Tests            |
@@ -40,15 +39,6 @@ Winsze social app, is a progressive web app built using ReactTS and Firebase
     <img src="public/assets/screens/feed.png" alt="feed">
 </p>
 
-## This important ⚠
-
-### To run the application locally you need the firebase emulator
-
-| Command                         | Description                                                |
-|---------------------------------|------------------------------------------------------------|
-| `npm install -g firebase-tools` | Install firebase CLI                                       |
-| `firebase init`                 | Initialize app and configure  emulator (default is enough) |
-| `firebase emulators:start`      | Run emulator                                               |
 
 ## Firebase 🔥
 
