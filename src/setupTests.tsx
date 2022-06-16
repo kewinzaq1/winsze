@@ -12,14 +12,14 @@ beforeAll(() => {
   console.error = (...args) => {
     if (
       /Warning: ReactDOM.render is no longer supported in React 18./.test(
-        args[0],
+        args[0]
       )
     ) {
       return
     }
     if (
       /Warning: An update to AuthProvider inside a test was not wrapped in act(...)/.test(
-        args[0],
+        args[0]
       )
     ) {
       return
