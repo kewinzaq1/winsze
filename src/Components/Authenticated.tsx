@@ -1,23 +1,16 @@
 import * as React from 'react'
 import {Route, Routes} from 'react-router-dom'
 import {Feed} from './Feed'
-import {SettingsProvider, Settings} from './Settings'
+import {Settings} from './Settings/Settings'
 import {Friends} from './Users'
 import {Progress} from './Layout/Progress'
 const SingleUser = React.lazy(() => import('./Users/SingleUser'))
 
 export const AuthenticatedApp = () => (
   <Routes>
-    <Route
-      path="/settings"
-      element={
-        <SettingsProvider>
-          <Settings />
-        </SettingsProvider>
-      }
-    />
-    <Route path="/" element={<Feed />}></Route>
-    <Route path="/users" element={<Friends />}></Route>
+    <Route path="/settings" element={<Settings />} />
+    <Route path="/" element={<Feed />} />
+    <Route path="/users" element={<Friends />} />
     <Route
       path="/users/:id"
       element={
@@ -25,6 +18,6 @@ export const AuthenticatedApp = () => (
           <SingleUser />
         </React.Suspense>
       }
-    ></Route>
+    />
   </Routes>
 )

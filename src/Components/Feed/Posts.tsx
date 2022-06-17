@@ -4,7 +4,6 @@ import {useStream} from '../../Utils/Hooks'
 import {Post as PostModel} from '../../Utils/Models'
 import {streamPosts} from './index'
 import {Progress} from '../Layout/Progress'
-
 const Post = React.lazy(() => import('./Post'))
 
 const Posts = () => {

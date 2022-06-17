@@ -19,8 +19,8 @@ import MailOutlinedIcon from '@mui/icons-material/MailOutlined'
 import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined'
 import {ConfirmationDeleteMenu} from '../Layout/ConfirmationDeleteMenu'
 import {SettingsForm} from './SettingsForm/SettingsForm'
-import {useSettings} from './index'
 import {alertRed, maxWidth, styleFlexColumn} from '../../Utils/Layout'
+import {useSettings} from '../../Utils/Hooks/Settings/useSettings'
 
 export const Settings = () => {
   const {

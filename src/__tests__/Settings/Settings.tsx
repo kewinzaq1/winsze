@@ -1,16 +1,11 @@
 import {screen, waitFor} from '@testing-library/react'
-import {SettingsProvider} from '../../Components/Settings'
-import {Settings} from '../../Components/Settings'
+import {Settings} from '../../Components/Settings/Settings'
 import {render} from '../../Utils/Tests'
 import userEvent from '@testing-library/user-event'
 
 const renderSettings = () => {
   return render({
-    ui: (
-      <SettingsProvider>
-        <Settings />
-      </SettingsProvider>
-    )
+    ui: <Settings />
   })
 }
 

@@ -1,22 +1,16 @@
-import * as React from 'react'
-import {useAuth} from '../../Auth'
-import {
-  updateProfile,
-  deleteUser,
-  updatePassword as updatePasswordFirebase,
-  updateEmail as updateEmailFirebase,
-  sendEmailVerification
-} from 'firebase/auth'
+import {useAuth} from '../../../Auth'
 import {toast} from 'react-hot-toast'
-import {ref, uploadBytes, getDownloadURL, deleteObject} from 'firebase/storage'
-import {Settings} from './Settings'
 import {deleteDoc, doc, updateDoc} from 'firebase/firestore'
-import {SettingsProps} from '../../Utils/Models'
-import {auth, db, storage} from "../../Firebase";
+import {auth, db, storage} from '../../../Firebase'
+import {deleteObject, getDownloadURL, ref, uploadBytes} from 'firebase/storage'
+import {deleteUser, sendEmailVerification, updateProfile} from 'firebase/auth'
+import * as React from 'react'
+import {
+  updateEmail as updateEmailFirebase,
+  updatePassword as updatePasswordFirebase
+} from '@firebase/auth'
 
-const SettingsContext = React.createContext<SettingsProps | null>(null)
-
-export const SettingsProvider = ({children}: {children: React.ReactNode}) => {
+export const useSettings = () => {
   const {user} = useAuth()
   const userEmailVerified = user?.emailVerified ?? false
 
@@ -187,40 +181,24 @@ export const SettingsProvider = ({children}: {children: React.ReactNode}) => {
       ...overrides
     }))
 
-  return (
-    <SettingsContext.Provider
-      value={{
-        user,
-        userEmailVerified,
-        isOpenConfirmation,
-        settings,
-        deleteAccount,
-        closeAll,
-        openUpdatePicture,
-        openUpdateUsername,
-        openUpdatePassword,
-        openUpdateEmail,
-        openConfirmation,
-        isFormOpen,
-        verifyEmail,
-        typeValidation,
-        updatePhoto,
-        updateNickname,
-        updatePassword,
-        updateEmail
-      }}
-    >
-      {children}
-    </SettingsContext.Provider>
-  )
-}
-
-export const useSettings = () => {
-  const context = React.useContext(SettingsContext)
-  if (!context) {
-    throw new Error('useSettings() only used within SettingsProvider')
+  return {
+    user,
+    userEmailVerified,
+    isOpenConfirmation,
+    settings,
+    deleteAccount,
+    closeAll,
+    openUpdatePicture,
+    openUpdateUsername,
+    openUpdatePassword,
+    openUpdateEmail,
+    openConfirmation,
+    isFormOpen,
+    verifyEmail,
+    typeValidation,
+    updatePhoto,
+    updateNickname,
+    updatePassword,
+    updateEmail
   }
-  return context
 }
-
-export {Settings}

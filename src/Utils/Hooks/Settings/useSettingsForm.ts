@@ -1,5 +1,5 @@
-import {useSettings} from '../../../Components/Settings'
 import * as React from 'react'
+import {useSettings} from './useSettings'
 
 export const useSettingsForm = () => {
   const {settings, updatePhoto, updateNickname, updatePassword, updateEmail} =

@@ -3,7 +3,7 @@ import {LoginState} from "../../Utils/Models/Login/LoginState.model";
 import {LoginActionTypes} from "../../Utils/Models/Login/LoginActionTypes";
 
 
-const initialLoginState: LoginState = {
+export const initialLoginState: LoginState = {
   option: 'register',
   email: '',
   nickname: '',
@@ -13,7 +13,7 @@ const initialLoginState: LoginState = {
   errorMessage: ''
 }
 
-function loginReducer(state: LoginState, action: LoginActions): LoginState {
+export function loginReducer(state: LoginState, action: LoginActions): LoginState {
   switch (action.type) {
     case LoginActionTypes.INPUT_NICKNAME: {
       return {...state, nickname: action.nickname}
@@ -42,4 +42,3 @@ function loginReducer(state: LoginState, action: LoginActions): LoginState {
   }
 }
 
-export {loginReducer, initialLoginState}
