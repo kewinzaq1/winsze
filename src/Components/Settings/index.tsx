@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {db, useAuth} from '../../Auth'
+import {useAuth} from '../../Auth'
 import {
   updateProfile,
   deleteUser,
@@ -8,11 +8,11 @@ import {
   sendEmailVerification
 } from 'firebase/auth'
 import {toast} from 'react-hot-toast'
-import {auth, storage} from '../../Auth'
 import {ref, uploadBytes, getDownloadURL, deleteObject} from 'firebase/storage'
 import {Settings} from './Settings'
 import {deleteDoc, doc, updateDoc} from 'firebase/firestore'
 import {SettingsProps} from '../../Utils/Models'
+import {auth, db, storage} from "../../Firebase";
 
 const SettingsContext = React.createContext<SettingsProps | null>(null)
 

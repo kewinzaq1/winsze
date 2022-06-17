@@ -20,12 +20,12 @@ import {
   QuerySnapshot,
   SnapshotListenOptions
 } from 'firebase/firestore'
-import {db, storage} from '../../Auth'
 import {FeedHeading} from './FeedHeading'
 import {v4 as uuidv4} from 'uuid'
 import React from 'react'
 import {Progress} from '../Layout/Progress'
 import {maxWidth} from '../../Utils/Layout'
+import {db, storage} from "../../Firebase";
 
 const Posts = React.lazy(() => import('./Posts'))
 

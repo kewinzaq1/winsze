@@ -5,10 +5,11 @@ import {
   signInWithEmailAndPassword,
   updateProfile
 } from 'firebase/auth'
-import {db, useAuth} from '../../../Auth'
+import {useAuth} from '../../../Auth'
 import {initialLoginState, loginReducer} from '../../../Components/Login'
 import {doc, setDoc} from 'firebase/firestore'
 import {LoginActionTypes} from "../../Models/Login/LoginActionTypes";
+import {db} from "../../../Firebase";
 
 export const useLogin = () => {
   const auth = getAuth()

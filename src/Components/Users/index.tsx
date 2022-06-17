@@ -14,9 +14,9 @@ import {
   SnapshotListenOptions
 } from 'firebase/firestore'
 import {lazy, Suspense} from 'react'
-import {db} from '../../Auth'
 import {Progress} from '../Layout/Progress'
 import {styleFlexColumn} from '../../Utils/Layout'
+import {db} from "../../Firebase";
 const Users = lazy(() => import('./Users'))
 
 export const Friends = () => (
