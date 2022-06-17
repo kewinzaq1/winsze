@@ -1,24 +1,23 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-import {jsx, css} from '@emotion/react'
+import {css} from '@emotion/react'
 import {deleteObject, getDownloadURL, ref, uploadBytes} from 'firebase/storage'
-import {User} from 'firebase/auth'
 import {
-  collection,
-  query,
-  orderBy,
-  onSnapshot,
-  setDoc,
-  doc,
-  deleteDoc,
-  updateDoc,
-  increment,
-  arrayUnion,
-  arrayRemove,
-  DocumentData,
-  FirestoreError,
-  QuerySnapshot,
-  SnapshotListenOptions
+    arrayRemove,
+    arrayUnion,
+    collection,
+    deleteDoc,
+    doc,
+    DocumentData,
+    FirestoreError,
+    increment,
+    onSnapshot,
+    orderBy,
+    query,
+    QuerySnapshot,
+    setDoc,
+    SnapshotListenOptions,
+    updateDoc
 } from 'firebase/firestore'
 import {FeedHeading} from './FeedHeading'
 import {v4 as uuidv4} from 'uuid'
@@ -26,10 +25,13 @@ import React from 'react'
 import {Progress} from '../Layout/Progress'
 import {maxWidth} from '../../Utils/Layout'
 import {db, storage} from "../../Firebase";
-
+import {UpdatePost} from "../../Utils/Models/Feed/UpdatePost.model";
+import {UploadPost} from "../../Utils/Models/Feed/UploadPost.model";
+import {ToggleLike} from "../../Utils/Models/Feed/ToggleLike.model";
+import {AddComment} from "../../Utils/Models/Feed/AddComment.model";
+import {RemoveComment} from "../../Utils/Models/Feed/RemoveComment.model";
 const Posts = React.lazy(() => import('./Posts'))
 
-// TODO all to interface for keep semantic :)
 
 export const Feed = () => {
   return (
@@ -46,12 +48,6 @@ export const Feed = () => {
       </React.Suspense>
     </main>
   )
-}
-
-interface UploadPost {
-  user: User
-  desc: string
-  photo?: File
 }
 
 export const uploadPost = async ({user, desc, photo}: UploadPost) => {
@@ -106,14 +102,6 @@ export const removePost = async (id: string, photo: string | undefined) => {
   }
 }
 
-interface UpdatePost {
-  id: string
-  editPhotoFile?: File
-  originalPhoto?: string
-  isPhotoChanged: boolean
-  overwrites?: object
-}
-
 export const updatePost = async ({
   id,
   editPhotoFile,
@@ -148,23 +136,11 @@ export const updatePost = async ({
   }
 }
 
-interface ToggleLike {
-  id: string
-  isLiked?: boolean
-  userId: string
-}
-
 export const toggleLike = async ({id, isLiked, userId}: ToggleLike) => {
   await updateDoc(doc(db, 'posts', id), {
     likes: increment(isLiked ? -1 : 1),
     usersWhoLiked: isLiked ? arrayRemove(userId) : arrayUnion(userId)
   })
-}
-
-interface AddComment {
-  postId: string
-  user: User
-  content: string
 }
 
 export const addComment = async ({postId, user, content}: AddComment) => {
@@ -180,11 +156,6 @@ export const addComment = async ({postId, user, content}: AddComment) => {
       })
     )
   })
-}
-
-interface RemoveComment {
-  postId: string
-  comment: string
 }
 
 export const removeComment = async ({postId, comment}: RemoveComment) => {

@@ -42,3 +42,8 @@ export {LoginActions} from './Utils/Models/Login/LoginAction.model'
 export {AuthProviderModel} from './Utils/Models/Auth/AuthProvider.model'
 export {LoginState} from "./Utils/Models/Login/LoginState.model";
 export {LoginActionTypes} from "./Utils/Models/Login/LoginActionTypes";
+export {UpdatePost} from "./Utils/Models/Feed/UpdatePost.model";
+export {UploadPost} from "./Utils/Models/Feed/UploadPost.model";
+export {ToggleLike} from "./Utils/Models/Feed/ToggleLike.model";
+export {AddComment} from "./Utils/Models/Feed/AddComment.model";
+export {RemoveComment} from "./Utils/Models/Feed/RemoveComment.model";
