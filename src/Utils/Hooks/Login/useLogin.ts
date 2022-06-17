@@ -6,10 +6,13 @@ import {
   updateProfile
 } from 'firebase/auth'
 import {useAuth} from '../../../Auth'
-import {initialLoginState, loginReducer} from '../../../Components/Login'
 import {doc, setDoc} from 'firebase/firestore'
-import {LoginActionTypes} from "../../Models/Login/LoginActionTypes";
-import {db} from "../../../Firebase";
+import {LoginActionTypes} from '../../Models/Login/LoginActionTypes'
+import {db} from '../../../Firebase'
+import {
+  initialLoginState,
+  loginReducer
+} from '../../Reducers/Login/LoginReducer'
 
 export const useLogin = () => {
   const auth = getAuth()
