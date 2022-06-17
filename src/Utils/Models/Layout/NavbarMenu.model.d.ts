@@ -1,6 +1,6 @@
-import {AuthProps} from '../../Models'
+import {Auth} from '../Auth/Auth.model'
 
-export interface NavbarMenuModel extends Partial<AuthProps> {
+export interface NavbarMenuModel extends Partial<Auth> {
   anchorEl?: HTMLElement
   open: boolean
   handleClose: () => void

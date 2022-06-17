@@ -31,9 +31,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import {ConfirmationDeleteMenu} from '../Layout/ConfirmationDeleteMenu'
 import {Comments} from './Comments/Comments'
 import {Link} from 'react-router-dom'
-import {Post as ModelPost} from '../../Utils/Models'
-import {alertRed, myBlue, padEl} from '../../Utils/Layout'
+import {alertRed, myBlue, padEl} from '../Layout/LayoutStyles'
 import {usePost} from '../../Utils/Hooks/Post/usePost'
+import {Post as ModelPost} from '../../Utils/Models/Feed/Post.model'
 
 const Post = ({
   author,

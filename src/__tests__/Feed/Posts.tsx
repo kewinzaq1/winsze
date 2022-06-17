@@ -1,7 +1,7 @@
 import {screen, waitFor} from '@testing-library/react'
 import {render} from '../../Utils/Tests'
 import Post from '../../Components/Feed/Post'
-import {Post as ModelPost} from '../../Utils/Models'
+import {Post as ModelPost} from '../../Utils/Models/Feed/Post.model'
 
 test('display post', async () => {
   const {

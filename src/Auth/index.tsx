@@ -1,12 +1,12 @@
 import * as React from 'react'
 import {onAuthStateChanged, signOut} from 'firebase/auth'
-import {useLocalStorageState} from '../Utils/Hooks'
 import {useNavigate} from 'react-router-dom'
-import {AuthProps} from '../Utils/Models'
 import {AuthProviderModel} from '../Utils/Models/Auth/AuthProvider.model'
-import {auth} from "../Firebase";
+import {auth} from '../Firebase'
+import {useLocalStorageState} from '../Utils/Hooks/Shared/useLocalStorageState'
+import {Auth} from '../Utils/Models/Auth/Auth.model'
 
-export const AuthContext = React.createContext<AuthProps | null>(null)
+export const AuthContext = React.createContext<Auth | null>(null)
 
 export const AuthProvider = ({initUser, children}: AuthProviderModel) => {
   const [user, setUser] = useLocalStorageState(

@@ -6,12 +6,10 @@ import {Avatar, Divider, Stack, Typography} from '@mui/material'
 import {useParams} from 'react-router-dom'
 import {streamFriends} from '.'
 import {useAuth} from '../../Auth'
-import {useStream} from '../../Utils/Hooks'
 import {streamPosts} from '../Feed'
 import {FeedHeading} from '../Feed/FeedHeading'
 import Post from '../Feed/Post'
 import PersonIcon from '@mui/icons-material/Person'
-import {Post as PostModel, User} from '../../Utils/Models'
 import {Progress} from '../Layout/Progress'
 import {
   maxWidth,
@@ -19,7 +17,10 @@ import {
   myBlue,
   styleFlexColumn,
   tabletBreakpoint
-} from '../../Utils/Layout'
+} from '../Layout/LayoutStyles'
+import {useStream} from '../../Utils/Hooks/Shared/useStream'
+import {Post as PostModel} from '../../Utils/Models/Feed/Post.model'
+import {User} from '../../Utils/Models/User/User.model'
 
 const SingleUser = () => {
   const {user: fireAuthUser} = useAuth()

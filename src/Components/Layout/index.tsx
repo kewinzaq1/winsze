@@ -6,7 +6,7 @@ import {Footer} from './Footer'
 import {Navbar} from './Navbar/Navbar'
 import 'normalize.css'
 import './index.css'
-import {toastOptions} from '../../Utils/Layout'
+import {toastOptions} from './LayoutStyles'
 
 export const Layout = ({children}: {children: React.ReactNode}) => (
   <>

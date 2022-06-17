@@ -1,7 +1,7 @@
 import {css} from '@emotion/react'
 import styled from '@emotion/styled'
 import {AppBar as AppBarMaterial} from '@mui/material'
-import {maxWidth} from '../../../Utils/Layout'
+import {maxWidth} from '../LayoutStyles'
 
 export const AppBar = styled(AppBarMaterial)`
   box-shadow: var(--light-box-shadow);

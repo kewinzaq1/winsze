@@ -4,11 +4,11 @@ import {css} from '@emotion/react'
 import * as React from 'react'
 import {Divider, Stack} from '@mui/material'
 import {streamFriends} from '.'
-import {useStream} from '../../Utils/Hooks'
-import {User as UserModel} from '../../Utils/Models'
 import {User} from './User'
 import {Progress} from '../Layout/Progress'
-import {maxWidth} from '../../Utils/Layout'
+import {maxWidth} from '../Layout/LayoutStyles'
+import {useStream} from '../../Utils/Hooks/Shared/useStream'
+import {User as UserModel} from '../../Utils/Models/User/User.model'
 
 const Users = () => {
   const users: UserModel[] = useStream(streamFriends)

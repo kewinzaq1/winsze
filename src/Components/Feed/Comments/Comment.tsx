@@ -16,7 +16,7 @@ import Moment from 'react-moment'
 import {useAuth} from '../../../Auth'
 import {removeComment} from '..'
 import toast from 'react-hot-toast'
-import {alertRed} from '../../../Utils/Layout'
+import {alertRed} from '../../Layout/LayoutStyles'
 import {CommentModel} from '../../../Utils/Models/Feed/Comments/Comment.model'
 
 export const Comment = ({comment, postId}: CommentModel) => {

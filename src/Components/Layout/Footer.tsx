@@ -10,7 +10,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {useAuth} from '../../Auth'
-import {maxWidth} from '../../Utils/Layout'
+import {maxWidth} from './LayoutStyles'
 
 export const Footer = () => {
   const {user} = useAuth()

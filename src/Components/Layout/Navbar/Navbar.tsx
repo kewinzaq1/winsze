@@ -7,7 +7,7 @@ import {NavbarMenu} from './NavbarMenu'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../../../Auth'
 import {User as FireAuthUser} from 'firebase/auth'
-import {myBlue} from '../../../Utils/Layout'
+import {myBlue} from '../LayoutStyles'
 import {AppBar, Nav, NavActions} from './NavbarStyles'
 
 export const Navbar = () => {

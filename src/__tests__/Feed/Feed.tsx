@@ -2,8 +2,8 @@ import {screen, waitFor} from '@testing-library/react'
 import {Comment} from '../../Components/Feed/Comments/Comment'
 import {FeedHeading} from '../../Components/Feed/FeedHeading'
 import Post from '../../Components/Feed/Post'
-import {buildUser} from '../../Utils/Builders'
 import {render} from '../../Utils/Tests'
+import {buildUser} from '../../Utils/Builders/buildUser'
 
 const user = buildUser()
 

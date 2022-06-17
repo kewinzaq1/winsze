@@ -15,8 +15,8 @@ import {
 } from 'firebase/firestore'
 import {lazy, Suspense} from 'react'
 import {Progress} from '../Layout/Progress'
-import {styleFlexColumn} from '../../Utils/Layout'
-import {db} from "../../Firebase";
+import {styleFlexColumn} from '../Layout/LayoutStyles'
+import {db} from '../../Firebase'
 const Users = lazy(() => import('./Users'))
 
 export const Friends = () => (

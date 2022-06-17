@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import {buildUser} from '../../src/Utils/Builders'
+import {buildUser} from '../../src/Utils/Builders/buildUser'
 
 const {email, username: nickname, password} = buildUser()
 beforeEach(() => {

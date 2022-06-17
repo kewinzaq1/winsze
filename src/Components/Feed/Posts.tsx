@@ -1,9 +1,9 @@
 import * as React from 'react'
 import {Stack} from '@mui/material'
-import {useStream} from '../../Utils/Hooks'
-import {Post as PostModel} from '../../Utils/Models'
 import {streamPosts} from './index'
 import {Progress} from '../Layout/Progress'
+import {useStream} from '../../Utils/Hooks/Shared/useStream'
+import {Post as PostModel} from '../../Utils/Models/Feed/Post.model'
 const Post = React.lazy(() => import('./Post'))
 
 const Posts = () => {

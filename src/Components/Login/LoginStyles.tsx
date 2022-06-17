@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import {baseFlex, mobileBreakpoint, myBlue} from '../../Utils/Layout'
+import {baseFlex, mobileBreakpoint, myBlue} from '../Layout/LayoutStyles'
 import {FormGroup} from '@mui/material'
 
 export const LoginWrapper = styled.main`

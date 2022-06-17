@@ -2,7 +2,7 @@ import * as React from 'react'
 import {useAuth} from '../../../Auth'
 import toast from 'react-hot-toast'
 import {removePost, toggleLike, updatePost} from '../../../Components/Feed'
-import {Post as ModelPost} from '../../Models'
+import {Post as ModelPost} from '../../Models/Feed/Post.model'
 
 export const usePost = ({
   description,

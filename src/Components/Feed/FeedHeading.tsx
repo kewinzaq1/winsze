@@ -14,7 +14,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import ClearIcon from '@mui/icons-material/Clear'
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
-import {alertRed} from '../../Utils/Layout'
+import {alertRed} from '../Layout/LayoutStyles'
 import {useFeed} from '../../Utils/Hooks/Feed/useFeed'
 
 export const FeedHeading = ({disableTitle}: {disableTitle?: boolean}) => {

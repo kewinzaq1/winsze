@@ -3,35 +3,34 @@
 import {css} from '@emotion/react'
 import {deleteObject, getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {
-    arrayRemove,
-    arrayUnion,
-    collection,
-    deleteDoc,
-    doc,
-    DocumentData,
-    FirestoreError,
-    increment,
-    onSnapshot,
-    orderBy,
-    query,
-    QuerySnapshot,
-    setDoc,
-    SnapshotListenOptions,
-    updateDoc
+  arrayRemove,
+  arrayUnion,
+  collection,
+  deleteDoc,
+  doc,
+  DocumentData,
+  FirestoreError,
+  increment,
+  onSnapshot,
+  orderBy,
+  query,
+  QuerySnapshot,
+  setDoc,
+  SnapshotListenOptions,
+  updateDoc
 } from 'firebase/firestore'
 import {FeedHeading} from './FeedHeading'
 import {v4 as uuidv4} from 'uuid'
 import React from 'react'
 import {Progress} from '../Layout/Progress'
-import {maxWidth} from '../../Utils/Layout'
-import {db, storage} from "../../Firebase";
-import {UpdatePost} from "../../Utils/Models/Feed/UpdatePost.model";
-import {UploadPost} from "../../Utils/Models/Feed/UploadPost.model";
-import {ToggleLike} from "../../Utils/Models/Feed/ToggleLike.model";
-import {AddComment} from "../../Utils/Models/Feed/AddComment.model";
-import {RemoveComment} from "../../Utils/Models/Feed/RemoveComment.model";
+import {maxWidth} from '../Layout/LayoutStyles'
+import {db, storage} from '../../Firebase'
+import {UpdatePost} from '../../Utils/Models/Feed/UpdatePost.model'
+import {UploadPost} from '../../Utils/Models/Feed/UploadPost.model'
+import {ToggleLike} from '../../Utils/Models/Feed/ToggleLike.model'
+import {AddComment} from '../../Utils/Models/Feed/AddComment.model'
+import {RemoveComment} from '../../Utils/Models/Feed/RemoveComment.model'
 const Posts = React.lazy(() => import('./Posts'))
-
 
 export const Feed = () => {
   return (

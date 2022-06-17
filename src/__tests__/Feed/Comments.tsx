@@ -1,7 +1,7 @@
 import {screen, waitFor} from '@testing-library/react'
 import {Comments} from '../../Components/Feed/Comments/Comments'
-import {buildUser} from '../../Utils/Builders'
 import {render} from '../../Utils/Tests'
+import {buildUser} from '../../Utils/Builders/buildUser'
 
 const {username} = buildUser()
 
