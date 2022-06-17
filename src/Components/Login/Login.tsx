@@ -10,9 +10,9 @@ import {
   Typography
 } from '@mui/material'
 import {Send} from '@mui/icons-material'
-import {LoginActionTypes} from '../../Utils/Models/Login/Login.model'
 import {useLogin} from '../../Utils/Hooks/Login/useLogin'
 import {Form, FormActions, FormWallpaper, LoginWrapper} from './LoginStyles'
+import {LoginActionTypes} from "../../Utils/Models/Login/LoginActionTypes";
 
 export const Login = () => {
   const {

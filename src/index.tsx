@@ -38,7 +38,7 @@ export {alertRed} from './Utils/Layout'
 export {myBlue} from './Utils/Layout'
 export {baseFlex} from './Utils/Layout'
 export {maxWidth} from './Utils/Layout'
-export {LoginActions} from './Utils/Models/Login/Login.model'
-export {LoginActionTypes} from './Utils/Models/Login/Login.model'
-export {LoginState} from './Utils/Models/Login/Login.model'
+export {LoginActions} from './Utils/Models/Login/LoginAction.model'
 export {AuthProviderModel} from './Utils/Models/Auth/AuthProvider.model'
+export {LoginState} from "./Utils/Models/Login/LoginState.model";
+export {LoginActionTypes} from "./Utils/Models/Login/LoginActionTypes";

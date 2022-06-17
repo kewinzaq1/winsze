@@ -1,8 +1,7 @@
-import {
-  LoginActions,
-  LoginActionTypes,
-  LoginState
-} from '../../Utils/Models/Login/Login.model'
+import {LoginActions} from "../../Utils/Models/Login/LoginAction.model"
+import {LoginState} from "../../Utils/Models/Login/LoginState.model";
+import {LoginActionTypes} from "../../Utils/Models/Login/LoginActionTypes";
+
 
 const initialLoginState: LoginState = {
   option: 'register',

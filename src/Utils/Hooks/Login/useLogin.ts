@@ -7,8 +7,8 @@ import {
 } from 'firebase/auth'
 import {db, useAuth} from '../../../Auth'
 import {initialLoginState, loginReducer} from '../../../Components/Login'
-import {LoginActionTypes} from '../../Models/Login/Login.model'
 import {doc, setDoc} from 'firebase/firestore'
+import {LoginActionTypes} from "../../Models/Login/LoginActionTypes";
 
 export const useLogin = () => {
   const auth = getAuth()

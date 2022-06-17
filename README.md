@@ -6,7 +6,6 @@
 <img src="public/logo192.png"  alt="Logo">
 </p>
 winsze
-
 <br>
 <br>
 
